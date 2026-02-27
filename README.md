@@ -8,7 +8,8 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 
 ## Skills Directory
 
-### Development & Quality
+<details open>
+<summary><strong>Development & Quality</strong> (6 skills)</summary>
 
 | Skill | Description |
 |---|---|
@@ -19,7 +20,10 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 | [design-patterns](skills/design-patterns/) | PHP & Laravel design patterns with decision matrix |
 | [livewire-flux](skills/livewire-flux/) | Livewire 4 + Flux UI component patterns |
 
-### Project Lifecycle
+</details>
+
+<details>
+<summary><strong>Project Lifecycle</strong> (4 skills)</summary>
 
 | Skill | Description |
 |---|---|
@@ -28,7 +32,10 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 | [roadmap-generator](skills/roadmap-generator/) | Phase-based roadmap in Markdown + styled HTML |
 | [api-lifecycle](skills/api-lifecycle/) | Full API lifecycle — design through governance |
 
-### Deployment & Ops
+</details>
+
+<details>
+<summary><strong>Deployment & Ops</strong> (3 skills)</summary>
 
 | Skill | Description |
 |---|---|
@@ -36,22 +43,31 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 | [git-workflow](skills/git-workflow/) | Conventional commits, branching, release automation, and git hooks |
 | [package-dev](skills/package-dev/) | Laravel package scaffolding, testing, and release |
 
-### Business & Design
+</details>
+
+<details>
+<summary><strong>Business & Design</strong> (2 skills)</summary>
 
 | Skill | Description |
 |---|---|
 | [sales-planner](skills/sales-planner/) | Pricing, quotations, marketing copy, and financial planning |
 | [svg-logo-system](skills/svg-logo-system/) | SVG logo system design with multi-platform export |
 
-### Meta
+</details>
+
+<details>
+<summary><strong>Meta</strong> (1 skill)</summary>
 
 | Skill | Description |
 |---|---|
 | [self-update](skills/self-update/) | Auto-update CLAUDE.md with corrections, preferences, and gotchas |
 
+</details>
+
 ## Installation
 
-### Quick Install (all skills)
+<details open>
+<summary><strong>Quick Install (all skills)</strong></summary>
 
 ```bash
 # Remote — install all skills via curl
@@ -67,12 +83,17 @@ bash install.sh
 
 Skills are installed to `~/.claude/skills/` and available globally in Claude Code.
 
-### Manual Install (single skill)
+</details>
+
+<details>
+<summary><strong>Manual Install (single skill)</strong></summary>
 
 ```bash
 # Copy a skill directory into your project's .claude/skills/ folder
 cp -r skills/pest-testing /path/to/your-project/.claude/skills/
 ```
+
+</details>
 
 ## Kickoff.my Baseline
 
@@ -88,7 +109,8 @@ Many skills assume the [Kickoff.my](https://kickoff.my) bootstrap stack:
 
 Skills build on top of this baseline rather than re-scaffolding what Kickoff already provides.
 
-## Skill Structure
+<details>
+<summary><strong>Skill Structure</strong></summary>
 
 Each skill follows this structure:
 
@@ -113,12 +135,17 @@ description: >
 ---
 ```
 
-## Contributing
+</details>
+
+<details>
+<summary><strong>Contributing</strong></summary>
 
 1. Follow the existing skill structure and frontmatter format
 2. Include `metadata` with `compatible_agents` and `tags` in frontmatter
 3. Add reference files for templates and patterns
 4. Include trigger phrases in both English and Bahasa Malaysia where appropriate
+
+</details>
 
 ## License
 
