@@ -12,6 +12,7 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 
 | Skill | Description |
 |---|---|
+| [project-laravel](skills/project-laravel/) | Kickoff Laravel conventions enforcer and code scaffolder |
 | [pest-testing](skills/pest-testing/) | Pest PHP test generator with Livewire, arch testing, and factory patterns |
 | [code-quality](skills/code-quality/) | PHPStan + Pint + Rector workflow automation |
 | [php-best-practices](skills/php-best-practices/) | PHP 8.2+ modernization, refactoring, and code review |
