@@ -95,6 +95,19 @@ cp -r skills/pest-testing /path/to/your-project/.claude/skills/
 
 </details>
 
+## Documentation
+
+Full SDLC documentation is available in the [`docs/`](docs/) directory:
+
+| Section | Contents |
+|---|---|
+| [Product](docs/00-product/) | Specification, requirements, roadmap |
+| [Architecture](docs/01-architecture/) | Design overview, patterns, ADRs |
+| [Development](docs/02-development/) | Getting started, workflows, testing |
+| [Deployment](docs/03-deployment/) | Publishing and release process |
+| [API Reference](docs/04-api/) | Skill format schema and contracts |
+| [Support](docs/05-support/) | FAQ, triage, SLA, deprecation |
+
 ## Kickoff.my Baseline
 
 Many skills assume the [Kickoff.my](https://kickoff.my) bootstrap stack:
