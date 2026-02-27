@@ -45,14 +45,28 @@ A collection of Claude Code skills for Laravel developers, solo founders, and pa
 
 ## Installation
 
-Each skill can be added to your Claude Code project:
+### Quick Install (all skills)
+
+```bash
+# Remote — install all skills via curl
+curl -fsSL https://raw.githubusercontent.com/nasrulhazim/agent-skills/main/install.sh | bash
+```
+
+```bash
+# Local — clone and install
+git clone https://github.com/nasrulhazim/agent-skills.git
+cd agent-skills
+bash install.sh
+```
+
+Skills are installed to `~/.claude/skills/` and available globally in Claude Code.
+
+### Manual Install (single skill)
 
 ```bash
 # Copy a skill directory into your project's .claude/skills/ folder
 cp -r skills/pest-testing /path/to/your-project/.claude/skills/
 ```
-
-Or reference directly from this repository in your Claude Code configuration.
 
 ## Kickoff.my Baseline
 
