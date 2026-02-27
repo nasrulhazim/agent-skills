@@ -1,5 +1,8 @@
 ---
 name: svg-logo-system
+metadata:
+  compatible_agents: [claude-code]
+  tags: [design, svg, logo, branding, favicon, export]
 description: >
   Complete SVG logo system designer that takes a brand brief and produces 25 diverse logo concepts,
   dark/light wordmarks, icon marks, interactive HTML preview galleries, real-world mockup pages,

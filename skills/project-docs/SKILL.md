@@ -1,5 +1,8 @@
 ---
 name: project-docs
+metadata:
+  compatible_agents: [claude-code]
+  tags: [documentation, sdlc, laravel, php, markdown, badges, release-notes]
 description: >
   Full SDLC documentation toolchain for software projects — pre-development through post-release.
   Scaffolds numbered folder structures, generates Product Specs via interview, creates versioned
@@ -33,6 +36,9 @@ All outputs use the numbered folder structure compatible with `/docs` Claude Cod
 | `/docs support` | Post | Scaffold support cluster (FAQ, triage, SLA, etc.) |
 | `/docs runbook` | Post | Generate ops/deployment runbook with checklists |
 | `/docs release-note [--tldr]` | Post | Release notes from git log |
+| `/docs srs` | Pre | Link to `project-requirements` skill for full SRS generation |
+| `/docs stories` | Pre | Link to `project-requirements` skill for user stories |
+| `/docs ci-cd` | Post | Generate CI/CD pipeline documentation |
 
 ---
 
@@ -45,7 +51,9 @@ docs/
 │   ├── README.md
 │   ├── 01-product-spec.md
 │   ├── 02-requirements.md
-│   └── 03-roadmap.md
+│   ├── 03-roadmap.md
+│   ├── 04-srs.md
+│   └── 05-user-stories.md
 ├── 01-architecture/                  ← Pre/During: design, ADRs
 │   ├── README.md
 │   ├── 01-overview.md
@@ -57,11 +65,13 @@ docs/
 │   ├── README.md
 │   ├── 01-getting-started.md
 │   ├── 02-workflows.md
-│   └── 03-testing.md
+│   ├── 03-testing.md
+│   └── 04-livewire-components.md
 ├── 03-deployment/                    ← Post: deploy, ops runbook
 │   ├── README.md
 │   ├── 01-overview.md
-│   └── 02-runbook.md
+│   ├── 02-runbook.md
+│   └── 03-ci-cd.md
 ├── 04-api/                           ← During/Post: contracts
 │   ├── README.md
 │   └── 01-endpoints.md
@@ -92,6 +102,7 @@ docs/
 | Signal | Project Type |
 |---|---|
 | `composer.json` + Laravel deps, `artisan` | `laravel` |
+| `composer.json` + Livewire deps, Flux UI | `laravel-livewire` |
 | OpenAPI/Swagger, REST/GraphQL description | `api` |
 | `bin/` directory, CLI flags/commands | `cli` |
 | "package", "library", "SDK", "client library" | `sdk` |
@@ -111,6 +122,10 @@ If ambiguous, ask: "What type of project is this?"
 
 - `references/scaffolds.md` — file contents per project type (during-phase dev docs)
 - `references/sdlc-templates.md` — pre and post phase document templates
+
+> **Livewire projects:** For `laravel-livewire` type projects, also scaffold Livewire component
+> documentation in `02-development/`:
+> - `04-livewire-components.md` — Component inventory, props, events, patterns
 
 ### Step 3: Generate Files
 
@@ -149,6 +164,19 @@ Populate every field from interview answers.
 Mark genuinely unknown fields as `> ⚠️ TBD — needs decision` rather than leaving blank.
 
 Output: `docs/00-product/01-product-spec.md`
+
+### Requirement Design Phase Integration
+
+For full Software Requirements Specification (SRS) and user story generation, this skill
+delegates to the `project-requirements` skill:
+
+- `/docs srs` — Invokes `project-requirements` to generate a complete SRS document.
+  Output: `docs/00-product/04-srs.md`
+- `/docs stories` — Invokes `project-requirements` to generate user stories with acceptance criteria.
+  Output: `docs/00-product/05-user-stories.md`
+
+If the `project-requirements` skill is not available, prompt the user to install it or
+provide requirements manually for inclusion in the product spec.
 
 ---
 

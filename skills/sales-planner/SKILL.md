@@ -1,5 +1,8 @@
 ---
 name: sales-planner
+metadata:
+  compatible_agents: [claude-code]
+  tags: [sales, pricing, quotation, marketing, financial-planning, proposal]
 description: >
   Product pricing, sales, quotation, marketing copy, and financial planning assistant for
   developers and solo founders. Use this skill whenever the user wants to figure out how to
@@ -49,6 +52,7 @@ inline, extract and structure them rather than asking redundant questions.
 | `get-marketing social malay` | Social media post in Bahasa Malaysia |
 | `get-financial plan` | Revenue scenario planning |
 | `get-financial breakeven` | Break-even analysis |
+| `get-proposal` | Full client-facing project proposal (scope, timeline, deliverables, pricing) |
 | `setup-config` | Interview → generate product-config.md |
 
 ---
@@ -125,6 +129,22 @@ Total                         129,600
 ```
 
 Include annual maintenance/support pricing if defined in config.
+
+### Hourly / Retainer Pricing
+
+For service-based or consulting engagements:
+
+```
+Hourly Rate:          RM 250/hour
+Day Rate (8h):        RM 2,000/day
+Monthly Retainer:     RM 8,000/month (includes 40 hours)
+Overage Rate:         RM 250/hour (billed at end of month)
+```
+
+Show:
+- Recommended rate based on target annual income and utilisation rate
+- Retainer vs hourly comparison (break-even at X hours/month)
+- Partner channel rates (apply same margin structure)
 
 ---
 
@@ -277,6 +297,68 @@ Annual break-even:     3 direct sales OR 4 reseller sales
 
 ---
 
+## 6. get-proposal
+
+Generate a client-facing project proposal pulling from product-config.md.
+
+### Interview (if needed)
+
+If client details not provided, ask:
+- Client name and organisation
+- Project scope (one paragraph)
+- Expected timeline
+- Any special requirements or compliance needs
+
+### Proposal Structure
+
+```
+PROJECT PROPOSAL
+─────────────────────────────────────────────
+Prepared For:   [Client Name / Organisation]
+Prepared By:    [Your Company]
+Date:           [Date]
+Reference:      P-[YYYY]-[NNN]
+
+─────────────────────────────────────────────
+EXECUTIVE SUMMARY
+
+[1–2 paragraphs: problem, solution, why us]
+
+─────────────────────────────────────────────
+SCOPE OF WORK
+
+Phase 1: [Phase name]
+  - [Deliverable]
+  - [Deliverable]
+
+Phase 2: [Phase name]
+  - [Deliverable]
+
+─────────────────────────────────────────────
+TIMELINE
+
+Phase 1:  Week 1–4
+Phase 2:  Week 5–8
+UAT:      Week 9–10
+Go-live:  Week 11
+
+─────────────────────────────────────────────
+INVESTMENT
+
+[Pricing table from product-config.md]
+
+─────────────────────────────────────────────
+TERMS & CONDITIONS
+
+[Standard terms]
+─────────────────────────────────────────────
+```
+
+For Malaysian government proposals, support bilingual (BM/EN) output.
+Output: `proposal-[client]-[date].md`
+
+---
+
 ## Partner Channel Guide
 
 Standard margins from the claude-sales framework. Use as defaults if not in config:
@@ -305,6 +387,7 @@ When generating documents, save with these names:
 | Quotation | `quotation-[client]-[date].md` |
 | Marketing copy | `marketing-[type].md` |
 | Financial plan | `financial-plan.md` |
+| Proposal | `proposal-[client]-[date].md` |
 
 All files are Markdown. Present them via `present_files` so the user can download.
 

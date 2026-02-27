@@ -1,5 +1,8 @@
 ---
 name: self-update
+metadata:
+  compatible_agents: [claude-code]
+  tags: [claude-md, preferences, self-update, living-document, conventions]
 description: >
   Living document practice — Claude automatically updates CLAUDE.md whenever a user
   corrects a mistake, expresses a preference, a better pattern is discovered, or a gotcha
@@ -34,6 +37,8 @@ Update immediately when any of these occur:
 | Architectural decision made | "kita guna UUIDs, bukan auto-increment" |
 | Naming or style preference | "method names in camelCase, not snake_case" |
 | Tool or stack choice confirmed | "pakai Pest, bukan PHPUnit" |
+| Testing preference confirmed | "pakai Pest describe blocks", "PHPStan level 8" |
+| Deployment preference confirmed | "deploy via GitHub Actions", "Docker for staging" |
 
 Do **not** wait until the end of the session. Update `CLAUDE.md` **as soon as** the
 correction or preference is identified — then continue with the task.
@@ -91,6 +96,52 @@ State preferences as facts, not opinions:
 - Tests: Pest — BDD-style `it()` and `describe()` blocks
 - Migrations: always reversible — implement `down()` properly
 ```
+
+---
+
+## Testing Preferences to Track
+
+When the user confirms testing preferences, record under `## Testing` in CLAUDE.md:
+
+```markdown
+## Testing
+
+- Framework: Pest (BDD-style `it()` and `describe()` blocks)
+- PHPStan Level: 8 (with Larastan)
+- Pint Preset: laravel
+- Rector: PHP 8.2 set enabled
+- Coverage: minimum 80% on critical paths
+- Arch Tests: strict types enforced, no `dd()` in src/
+```
+
+Common triggers:
+- User sets PHPStan level → record level and any baseline file
+- User chooses Pest patterns → record `describe/it` vs flat `test()` preference
+- User configures Pint → record preset choice and any custom rules
+- User sets up Rector → record which rule sets are active
+
+---
+
+## Deployment Preferences to Track
+
+When deployment patterns are confirmed, record under `## Deployment` in CLAUDE.md:
+
+```markdown
+## Deployment
+
+- CI: GitHub Actions (Pint → PHPStan → Rector → Pest)
+- CD: SSH deploy to VPS via `/bin/deploy.sh`
+- Docker: Laravel Sail for dev, custom Dockerfile for prod
+- Staging: auto-deploy on push to `staging` branch
+- Production: manual trigger after staging verification
+- Backup: daily via `/bin/backup.sh`
+```
+
+Common triggers:
+- User configures CI/CD pipeline → record workflow structure
+- User sets up Docker → record dev vs prod distinction
+- User confirms deployment target → record server/platform details
+- User establishes branching strategy → record branch → environment mapping
 
 ---
 
