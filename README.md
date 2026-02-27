@@ -104,6 +104,7 @@ Full SDLC documentation is available in the [`docs/`](docs/) directory:
 | [Product](docs/00-product/) | Specification, requirements, roadmap |
 | [Architecture](docs/01-architecture/) | Design overview, patterns, ADRs |
 | [Development](docs/02-development/) | Getting started, workflows, testing |
+| [Using Skills](docs/02-development/04-using-skills.md) | Installation, commands, tips |
 | [Deployment](docs/03-deployment/) | Publishing and release process |
 | [API Reference](docs/04-api/) | Skill format schema and contracts |
 | [Support](docs/05-support/) | FAQ, triage, SLA, deprecation |
