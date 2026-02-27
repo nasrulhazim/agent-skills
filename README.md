@@ -1,6 +1,10 @@
 # Agent Skills
 
-A collection of Claude Code skills for Laravel developers, solo founders, and package authors — targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
+[![Latest Version](https://img.shields.io/github/v/release/nasrulhazim/agent-skills?style=flat-square)](https://github.com/nasrulhazim/agent-skills/releases)
+[![License](https://img.shields.io/github/license/nasrulhazim/agent-skills?style=flat-square)](LICENSE)
+
+A collection of Claude Code skills for Laravel developers, solo founders, and package authors —
+targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 
 ## Skills Directory
 
@@ -28,6 +32,7 @@ A collection of Claude Code skills for Laravel developers, solo founders, and pa
 | Skill | Description |
 |---|---|
 | [ci-cd-pipeline](skills/ci-cd-pipeline/) | GitHub Actions + Docker workflow automation |
+| [git-workflow](skills/git-workflow/) | Conventional commits, branching, release automation, and git hooks |
 | [package-dev](skills/package-dev/) | Laravel package scaffolding, testing, and release |
 
 ### Business & Design
@@ -86,7 +91,7 @@ Skills build on top of this baseline rather than re-scaffolding what Kickoff alr
 
 Each skill follows this structure:
 
-```
+```text
 skills/[skill-name]/
 ├── SKILL.md              # Skill definition (YAML frontmatter + instructions)
 └── references/           # Reference files (templates, patterns, examples)
