@@ -29,9 +29,9 @@ feature/       ●──●           ●──●
 1. Create feature branch from `develop`: `git checkout -b feature/add-login develop`
 2. Work on feature, commit with conventional commits
 3. Open PR from `feature/add-login` → `develop`
-4. When ready to release, create release branch: `git checkout -b release/v1.2.0 develop`
+4. When ready to release, create release branch: `git checkout -b release/1.2.0 develop`
 5. Fix release issues on release branch, then merge into `main` and `develop`
-6. Tag `main`: `git tag -a v1.2.0 -m "v1.2.0"`
+6. Tag `main`: `git tag -a 1.2.0 -m "1.2.0"`
 7. For production emergencies, branch from `main`: `git checkout -b hotfix/fix-crash main`
 8. Merge hotfix into both `main` and `develop`
 

@@ -257,8 +257,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 Add comparison links at the bottom of the changelog:
 
 ```markdown
-[Unreleased]: https://github.com/owner/repo/compare/v1.2.0...HEAD
-[1.2.0]: https://github.com/owner/repo/compare/v1.1.0...v1.2.0
+[Unreleased]: https://github.com/owner/repo/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/owner/repo/compare/1.1.0...1.2.0
 ```
 
 ---
@@ -285,19 +285,26 @@ Read the current version from:
 - **JS/Node**: `package.json` → `version` field
 - **Fallback**: `git describe --tags --abbrev=0`
 
+### Tag Format
+
+Tags use **bare semver** without `v` prefix: `1.0.0`, `1.2.3`, `2.0.0-beta.1`.
+
+- **DO**: `git tag -a 1.2.0 -m "1.2.0"`
+- **DON'T**: `git tag -a v1.2.0 -m "v1.2.0"`
+
 ### Release Steps
 
 1. **Determine bump type** — scan commits since last tag for breaking changes, features, fixes
 2. **Bump version** — update `composer.json` and/or `package.json`
 3. **Update changelog** — run the changelog generation workflow
-4. **Commit** — `chore(release): vX.Y.Z`
-5. **Tag** — `git tag -a vX.Y.Z -m "vX.Y.Z"`
+4. **Commit** — `chore(release): X.Y.Z`
+5. **Tag** — `git tag -a X.Y.Z -m "X.Y.Z"`
 6. **Push** — `git push && git push --tags`
 7. **GitHub Release** — create via `gh release create`:
 
 ```bash
-gh release create vX.Y.Z \
-  --title "vX.Y.Z" \
+gh release create X.Y.Z \
+  --title "X.Y.Z" \
   --notes-file CHANGELOG_EXCERPT.md \
   --latest
 ```
@@ -307,8 +314,8 @@ gh release create vX.Y.Z \
 For alpha/beta/rc releases:
 
 ```bash
-gh release create vX.Y.Z-beta.1 \
-  --title "vX.Y.Z Beta 1" \
+gh release create X.Y.Z-beta.1 \
+  --title "X.Y.Z Beta 1" \
   --prerelease
 ```
 
@@ -335,7 +342,7 @@ Recommend and scaffold a branching strategy based on team size and release caden
 feature/SHORT-DESCRIPTION     # New features
 fix/SHORT-DESCRIPTION          # Bug fixes
 chore/SHORT-DESCRIPTION        # Maintenance tasks
-release/vX.Y.Z                 # Release preparation (Git Flow)
+release/X.Y.Z                  # Release preparation (Git Flow)
 hotfix/SHORT-DESCRIPTION       # Production hotfixes (Git Flow)
 ```
 
