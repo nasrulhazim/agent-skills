@@ -69,13 +69,13 @@ packages/vendor/package-name/
         }
     ],
     "require": {
-        "php": "^8.2",
-        "illuminate/contracts": "^11.0 || ^12.0",
-        "illuminate/support": "^11.0 || ^12.0"
+        "php": "^8.4",
+        "illuminate/contracts": "^12.0",
+        "illuminate/support": "^12.0"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
-        "orchestra/testbench": "^9.0 || ^10.0",
+        "orchestra/testbench": "^10.0",
         "pestphp/pest": "^3.0",
         "pestphp/pest-plugin-laravel": "^3.0"
     },

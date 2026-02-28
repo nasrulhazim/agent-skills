@@ -36,6 +36,14 @@ skills/
 - Reference file naming: kebab-case, descriptive (e.g., `pest-patterns.md`, `api-security-checklist.md`)
 - Skill naming: kebab-case, action-oriented where possible (e.g., `pest-testing`, not `pest`)
 - Command format in skills: `/command subcommand` (e.g., `/test generate`, `/quality check`)
+- Git tags: bare semver without `v` prefix (`1.0.0`, not `v1.0.0`)
+- Package development:
+  - Laravel packages: scaffold from [spatie/package-skeleton-laravel](https://github.com/spatie/package-skeleton-laravel)
+  - PHP packages: scaffold from [spatie/package-skeleton-php](https://github.com/spatie/package-skeleton-php)
+  - Default vendor name: `cleaniquecoders` (always ask user to confirm)
+  - Package names: kebab-case, all lowercase
+  - PHP: `^8.4` minimum
+  - Laravel: always latest version (`^12.0`)
 
 ## Gotchas
 

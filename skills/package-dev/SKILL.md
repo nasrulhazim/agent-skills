@@ -43,15 +43,25 @@ integrates with Orchestra Testbench for package testing.
 
 Ask the user for:
 
-- **Vendor name** (e.g. `nasrulhazim`, `cleaniquecoders`)
-- **Package name** (e.g. `laravel-helper`, `profile`)
+- **Vendor name** — always ask, default: `cleaniquecoders`
+- **Package name** — kebab-case, all lowercase (e.g. `laravel-helper`, `profile`)
+- **Package type** — Laravel package or pure PHP package
 - **Package description** (one-liner for composer.json)
-- **PHP minimum version** (default: `^8.2`)
-- **Laravel version constraint** (default: `^11.0 || ^12.0`)
+- **PHP minimum version** (default: `^8.4`)
+- **Laravel version constraint** (default: `^12.0`, Laravel packages only)
 - **Namespace** (default: derived from vendor/package, e.g. `CleaniqueCoders\Profile`)
 - **Features to include** (config, migrations, views, routes, commands — pick applicable ones)
 
 If the user already provided context, extract what you can and only ask for what is missing.
+
+### Skeleton Templates
+
+Use Spatie's skeleton templates to scaffold the package:
+
+- **Laravel package**: Clone from [spatie/package-skeleton-laravel](https://github.com/spatie/package-skeleton-laravel)
+- **PHP package**: Clone from [spatie/package-skeleton-php](https://github.com/spatie/package-skeleton-php)
+
+After cloning, run the skeleton's configure script to replace placeholders with the actual vendor name, package name, namespace, and author details.
 
 ### Step 2: Generate Directory Structure
 
@@ -102,11 +112,11 @@ Read `references/package-structure.md` for the full template. Key sections:
     "keywords": ["laravel", "php"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
-        "illuminate/support": "^11.0 || ^12.0"
+        "php": "^8.4",
+        "illuminate/support": "^12.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^9.0 || ^10.0",
+        "orchestra/testbench": "^10.0",
         "pestphp/pest": "^3.0",
         "pestphp/pest-plugin-laravel": "^3.0",
         "laravel/pint": "^1.0"
@@ -357,17 +367,17 @@ All notable changes to this project will be documented in this file.
 - Facade support
 - Migration publishing
 
-[Unreleased]: https://github.com/vendor/package/compare/v1.1.0...HEAD
-[1.1.0]: https://github.com/vendor/package/compare/v1.0.0...v1.1.0
-[1.0.0]: https://github.com/vendor/package/releases/tag/v1.0.0
+[Unreleased]: https://github.com/vendor/package/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/vendor/package/compare/1.0.0...1.1.0
+[1.0.0]: https://github.com/vendor/package/releases/tag/1.0.0
 ```
 
 ### Step 4: Commit and Tag
 
 ```bash
 git add -A
-git commit -m "chore: release v1.1.0"
-git tag -a v1.1.0 -m "Release v1.1.0"
+git commit -m "chore: release 1.1.0"
+git tag -a 1.1.0 -m "1.1.0"
 git push origin main --tags
 ```
 
