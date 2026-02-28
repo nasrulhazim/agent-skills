@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Auto-regenerate and commit manifest.txt before pushing
+bash generate-manifest.sh
+
+if ! git diff --quiet manifest.txt 2>/dev/null || ! git ls-files --error-unmatch manifest.txt &>/dev/null; then
+    echo "manifest.txt updated — auto-committing..."
+    git add manifest.txt
+    git commit -m "chore: update manifest.txt"
+fi
