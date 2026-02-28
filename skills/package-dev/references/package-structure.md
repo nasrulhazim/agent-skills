@@ -680,3 +680,13 @@ All notable changes to `package-name` will be documented in this file.
 ### Added
 - Initial release
 ```
+
+---
+
+## Version Compatibility Matrix
+
+| Laravel | PHP      | Testbench | Pest Plugin Laravel |
+|---------|----------|-----------|---------------------|
+| 12.x    | ^8.2     | ^10.0     | ^3.0                |
+| 11.x    | ^8.2     | ^9.0      | ^2.0 / ^3.0         |
+| 10.x    | ^8.1     | ^8.0      | ^2.0                |

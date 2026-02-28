@@ -17,7 +17,9 @@ description: >
   README", "add a facade to my package", "configure Testbench", "publish my package",
   "buat package Laravel baru", "scaffold struktur package", "sediakan test untuk package",
   "sediakan release", "jana README package", "tambah facade", "konfigurasi Testbench",
-  "terbitkan package ke Packagist", or "uruskan versioning package".
+  "terbitkan package ke Packagist", "uruskan versioning package", "upgrade Laravel version",
+  "bump PHP version constraint", "update package dependencies", "naik taraf versi Laravel",
+  "kemaskini versi PHP", or "upgrade dependencies package".
 ---
 
 # Package Development Skill
@@ -34,6 +36,7 @@ integrates with Orchestra Testbench for package testing.
 | `/package test` | Set up Pest test suite with Orchestra Testbench integration |
 | `/package release` | Run release checklist: version bump, changelog, git tag, Packagist |
 | `/package readme` | Generate professional README with badges, installation, usage, and testing sections |
+| `/package upgrade` | Upgrade PHP/Laravel version constraints and dependencies |
 
 ---
 
@@ -482,7 +485,98 @@ Based on the package scan:
 
 ---
 
-## 5. Anti-Patterns to Avoid
+## 5. `/package upgrade` — Upgrade Dependencies
+
+Bump PHP, Laravel, and ecosystem dependency version constraints in an existing package.
+
+### Step 1: Read Current State
+
+Parse `composer.json` for current constraints:
+
+- `require.php`
+- All `illuminate/*` packages
+- `orchestra/testbench`
+- `pestphp/pest-plugin-laravel`
+- `laravel/pint`
+- Any other Laravel-ecosystem dependencies
+
+### Step 2: Check Dependency Availability
+
+For each dependency being upgraded, verify the target version exists on Packagist:
+
+- Use `composer show {package} --available` or check `https://packagist.org/packages/{vendor}/{package}` to confirm the target version/constraint is published
+- Flag any dependency that does not yet have a compatible release for the target Laravel/PHP version
+- If a dependency is not available, warn the user and suggest alternatives: wait for the release, find a fork, or drop the dependency
+
+### Step 3: Show Current vs Target
+
+Display a comparison table with availability status:
+
+| Dependency | Current | Target | Available? |
+|---|---|---|---|
+| `php` | `^8.2` | `^8.4` | ✅ |
+| `illuminate/support` | `^11.0` | `^12.0` | ✅ |
+| `orchestra/testbench` | `^9.0` | `^10.0` | ✅ |
+| `pestphp/pest-plugin-laravel` | `^2.0` | `^3.0` | ✅ |
+
+### Step 4: Ask Target Versions
+
+Confirm with the user before proceeding. Defaults:
+
+- **PHP**: `^8.4`
+- **Laravel**: `^12.0`
+- **Testbench**: `^10.0`
+
+### Step 5: Reference Upgrade Guide
+
+Point the user to the official Laravel upgrade guide for breaking changes:
+
+- `https://laravel.com/docs/{targetMajor}.x/upgrade`
+
+For example, when upgrading to Laravel 12: `https://laravel.com/docs/12.x/upgrade`
+
+### Step 6: Update composer.json
+
+Bump version constraints for:
+
+- `require.php`
+- All `illuminate/*` packages in `require` and `require-dev`
+- `orchestra/testbench`
+- `pestphp/pest-plugin-laravel`
+- `laravel/pint`
+- Any other Laravel-ecosystem dev dependencies
+
+### Step 7: Run Composer Update
+
+```bash
+composer update
+```
+
+If dependency resolution fails, report which packages conflict and suggest resolution steps.
+
+### Step 8: Run Tests
+
+```bash
+composer test
+```
+
+Or `./vendor/bin/pest` if no `test` script is defined. Report any failures so the user can address breaking changes.
+
+### Step 9: Update README
+
+If the README contains version badges or a "Requirements" section referencing specific PHP/Laravel versions, update those to match the new constraints.
+
+### Version Compatibility Matrix
+
+| Laravel | PHP      | Testbench | Pest Plugin Laravel |
+|---------|----------|-----------|---------------------|
+| 12.x    | ^8.2     | ^10.0     | ^3.0                |
+| 11.x    | ^8.2     | ^9.0      | ^2.0 / ^3.0         |
+| 10.x    | ^8.1     | ^8.0      | ^2.0                |
+
+---
+
+## 6. Anti-Patterns to Avoid
 
 | Anti-Pattern | Correct Approach |
 |---|---|
