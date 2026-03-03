@@ -23,6 +23,10 @@ livewire-flux/SKILL.md
 livewire-flux/references/flux-components.md
 livewire-flux/references/livewire4-patterns.md
 livewire-flux/references/spatie-integration.md
+log-monitor/SKILL.md
+log-monitor/references/error-patterns.md
+log-monitor/references/github-issue-templates.md
+log-monitor/references/report-templates.md
 package-dev/SKILL.md
 package-dev/references/package-structure.md
 package-dev/references/testbench-patterns.md
