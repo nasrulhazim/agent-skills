@@ -58,6 +58,10 @@ project-requirements/SKILL.md
 project-requirements/references/proposal-template.md
 project-requirements/references/srs-template.md
 project-requirements/references/user-story-patterns.md
+repo-research/SKILL.md
+repo-research/references/document-templates.md
+repo-research/references/mermaid-patterns.md
+repo-research/references/saas-analysis-framework.md
 roadmap-generator/SKILL.md
 roadmap-generator/references/html-roadmap-patterns.md
 roadmap-generator/references/interview-guide.md
