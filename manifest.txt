@@ -17,6 +17,8 @@ design-patterns/references/laravel-patterns.md
 design-patterns/references/pattern-catalog.md
 dev-summary/SKILL.md
 dev-summary/references/git-commands.md
+faq-generator/SKILL.md
+faq-generator/references/faq-patterns.md
 git-workflow/SKILL.md
 git-workflow/references/branch-strategies.md
 git-workflow/references/conventional-commits.md
