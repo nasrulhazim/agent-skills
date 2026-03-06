@@ -1,6 +1,7 @@
 # Phase 2 Comprehensive Preview Mockup Template
 
 Use this structure for `logo-preview.html`. Embed SVGs inline for reliable rendering.
+**Replace all placeholder colors** with the project's color map from Phase 0.
 
 ```html
 <!DOCTYPE html>
@@ -31,7 +32,7 @@ Use this structure for `logo-preview.html`. Embed SVGs inline for reliable rende
       gap: 0;
     }
     .nav-dark {
-      background: #0B1120;
+      background: #18181B;     /* REPLACE: project --dark-bg */
       padding: 0.75rem 2rem;
       display: flex;
       align-items: center;
@@ -47,7 +48,7 @@ Use this structure for `logo-preview.html`. Embed SVGs inline for reliable rende
     }
     .nav-logo { height: 32px; }
     .nav-links { display: flex; gap: 1.5rem; }
-    .nav-dark .nav-links span { color: #94A3B8; font-size: 0.875rem; }
+    .nav-dark .nav-links span { color: #A1A1AA; font-size: 0.875rem; }
     .nav-light .nav-links span { color: #64748B; font-size: 0.875rem; }
 
     /* ── Browser Frame ── */
@@ -80,7 +81,7 @@ Use this structure for `logo-preview.html`. Embed SVGs inline for reliable rende
       margin-left: 0.5rem;
     }
     .browser-content {
-      background: #0B1120;
+      background: #18181B;     /* REPLACE: project --dark-bg */
       padding: 2rem;
       display: flex;
       align-items: center;
@@ -101,19 +102,19 @@ Use this structure for `logo-preview.html`. Embed SVGs inline for reliable rende
       overflow: hidden;
       box-shadow: 0 0 0 2px #CBD5E1, 0 4px 20px rgba(0,0,0,0.2);
     }
-    .mobile-status { background: #0B1120; padding: 0.5rem 1rem; height: 28px; }
+    .mobile-status { background: #18181B; padding: 0.5rem 1rem; height: 28px; }
     .mobile-screen {
-      background: #0B1120;
+      background: #18181B;     /* REPLACE: project --dark-bg */
       height: 380px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .mobile-screen img, .mobile-screen svg { max-width: 80px; max-height: 80px; }
-    .mobile-home { background: #0B1120; padding: 0.75rem; display: flex; justify-content: center; }
+    .mobile-home { background: #18181B; padding: 0.75rem; display: flex; justify-content: center; }
     .mobile-home-bar {
       width: 100px; height: 4px;
-      background: #475569;
+      background: #3F3F46;     /* REPLACE: one shade lighter than --dark-bg */
       border-radius: 2px;
     }
 
@@ -127,7 +128,7 @@ Use this structure for `logo-preview.html`. Embed SVGs inline for reliable rende
     }
     .favicon-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
     .favicon-bg-dark {
-      background: #0B1120;
+      background: #18181B;     /* REPLACE: project --dark-bg */
       padding: 0.5rem;
       border-radius: 8px;
       display: flex;
@@ -143,18 +144,18 @@ Use this structure for `logo-preview.html`. Embed SVGs inline for reliable rende
       align-items: center;
       justify-content: center;
     }
-    .favicon-label { font-size: 0.7rem; color: #94A3B8; }
+    .favicon-label { font-size: 0.7rem; color: #A1A1AA; }
 
     /* ── Footer ── */
     .footer-dark {
-      background: #0B1120;
+      background: #18181B;     /* REPLACE: project --dark-bg */
       padding: 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     .footer-dark img, .footer-dark svg { height: 24px; opacity: 0.8; }
-    .footer-copy { color: #475569; font-size: 0.75rem; }
+    .footer-copy { color: #71717A; font-size: 0.75rem; }
 
     /* ── Color Palette ── */
     .palette {
@@ -192,9 +193,9 @@ Use this structure for `logo-preview.html`. Embed SVGs inline for reliable rende
     <div class="section-label">Navigation Bar</div>
     <div class="nav-mockup">
       <div class="nav-dark">
-        <!-- REPLACE with inline logo-dark.svg or <img src="logo-dark.svg"> -->
         <img src="logo-dark.svg" class="nav-logo" alt="Logo dark">
         <div class="nav-links">
+          <!-- REPLACE with project's actual nav items if known -->
           <span>Products</span><span>Pricing</span><span>Docs</span><span>Blog</span>
         </div>
       </div>
@@ -277,19 +278,20 @@ Use this structure for `logo-preview.html`. Embed SVGs inline for reliable rende
     <div class="section-label">Footer Placement</div>
     <div class="footer-dark">
       <img src="logo-dark.svg" alt="Logo footer">
-      <span class="footer-copy">© 2026 [BrandName]. All rights reserved.</span>
+      <span class="footer-copy">&copy; 2026 [BrandName]. All rights reserved.</span>
     </div>
   </div>
 
   <!-- ── Section 6: Brand Colors ── -->
+  <!-- Populate swatches from Phase 0 color map -->
   <div class="section">
     <div class="section-label">Brand Color Palette</div>
     <div class="palette">
-      <!-- Repeat one .swatch per brand color -->
+      <!-- Add one .swatch per project brand color from Phase 0 -->
       <div class="swatch">
-        <div class="swatch-color" style="background:#0B1120"></div>
-        <div class="swatch-name">Night</div>
-        <div class="swatch-hex">#0B1120</div>
+        <div class="swatch-color" style="background:#18181B"></div>
+        <div class="swatch-name">Dark BG</div>
+        <div class="swatch-hex">#18181B</div>
       </div>
       <!-- Add primary, secondary, accent, neutral colors here -->
     </div>
@@ -303,4 +305,8 @@ Use this structure for `logo-preview.html`. Embed SVGs inline for reliable rende
 - All `<img src="...">` paths are relative — files must be in the same `tinker/` directory.
 - For guaranteed rendering in Claude.ai downloads, consider inlining SVG content directly.
 - Replace `[BrandName]` throughout with the actual brand name.
-- The color palette section should reflect the actual brand colors extracted from the final logo.
+- The color palette section should reflect the actual brand colors from Phase 0.
+- **All `/* REPLACE */` comments** indicate values derived from the project's color map.
+  `#18181B` (zinc-900) is shown as a common Tailwind dark bg — always verify against the project.
+- Nav link text should match the project's actual navigation items if known from CLAUDE.md
+  or existing views.

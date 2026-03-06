@@ -1,6 +1,7 @@
 # Phase 1 Preview Gallery Template
 
-Use this structure for `preview.html`. Adapt colors, card counts, and SVG paths as needed.
+Use this structure for `preview.html`. **Replace placeholder colors** with the project's actual
+color map from Phase 0. The values below are placeholders — never use them as-is.
 
 ```html
 <!DOCTYPE html>
@@ -11,12 +12,13 @@ Use this structure for `preview.html`. Adapt colors, card counts, and SVG paths 
   <title>[BrandName] — Logo Concepts</title>
   <style>
     :root[data-theme="dark"] {
-      --bg: #0B1120;
-      --card-bg: #161E30;
-      --border: #2A3550;
-      --text: #E2E8F0;
-      --subtext: #94A3B8;
-      --selected-border: #6366F1;
+      /* REPLACE these with project's --dark-bg derived colors */
+      --bg: #18181B;            /* project dark bg (e.g. zinc-900) */
+      --card-bg: #27272A;       /* one shade lighter than bg */
+      --border: #3F3F46;        /* subtle border on dark */
+      --text: #E2E8F0;          /* light text */
+      --subtext: #A1A1AA;       /* muted text */
+      --selected-border: #059669; /* project's --brand-primary */
     }
     :root[data-theme="light"] {
       --bg: #F8FAFC;
@@ -24,7 +26,7 @@ Use this structure for `preview.html`. Adapt colors, card counts, and SVG paths 
       --border: #E2E8F0;
       --text: #1E293B;
       --subtext: #64748B;
-      --selected-border: #6366F1;
+      --selected-border: #059669; /* same --brand-primary */
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -111,7 +113,7 @@ Use this structure for `preview.html`. Adapt colors, card counts, and SVG paths 
         Click a concept to select it. Toggle dark/light to preview both modes.
       </p>
     </div>
-    <button class="toggle-btn" onclick="toggleTheme()">☀️ Light Mode</button>
+    <button class="toggle-btn" onclick="toggleTheme()">Light Mode</button>
   </header>
 
   <div class="grid" id="grid">
@@ -125,8 +127,8 @@ Use this structure for `preview.html`. Adapt colors, card counts, and SVG paths 
   <script>
     // Replace this array with actual logo file references
     const logos = [
-      { id: '01', name: 'Geometric Shield',   file: 'logo-01-geometric-shield.svg' },
-      { id: '02', name: 'Wordmark Bold',       file: 'logo-02-wordmark-bold.svg' },
+      { id: '01', name: 'Concept Name',  file: 'logo-01-concept-name.svg' },
+      { id: '02', name: 'Concept Name',  file: 'logo-02-concept-name.svg' },
       // ... repeat for all 25
     ];
 
@@ -136,7 +138,7 @@ Use this structure for `preview.html`. Adapt colors, card counts, and SVG paths 
       const html = document.documentElement;
       const isDark = html.dataset.theme === 'dark';
       html.dataset.theme = isDark ? 'light' : 'dark';
-      document.querySelector('.toggle-btn').textContent = isDark ? '🌙 Dark Mode' : '☀️ Light Mode';
+      document.querySelector('.toggle-btn').textContent = isDark ? 'Dark Mode' : 'Light Mode';
     }
 
     function selectCard(id) {
@@ -146,7 +148,7 @@ Use this structure for `preview.html`. Adapt colors, card counts, and SVG paths 
       });
       const logo = logos.find(l => l.id === id);
       document.getElementById('selection-info').innerHTML =
-        `✅ Selected: <strong>#${logo.id} — ${logo.name}</strong>. Tell Claude "go with #${logo.id}" to proceed to refinement.`;
+        `Selected: <strong>#${logo.id} — ${logo.name}</strong>. Tell Claude "go with #${logo.id}" to proceed to refinement.`;
     }
 
     const grid = document.getElementById('grid');
@@ -169,4 +171,5 @@ Use this structure for `preview.html`. Adapt colors, card counts, and SVG paths 
 - The `logos` array in the JS should be populated with all 25 generated filenames and concept names.
 - Cards use `<img>` tags pointing to the SVG files — they must be in the same directory.
 - The toggle switches `data-theme` on `<html>`, which changes CSS variables globally.
-- To inline SVGs instead of using `<img>`, replace `<img src="...">` with the raw SVG markup.
+- **All color values are placeholders.** Replace with the project's actual colors from Phase 0.
+- Dark theme card-bg should be one shade lighter than the page bg (e.g. zinc-800 on zinc-900).
