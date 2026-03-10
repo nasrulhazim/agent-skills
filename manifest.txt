@@ -24,10 +24,6 @@ git-workflow/references/branch-strategies.md
 git-workflow/references/conventional-commits.md
 git-workflow/references/hooks-and-templates.md
 livewire-flux/SKILL.md
-logo-designer/SKILL.md
-logo-designer/references/gallery-grid-template.md
-logo-designer/references/individual-showcase-template.md
-logo-designer/references/svg-design-patterns.md
 livewire-flux/references/flux-components.md
 livewire-flux/references/livewire4-patterns.md
 livewire-flux/references/spatie-integration.md
@@ -35,6 +31,10 @@ log-monitor/SKILL.md
 log-monitor/references/error-patterns.md
 log-monitor/references/github-issue-templates.md
 log-monitor/references/report-templates.md
+logo-designer/SKILL.md
+logo-designer/references/gallery-grid-template.md
+logo-designer/references/individual-showcase-template.md
+logo-designer/references/svg-design-patterns.md
 package-dev/SKILL.md
 package-dev/references/package-structure.md
 package-dev/references/testbench-patterns.md
