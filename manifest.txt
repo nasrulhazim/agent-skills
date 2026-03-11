@@ -11,6 +11,10 @@ code-quality/SKILL.md
 code-quality/references/larastan-rules.md
 code-quality/references/pint-presets.md
 code-quality/references/rector-sets.md
+courseware-builder/SKILL.md
+courseware-builder/references/html-template.md
+courseware-builder/references/step-templates.md
+courseware-builder/references/themes.md
 design-patterns/SKILL.md
 design-patterns/references/decision-matrix.md
 design-patterns/references/laravel-patterns.md
