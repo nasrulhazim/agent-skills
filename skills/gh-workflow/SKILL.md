@@ -1126,6 +1126,240 @@ gh api graphql -f query='
 ' -F number=5 -f org="my-org"
 ```
 
+### Full Roadmap Project Setup (End-to-End)
+
+A complete workflow for setting up a roadmap project with phases, labels, issues, field values, dates, and assignments — all from the CLI.
+
+**Step 1 — Create project and custom fields:**
+
+```bash
+ORG="my-org"
+REPO="my-org/my-app"
+
+# Create the project
+gh project create --owner "$ORG" --title "Product Roadmap"
+# Note the PROJECT_NUMBER from `gh project list`
+PROJECT=8
+
+# Add custom fields
+gh project field-create $PROJECT --owner "$ORG" \
+  --name "Phase" --data-type "SINGLE_SELECT" \
+  --single-select-options "Phase 1,Phase 2,Phase 3"
+
+gh project field-create $PROJECT --owner "$ORG" \
+  --name "Priority" --data-type "SINGLE_SELECT" \
+  --single-select-options "High,Medium,Low"
+
+gh project field-create $PROJECT --owner "$ORG" \
+  --name "Effort" --data-type "SINGLE_SELECT" \
+  --single-select-options "Small,Medium,Large"
+
+gh project field-create $PROJECT --owner "$ORG" \
+  --name "Persona" --data-type "SINGLE_SELECT" \
+  --single-select-options "Consumer,Admin,Developer,Ops,Dev Team"
+
+# Date fields for Roadmap timeline view
+gh project field-create $PROJECT --owner "$ORG" \
+  --name "Start Date" --data-type "DATE"
+
+gh project field-create $PROJECT --owner "$ORG" \
+  --name "Target Date" --data-type "DATE"
+```
+
+**Step 2 — Create labels for cross-referencing:**
+
+```bash
+REPO="my-org/my-app"
+
+# Phase labels
+gh label create "phase:1" --description "Phase 1" --color "0E8A16" --repo "$REPO" 2>/dev/null || true
+gh label create "phase:2" --description "Phase 2" --color "1D76DB" --repo "$REPO" 2>/dev/null || true
+gh label create "phase:3" --description "Phase 3" --color "D93F0B" --repo "$REPO" 2>/dev/null || true
+
+# Priority labels
+gh label create "priority:high" --color "B60205" --repo "$REPO" 2>/dev/null || true
+gh label create "priority:medium" --color "FBCA04" --repo "$REPO" 2>/dev/null || true
+gh label create "priority:low" --color "C5DEF5" --repo "$REPO" 2>/dev/null || true
+
+# Effort labels
+gh label create "effort:small" --color "BFD4F2" --repo "$REPO" 2>/dev/null || true
+gh label create "effort:medium" --color "D4C5F9" --repo "$REPO" 2>/dev/null || true
+gh label create "effort:large" --color "F9D0C4" --repo "$REPO" 2>/dev/null || true
+```
+
+**Step 3 — Create issues with labels, add to project, assign:**
+
+```bash
+REPO="my-org/my-app"
+ORG="my-org"
+PROJECT=8
+ASSIGNEE="developer1"
+
+# Create issue with labels
+gh issue create --repo "$REPO" \
+  --title "Per-API Analytics Dashboard" \
+  --body "$(cat <<'EOF'
+Analytics visible to subscribed consumers on catalogue detail page.
+
+### Scope
+- Request volume over time (line chart)
+- Error rate breakdown (4xx vs 5xx)
+- Average latency (p50, p95, p99)
+- Date range selector (24h, 7d, 30d)
+EOF
+)" \
+  --label "phase:2,priority:high,effort:medium"
+
+# Get the issue number from output, then:
+ISSUE_NUM=9
+
+# Add to project
+gh project item-add $PROJECT --owner "$ORG" \
+  --url "https://github.com/$REPO/issues/$ISSUE_NUM"
+
+# Assign
+gh issue edit $ISSUE_NUM --repo "$REPO" --add-assignee "$ASSIGNEE"
+
+# Close completed issues
+gh issue close $ISSUE_NUM --repo "$REPO"
+```
+
+**Step 4 — Set custom field values via GraphQL:**
+
+First, get all field IDs and option IDs:
+
+```bash
+gh api graphql -f query='
+  query($org: String!, $number: Int!) {
+    organization(login: $org) {
+      projectsV2(first: 1, query: "Product Roadmap") {
+        nodes {
+          id
+          fields(first: 20) {
+            nodes {
+              ... on ProjectV2SingleSelectField { id name options { id name } }
+              ... on ProjectV2Field { id name dataType }
+            }
+          }
+        }
+      }
+    }
+  }
+' -f org="my-org" -F number=$PROJECT
+```
+
+Then get project item IDs:
+
+```bash
+gh project item-list $PROJECT --owner "$ORG" --format json | \
+  python3 -c "import json,sys; [print(f\"{i['id']},{i['content']['number']}\") for i in json.load(sys.stdin)['items']]"
+```
+
+Set single-select field:
+
+```bash
+gh api graphql -f query='mutation {
+  updateProjectV2ItemFieldValue(input: {
+    projectId: "PVT_xxx"
+    itemId: "PVTI_xxx"
+    fieldId: "PVTSSF_xxx"
+    value: { singleSelectOptionId: "option_id" }
+  }) { projectV2Item { id } }
+}'
+```
+
+Set date field:
+
+```bash
+gh api graphql -f query='mutation {
+  updateProjectV2ItemFieldValue(input: {
+    projectId: "PVT_xxx"
+    itemId: "PVTI_xxx"
+    fieldId: "PVTF_xxx"
+    value: { date: "2026-04-01" }
+  }) { projectV2Item { id } }
+}'
+```
+
+**Step 5 — Bulk set fields with a script:**
+
+```bash
+PROJECT_ID="PVT_xxx"
+PHASE_FIELD="PVTSSF_xxx"
+PHASE1_OPT="option_id_phase1"
+START_FIELD="PVTF_xxx"
+TARGET_FIELD="PVTF_xxx"
+
+# Array: item_id,phase_option,start_date,target_date
+declare -a ITEMS=(
+  "PVTI_item1,$PHASE1_OPT,2026-03-01,2026-03-15"
+  "PVTI_item2,$PHASE1_OPT,2026-03-10,2026-03-20"
+)
+
+for entry in "${ITEMS[@]}"; do
+  IFS=',' read -r ITEM_ID PHASE_OPT START TARGET <<< "$entry"
+
+  # Set phase
+  gh api graphql -f query="mutation { updateProjectV2ItemFieldValue(input: {
+    projectId: \"$PROJECT_ID\", itemId: \"$ITEM_ID\",
+    fieldId: \"$PHASE_FIELD\", value: { singleSelectOptionId: \"$PHASE_OPT\" }
+  }) { projectV2Item { id } } }" 2>/dev/null
+
+  # Set start date
+  gh api graphql -f query="mutation { updateProjectV2ItemFieldValue(input: {
+    projectId: \"$PROJECT_ID\", itemId: \"$ITEM_ID\",
+    fieldId: \"$START_FIELD\", value: { date: \"$START\" }
+  }) { projectV2Item { id } } }" 2>/dev/null
+
+  # Set target date
+  gh api graphql -f query="mutation { updateProjectV2ItemFieldValue(input: {
+    projectId: \"$PROJECT_ID\", itemId: \"$ITEM_ID\",
+    fieldId: \"$TARGET_FIELD\", value: { date: \"$TARGET\" }
+  }) { projectV2Item { id } } }" 2>/dev/null
+done
+```
+
+### Roadmap Timeline View Setup
+
+The **Roadmap** layout in GitHub Projects shows items as horizontal bars on a timeline. It requires **date fields** on each item.
+
+**Requirements:**
+- Create two Date fields: `Start Date` and `Target Date`
+- Set dates on every project item
+- Create a Roadmap view in the web UI (views cannot be created via API)
+
+**Manual steps (web UI only — no API for view creation):**
+1. Go to the project URL
+2. Click `+` (New view) → select **Roadmap** layout
+3. Click the gear icon in the timeline header → set **Start date** and **Target date** fields
+4. Optionally: Group by Phase for swimlanes, or sort by Priority
+
+**Other useful views to create manually:**
+- **Kanban Board** — Board layout, group by Status
+- **By Phase** — Board layout, group by Phase
+- **By Priority** — Table layout, sort by Priority
+
+> **Note:** GitHub's GraphQL API does NOT expose mutations for creating, updating, or deleting
+> ProjectV2 views. View management is exclusively available through the web UI. Views can only
+> be **read** via the API (`views` field on `ProjectV2`), not created or modified.
+
+### Bulk Assign Issues
+
+```bash
+REPO="my-org/my-app"
+ASSIGNEE="developer1"
+
+# Assign all open issues to someone
+for i in $(gh issue list --repo "$REPO" --state open --json number --jq '.[].number'); do
+  gh issue edit $i --repo "$REPO" --add-assignee "$ASSIGNEE"
+done
+
+# Assign issues by label
+for i in $(gh issue list --repo "$REPO" --label "phase:1" --state open --json number --jq '.[].number'); do
+  gh issue edit $i --repo "$REPO" --add-assignee "$ASSIGNEE"
+done
+```
+
 See `references/gh-project-patterns.md` for advanced project workflows, automation, and field management.
 
 ---

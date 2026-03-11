@@ -234,3 +234,163 @@ gh api graphql -f query='
   }
 '
 ```
+
+## Bulk Field Update Script
+
+When setting up a roadmap project with many items, use a bash array to bulk-update fields efficiently:
+
+```bash
+PROJECT_ID="PVT_xxx"
+PHASE_FIELD="PVTSSF_xxx"
+PRIORITY_FIELD="PVTSSF_xxx"
+STATUS_FIELD="PVTSSF_xxx"
+START_FIELD="PVTF_xxx"
+TARGET_FIELD="PVTF_xxx"
+
+# Option IDs (from field query above)
+PHASE1="option_id"
+PHASE2="option_id"
+HIGH="option_id"
+MEDIUM="option_id"
+TODO="option_id"
+DONE="option_id"
+
+# Format: item_id,phase,priority,status,start_date,target_date
+declare -a ITEMS=(
+  "PVTI_item1,$PHASE1,$HIGH,$DONE,2026-01-06,2026-02-14"
+  "PVTI_item2,$PHASE1,$MEDIUM,$TODO,2026-03-12,2026-03-19"
+  "PVTI_item3,$PHASE2,$HIGH,$TODO,2026-04-01,2026-04-15"
+)
+
+set_field() {
+  local ITEM_ID=$1 FIELD_ID=$2 VALUE_KEY=$3 VALUE=$4
+  gh api graphql -f query="mutation { updateProjectV2ItemFieldValue(input: {
+    projectId: \"$PROJECT_ID\", itemId: \"$ITEM_ID\",
+    fieldId: \"$FIELD_ID\", value: { $VALUE_KEY: \"$VALUE\" }
+  }) { projectV2Item { id } } }" 2>/dev/null
+}
+
+for entry in "${ITEMS[@]}"; do
+  IFS=',' read -r ITEM PHASE PRIORITY STATUS START TARGET <<< "$entry"
+  set_field "$ITEM" "$PHASE_FIELD" "singleSelectOptionId" "$PHASE"
+  set_field "$ITEM" "$PRIORITY_FIELD" "singleSelectOptionId" "$PRIORITY"
+  set_field "$ITEM" "$STATUS_FIELD" "singleSelectOptionId" "$STATUS"
+  set_field "$ITEM" "$START_FIELD" "date" "$START"
+  set_field "$ITEM" "$TARGET_FIELD" "date" "$TARGET"
+done
+```
+
+## Roadmap Timeline View
+
+The **Roadmap** layout shows items as horizontal bars on a timeline. Requirements:
+
+1. **Two Date fields** on the project: `Start Date` and `Target Date`
+2. **Set dates** on every item (items without dates won't appear on the timeline)
+3. **Create a Roadmap view** in the web UI (views CANNOT be created via API)
+
+### Setup Steps (Web UI)
+
+1. Go to the project URL
+2. Click `+` (New view) → select **Roadmap** layout
+3. Click the gear icon in the timeline header
+4. Set **Start date** field → `Start Date`
+5. Set **Target date** field → `Target Date`
+6. Optionally group by **Phase** for swimlane rows
+
+### Recommended Views
+
+| View Name | Layout | Group By | Purpose |
+|-----------|--------|----------|---------|
+| Kanban Board | Board | Status | Day-to-day work tracking |
+| By Phase | Board | Phase | Phase-level progress |
+| Roadmap | Roadmap | Phase (optional) | Timeline visualization |
+| By Priority | Table | — (sort by Priority) | Prioritization review |
+
+### API Limitations for Views
+
+> **Important:** GitHub's GraphQL API does NOT support creating, updating, or deleting
+> ProjectV2 views. The `createProjectV2View` mutation does not exist in the schema.
+> Views can only be **read** via the API (`views` field on `ProjectV2`).
+> All view management must be done through the GitHub web UI.
+
+```bash
+# Read existing views (read-only)
+gh api graphql -f query='
+  query($org: String!, $number: Int!) {
+    organization(login: $org) {
+      projectsV2(first: 1, query: "Product Roadmap") {
+        nodes {
+          views(first: 10) {
+            nodes { id name layout }
+          }
+        }
+      }
+    }
+  }
+' -f org="my-org" -F number=8
+```
+
+## Update Project Description and README
+
+```bash
+gh api graphql -f query='
+  mutation($id: ID!, $desc: String!, $readme: String!) {
+    updateProjectV2(input: {
+      projectId: $id
+      shortDescription: $desc
+      readme: $readme
+    }) {
+      projectV2 { id }
+    }
+  }
+' -f id="PVT_xxx" \
+  -f desc="Product development roadmap — Phase 1, Phase 2, Phase 3" \
+  -f readme="# Product Roadmap\n\nTracking all development phases.\n\n| Phase | Timeline |\n|-------|----------|\n| Phase 1 | Q1 2026 |\n| Phase 2 | Q2 2026 |\n| Phase 3 | Q3-Q4 2026 |"
+```
+
+## Get Item IDs Mapped to Issue Numbers
+
+Essential for scripting field updates — maps project item IDs to issue numbers:
+
+```bash
+gh project item-list PROJECT_NUMBER --owner "my-org" --format json | \
+  python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+for item in data['items']:
+    print(f\"{item['id']},{item['content']['number']},{item['content']['title']}\")
+"
+```
+
+## Bulk Assign Issues
+
+```bash
+REPO="my-org/my-app"
+ASSIGNEE="developer1"
+
+# Assign a range of issues
+for i in $(seq 1 23); do
+  gh issue edit $i --repo "$REPO" --add-assignee "$ASSIGNEE"
+done
+
+# Assign by label
+for i in $(gh issue list --repo "$REPO" --label "phase:1" --state open --json number --jq '.[].number'); do
+  gh issue edit $i --repo "$REPO" --add-assignee "$ASSIGNEE"
+done
+```
+
+## Create Issues and Close Done Ones
+
+```bash
+REPO="my-org/my-app"
+
+# Create and immediately close a completed feature
+URL=$(gh issue create --repo "$REPO" \
+  --title "Feature Name" \
+  --body "Description" \
+  --label "phase:1,priority:high,effort:small" 2>&1 | grep https)
+
+# Extract issue number and close
+NUM=$(echo "$URL" | grep -o '[0-9]*$')
+gh issue close "$NUM" --repo "$REPO"
+```
