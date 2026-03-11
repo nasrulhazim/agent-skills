@@ -19,6 +19,14 @@ dev-summary/SKILL.md
 dev-summary/references/git-commands.md
 faq-generator/SKILL.md
 faq-generator/references/faq-patterns.md
+gh-workflow/SKILL.md
+gh-workflow/references/gh-actions-patterns.md
+gh-workflow/references/gh-api-recipes.md
+gh-workflow/references/gh-issue-patterns.md
+gh-workflow/references/gh-pr-patterns.md
+gh-workflow/references/gh-project-patterns.md
+gh-workflow/references/gh-repo-management.md
+gh-workflow/references/gh-report-patterns.md
 git-workflow/SKILL.md
 git-workflow/references/branch-strategies.md
 git-workflow/references/conventional-commits.md
