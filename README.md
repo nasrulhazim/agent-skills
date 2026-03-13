@@ -23,7 +23,7 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 </details>
 
 <details>
-<summary><strong>Project Lifecycle</strong> (4 skills)</summary>
+<summary><strong>Project Lifecycle</strong> (5 skills)</summary>
 
 | Skill | Description |
 |---|---|
@@ -31,36 +31,53 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 | [project-requirements](skills/project-requirements/) | SRS, user stories, proposals, and wireframes |
 | [roadmap-generator](skills/roadmap-generator/) | Phase-based roadmap in Markdown + styled HTML |
 | [api-lifecycle](skills/api-lifecycle/) | Full API lifecycle — design through governance |
+| [faq-generator](skills/faq-generator/) | Multi-audience FAQ generator by stakeholder persona |
 
 </details>
 
 <details>
-<summary><strong>Deployment & Ops</strong> (3 skills)</summary>
+<summary><strong>Deployment & Ops</strong> (5 skills)</summary>
 
 | Skill | Description |
 |---|---|
 | [ci-cd-pipeline](skills/ci-cd-pipeline/) | GitHub Actions + Docker workflow automation |
 | [git-workflow](skills/git-workflow/) | Conventional commits, branching, release automation, and git hooks |
+| [gh-workflow](skills/gh-workflow/) | GitHub CLI automation — issues, PRs, Projects, Actions debugging |
 | [package-dev](skills/package-dev/) | Laravel package scaffolding, testing, and release |
+| [log-monitor](skills/log-monitor/) | Production log analysis, error triage, and GitHub issue creation |
 
 </details>
 
 <details>
-<summary><strong>Business & Design</strong> (2 skills)</summary>
+<summary><strong>Research & Analytics</strong> (2 skills)</summary>
+
+| Skill | Description |
+|---|---|
+| [repo-research](skills/repo-research/) | Deep codebase analysis with structured research documents and diagrams |
+| [dev-summary](skills/dev-summary/) | Multi-repo development stats, timelines, and contributor analytics |
+
+</details>
+
+<details>
+<summary><strong>Business & Design</strong> (4 skills)</summary>
 
 | Skill | Description |
 |---|---|
 | [sales-planner](skills/sales-planner/) | Pricing, quotations, marketing copy, and financial planning |
 | [svg-logo-system](skills/svg-logo-system/) | SVG logo system design with multi-platform export |
+| [logo-designer](skills/logo-designer/) | Professional SVG logo designer with granular category and style control |
+| [courseware-builder](skills/courseware-builder/) | Interactive HTML courseware builder with animated diagrams |
 
 </details>
 
 <details>
-<summary><strong>Meta</strong> (1 skill)</summary>
+<summary><strong>Meta</strong> (3 skills)</summary>
 
 | Skill | Description |
 |---|---|
 | [self-update](skills/self-update/) | Auto-update CLAUDE.md with corrections, preferences, and gotchas |
+| [project-sync](skills/project-sync/) | Sync CLAUDE.md conventions across multiple Kickoff projects |
+| [project-inventory](skills/project-inventory/) | Discover and inventory all Claude Code projects with HTML dashboard |
 
 </details>
 

@@ -1,6 +1,6 @@
 # Roadmap — Agent Skills
 
-> **Last Updated:** 2026-02-28
+> **Last Updated:** 2026-03-14
 > **Maintained by:** Nasrul Hazim
 
 ## Phase Summary
@@ -34,11 +34,10 @@ Laravel developers.
 
 **Deliverables:**
 
-- [x] 15 core skills with valid SKILL.md and
-  references
+- [x] 25 skills with valid SKILL.md and references
 - [x] `install.sh` script (local and remote)
 - [x] Root README with skills directory
-- [ ] Full SDLC documentation
+- [x] Full SDLC documentation
 - [ ] LICENSE file
 
 **Exit Criteria:** All skills installed successfully,
@@ -56,8 +55,8 @@ assurance.
 - [ ] Skill validation script (lint frontmatter,
   check references)
 - [ ] GitHub Actions CI for skill validation
-- [ ] 5+ additional skills based on community
-  feedback
+- [x] 10+ additional skills (25 total, exceeding
+  20+ target)
 - [ ] Upgrade assistant skills (e.g., Livewire 3
   to 4)
 

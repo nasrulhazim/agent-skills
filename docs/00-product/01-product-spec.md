@@ -3,7 +3,7 @@
 > **Status:** Draft
 > **Version:** 0.1
 > **Author:** Nasrul Hazim
-> **Last Updated:** 2026-02-28
+> **Last Updated:** 2026-03-14
 
 ## Problem Statement
 
@@ -42,8 +42,8 @@ Things explicitly out of scope for this version:
 
 ### Skill Collection
 
-15 skills covering development, lifecycle, deployment,
-business, and meta categories.
+25 skills covering development, lifecycle, deployment,
+research, business, and meta categories.
 
 **Acceptance Criteria:**
 
@@ -87,7 +87,7 @@ Skills assume the Kickoff.my bootstrap stack
 
 | Metric | Baseline | Target | Measurement |
 | --- | --- | --- | --- |
-| Skill count | 15 | 20+ | `skills/*/SKILL.md` |
+| Skill count | 25 | 30+ | `skills/*/SKILL.md` |
 | Install rate | — | 100% | Manual test |
 | Adoption | 0 | 50+ stars | GitHub stars |
 
@@ -95,7 +95,7 @@ Skills assume the Kickoff.my bootstrap stack
 
 The MVP must include:
 
-- All 15 current skills with valid frontmatter
+- All 25 current skills with valid frontmatter
 - Working `install.sh` script
 - Root README with skills directory
 

@@ -86,6 +86,7 @@ Type the command in your Claude Code session.
 | `/roadmap` | Generate visual roadmap |
 | `/api design` | Design OpenAPI spec |
 | `/api scaffold` | Scaffold controllers |
+| `/faq-generator` | Generate multi-audience FAQs |
 
 #### Deployment & Ops
 
@@ -96,8 +97,17 @@ Type the command in your Claude Code session.
 | `/git commit` | Conventional commit |
 | `/git release` | Prepare release |
 | `/git hooks` | Set up git hooks |
+| `/gh-workflow` | GitHub CLI automation |
 | `/package scaffold` | Scaffold Laravel package |
 | `/package release` | Publish to Packagist |
+| `/log-monitor` | Analyse production logs |
+
+#### Research & Analytics
+
+| Command | What It Does |
+| --- | --- |
+| `/repo-research` | Deep codebase analysis |
+| `/dev-summary` | Multi-repo commit stats |
 
 #### Business & Design
 
@@ -107,12 +117,16 @@ Type the command in your Claude Code session.
 | `/sales quotation` | Generate quotation |
 | `/sales marketing` | Marketing copy |
 | `/logo` | Design SVG logo system |
+| `/logo-designer` | Professional logo with style control |
+| `/courseware-builder` | Interactive HTML courseware |
 
 #### Meta
 
 | Command | What It Does |
 | --- | --- |
 | `/self-update` | Auto-update CLAUDE.md |
+| `/project-sync` | Sync CLAUDE.md across projects |
+| `/project-inventory` | Discover Claude Code projects |
 
 ---
 
@@ -159,6 +173,9 @@ project scope.
 - **api-lifecycle** — Seven-phase API management:
   design, develop, test, deploy, docs, govern,
   and security
+- **faq-generator** — Generates 7 audience-specific
+  FAQ documents (executive, marketing, PM, admin,
+  developer, devops, end user)
 
 ### Deployment & Ops Skills
 
@@ -171,9 +188,28 @@ projects.
 - **git-workflow** — Conventional commits, branch
   strategies, changelog generation, and release
   automation
+- **gh-workflow** — GitHub CLI automation for
+  issues, PRs, Projects, Actions debugging, and
+  advanced API operations
 - **package-dev** — Laravel package scaffolding
   with Pest + Orchestra Testbench, release
   workflow, and Packagist publishing
+- **log-monitor** — Analyses Laravel production
+  logs, categorises errors, generates reports,
+  and creates prioritised GitHub issues
+
+### Research & Analytics Skills
+
+Skills for analysing codebases and tracking
+development progress.
+
+- **repo-research** — Deep codebase analysis
+  producing 10 structured research documents
+  with Mermaid diagrams and SaaS opportunity
+  analysis
+- **dev-summary** — Multi-repo development stats,
+  commit timelines, contributor analytics, and
+  HTML dashboard
 
 ### Business & Design Skills
 
@@ -185,12 +221,23 @@ Skills for non-code deliverables.
 - **svg-logo-system** — Generates 25 logo
   concepts, wordmarks, icon marks, preview
   galleries, and export assets
+- **logo-designer** — Professional SVG logo
+  designer with granular control over category,
+  palette, frame, and rendering style
+- **courseware-builder** — Transforms technical
+  topics into interactive HTML slide decks with
+  animated diagrams and code examples
 
 ### Meta Skills
 
 - **self-update** — Automatically updates
   CLAUDE.md when you correct a mistake or
   express a preference
+- **project-sync** — Syncs CLAUDE.md conventions
+  across multiple Kickoff-based Laravel projects
+- **project-inventory** — Discovers and inventories
+  all Claude Code projects with HTML portfolio
+  dashboard
 
 ---
 
