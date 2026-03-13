@@ -83,10 +83,10 @@ Type the command in your Claude Code session.
 | `/docs health` | Docs health report |
 | `/requirements srs` | Generate SRS document |
 | `/requirements stories` | Generate user stories |
-| `/roadmap` | Generate visual roadmap |
-| `/api design` | Design OpenAPI spec |
-| `/api scaffold` | Scaffold controllers |
-| `/faq-generator` | Generate multi-audience FAQs |
+| `/project-roadmap` | Generate visual roadmap |
+| `/project-api design` | Design OpenAPI spec |
+| `/project-api scaffold` | Scaffold controllers |
+| `/project-faq` | Generate multi-audience FAQs |
 
 #### Deployment & Ops
 
@@ -124,7 +124,7 @@ Type the command in your Claude Code session.
 
 | Command | What It Does |
 | --- | --- |
-| `/self-update` | Auto-update CLAUDE.md |
+| `/project-conventions` | Auto-update CLAUDE.md |
 | `/project-sync` | Sync CLAUDE.md across projects |
 | `/project-inventory` | Discover Claude Code projects |
 
@@ -167,13 +167,13 @@ project scope.
 - **project-requirements** — Interview-driven
   SRS generation, user stories, client proposals,
   and ASCII wireframes
-- **roadmap-generator** — Produces ROADMAP.md and
+- **project-roadmap** — Produces ROADMAP.md and
   styled HTML visual roadmap with phases and
   dependencies
-- **api-lifecycle** — Seven-phase API management:
+- **project-api** — Seven-phase API management:
   design, develop, test, deploy, docs, govern,
   and security
-- **faq-generator** — Generates 7 audience-specific
+- **project-faq** — Generates 7 audience-specific
   FAQ documents (executive, marketing, PM, admin,
   developer, devops, end user)
 
@@ -230,7 +230,7 @@ Skills for non-code deliverables.
 
 ### Meta Skills
 
-- **self-update** — Automatically updates
+- **project-conventions** — Automatically updates
   CLAUDE.md when you correct a mistake or
   express a preference
 - **project-sync** — Syncs CLAUDE.md conventions

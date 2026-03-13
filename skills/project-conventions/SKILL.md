@@ -1,5 +1,5 @@
 ---
-name: self-update
+name: project-conventions
 metadata:
   compatible_agents: [claude-code]
   tags: [claude-md, preferences, self-update, living-document, conventions]

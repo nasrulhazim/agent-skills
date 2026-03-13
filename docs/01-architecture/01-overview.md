@@ -47,7 +47,7 @@ Each skill consists of:
 | Category | Skills | Purpose |
 | --- | --- | --- |
 | Dev & Quality | pest-testing, code-quality | Code review |
-| Lifecycle | project-docs, roadmap-gen | Planning |
+| Project Mgmt | project-docs, project-roadmap | Planning |
 | Deploy & Ops | ci-cd-pipeline, git-workflow | Release |
+| Research | repo-research, dev-summary | Analysis |
 | Business | sales-planner, svg-logo | Non-code |
-| Meta | self-update | Conventions |

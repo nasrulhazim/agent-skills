@@ -23,15 +23,18 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 </details>
 
 <details>
-<summary><strong>Project Lifecycle</strong> (5 skills)</summary>
+<summary><strong>Project Management</strong> (8 skills)</summary>
 
 | Skill | Description |
 |---|---|
+| [project-api](skills/project-api/) | Full API lifecycle — design through governance |
+| [project-conventions](skills/project-conventions/) | Auto-update CLAUDE.md with corrections, preferences, and gotchas |
 | [project-docs](skills/project-docs/) | Full SDLC documentation toolchain |
+| [project-faq](skills/project-faq/) | Multi-audience FAQ generator by stakeholder persona |
+| [project-inventory](skills/project-inventory/) | Discover and inventory all Claude Code projects with HTML dashboard |
 | [project-requirements](skills/project-requirements/) | SRS, user stories, proposals, and wireframes |
-| [roadmap-generator](skills/roadmap-generator/) | Phase-based roadmap in Markdown + styled HTML |
-| [api-lifecycle](skills/api-lifecycle/) | Full API lifecycle — design through governance |
-| [faq-generator](skills/faq-generator/) | Multi-audience FAQ generator by stakeholder persona |
+| [project-roadmap](skills/project-roadmap/) | Phase-based roadmap in Markdown + styled HTML |
+| [project-sync](skills/project-sync/) | Sync CLAUDE.md conventions across multiple Kickoff projects |
 
 </details>
 
@@ -67,17 +70,6 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 | [svg-logo-system](skills/svg-logo-system/) | SVG logo system design with multi-platform export |
 | [logo-designer](skills/logo-designer/) | Professional SVG logo designer with granular category and style control |
 | [courseware-builder](skills/courseware-builder/) | Interactive HTML courseware builder with animated diagrams |
-
-</details>
-
-<details>
-<summary><strong>Meta</strong> (3 skills)</summary>
-
-| Skill | Description |
-|---|---|
-| [self-update](skills/self-update/) | Auto-update CLAUDE.md with corrections, preferences, and gotchas |
-| [project-sync](skills/project-sync/) | Sync CLAUDE.md conventions across multiple Kickoff projects |
-| [project-inventory](skills/project-inventory/) | Discover and inventory all Claude Code projects with HTML dashboard |
 
 </details>
 

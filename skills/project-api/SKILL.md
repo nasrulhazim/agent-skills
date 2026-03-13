@@ -1,5 +1,5 @@
 ---
-name: api-lifecycle
+name: project-api
 metadata:
   compatible_agents: [claude-code]
   tags: [laravel, php, api, openapi, sanctum, rest]

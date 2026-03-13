@@ -1,5 +1,5 @@
 ---
-name: roadmap-generator
+name: project-roadmap
 metadata:
   compatible_agents: [claude-code]
   tags: [roadmap, project-planning, phases, html, markdown]

@@ -1,5 +1,5 @@
 ---
-name: faq-generator
+name: project-faq
 metadata:
   compatible_agents: [claude-code]
   tags: [faq, documentation, knowledge-base, multi-audience, marketing, developer, devops, support]
