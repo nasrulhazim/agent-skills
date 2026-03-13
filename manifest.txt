@@ -1,8 +1,3 @@
-project-api/SKILL.md
-project-api/references/api-governance-patterns.md
-project-api/references/api-security-checklist.md
-project-api/references/api-test-patterns.md
-project-api/references/openapi-template.md
 ci-cd-pipeline/SKILL.md
 ci-cd-pipeline/references/docker-laravel.md
 ci-cd-pipeline/references/github-actions-templates.md
@@ -21,8 +16,6 @@ design-patterns/references/laravel-patterns.md
 design-patterns/references/pattern-catalog.md
 dev-summary/SKILL.md
 dev-summary/references/git-commands.md
-project-faq/SKILL.md
-project-faq/references/faq-patterns.md
 gh-workflow/SKILL.md
 gh-workflow/references/gh-actions-patterns.md
 gh-workflow/references/gh-api-recipes.md
@@ -59,6 +52,13 @@ php-best-practices/references/code-smells.md
 php-best-practices/references/php82-features.md
 php-best-practices/references/rector-rules.md
 php-best-practices/references/refactoring-catalog.md
+project-api/SKILL.md
+project-api/references/api-governance-patterns.md
+project-api/references/api-security-checklist.md
+project-api/references/api-test-patterns.md
+project-api/references/openapi-template.md
+project-conventions/SKILL.md
+project-conventions/references/claude-md-template.md
 project-ddd/SKILL.md
 project-ddd/references/arch-tests.md
 project-ddd/references/domain-structure.md
@@ -67,6 +67,8 @@ project-docs/SKILL.md
 project-docs/references/badges.md
 project-docs/references/scaffolds.md
 project-docs/references/sdlc-templates.md
+project-faq/SKILL.md
+project-faq/references/faq-patterns.md
 project-inventory/SKILL.md
 project-inventory/references/collect-metrics-template.md
 project-inventory/references/dashboard-template.md
@@ -86,6 +88,9 @@ project-requirements/SKILL.md
 project-requirements/references/proposal-template.md
 project-requirements/references/srs-template.md
 project-requirements/references/user-story-patterns.md
+project-roadmap/SKILL.md
+project-roadmap/references/html-roadmap-patterns.md
+project-roadmap/references/interview-guide.md
 project-sync/SKILL.md
 project-sync/references/detection-markers.md
 project-sync/references/merge-algorithm.md
@@ -95,14 +100,9 @@ repo-research/SKILL.md
 repo-research/references/document-templates.md
 repo-research/references/mermaid-patterns.md
 repo-research/references/saas-analysis-framework.md
-project-roadmap/SKILL.md
-project-roadmap/references/html-roadmap-patterns.md
-project-roadmap/references/interview-guide.md
 sales-planner/SKILL.md
 sales-planner/references/pricing-patterns.md
 sales-planner/references/product-config-template.md
-project-conventions/SKILL.md
-project-conventions/references/claude-md-template.md
 svg-logo-system/SKILL.md
 svg-logo-system/references/preview-gallery-template.md
 svg-logo-system/references/preview-mockup-template.md
