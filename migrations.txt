@@ -1,0 +1,12 @@
+# Skill migrations — old-name:new-name
+# Each line maps a deprecated skill name to its replacement.
+# The installer uses this to detect and remove old skills,
+# notifying the user of the change.
+#
+# Format: old-skill-name:new-skill-name
+# Use "removed" as the new name if the skill was deleted entirely.
+
+api-lifecycle:project-api
+faq-generator:project-faq
+roadmap-generator:project-roadmap
+self-update:project-conventions

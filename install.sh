@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Agent Skills Installer
-# Version: 1.0.0
+# Version: 1.1.0
 # Usage (remote): curl -fsSL https://raw.githubusercontent.com/nasrulhazim/agent-skills/main/install.sh | bash
 # Usage (local):  bash install.sh
 
@@ -10,7 +10,7 @@ set -e
 echo ""
 echo "Agent Skills Installer"
 echo "======================"
-echo "Version: 1.0.0"
+echo "Version: 1.1.0"
 echo ""
 
 # Colors for output
@@ -44,6 +44,44 @@ SKILLS_DIR="$HOME/.claude/skills"
 if [ ! -d "$SKILLS_DIR" ]; then
     echo -e "${YELLOW}Creating $SKILLS_DIR directory...${NC}"
     mkdir -p "$SKILLS_DIR"
+fi
+
+# --- Migrations: detect and remove deprecated skills ---
+load_migrations() {
+    if [ "$INSTALL_MODE" = "local" ]; then
+        cat "$REPO_DIR/migrations.txt" 2>/dev/null
+    else
+        curl -fsSL "$REPO_URL/migrations.txt" 2>/dev/null
+    fi
+}
+
+MIGRATED=0
+MIGRATIONS=$(load_migrations)
+
+if [ -n "$MIGRATIONS" ]; then
+    while IFS= read -r line; do
+        # Skip comments and empty lines
+        [[ "$line" =~ ^#.*$ || -z "$line" ]] && continue
+
+        old_name="${line%%:*}"
+        new_name="${line##*:}"
+
+        if [ -d "$SKILLS_DIR/$old_name" ]; then
+            rm -rf "$SKILLS_DIR/$old_name"
+            MIGRATED=$((MIGRATED + 1))
+            if [ "$new_name" = "removed" ]; then
+                echo -e "  ${YELLOW}↗${NC} ${RED}$old_name${NC} removed (deprecated)"
+            else
+                echo -e "  ${YELLOW}↗${NC} ${RED}$old_name${NC} → ${GREEN}$new_name${NC} (renamed)"
+            fi
+        fi
+    done <<< "$MIGRATIONS"
+
+    if [ $MIGRATED -gt 0 ]; then
+        echo ""
+        echo -e "${YELLOW}$MIGRATED deprecated skill(s) cleaned up.${NC}"
+        echo ""
+    fi
 fi
 
 # Install a single file (local copy or remote curl)
@@ -136,6 +174,19 @@ echo "Installed skills:"
 for skill in "${SKILLS[@]}"; do
     echo "  - $skill"
 done
+if [ $MIGRATED -gt 0 ]; then
+    echo ""
+    echo -e "${YELLOW}⚠  Skill renames detected — update your workflows:${NC}"
+    while IFS= read -r line; do
+        [[ "$line" =~ ^#.*$ || -z "$line" ]] && continue
+        old_name="${line%%:*}"
+        new_name="${line##*:}"
+        if [ "$new_name" != "removed" ]; then
+            echo -e "     /${RED}$old_name${NC} → /${GREEN}$new_name${NC}"
+        fi
+    done <<< "$MIGRATIONS"
+fi
+
 echo ""
 echo "Full README:"
 if [ "$INSTALL_MODE" = "local" ]; then
