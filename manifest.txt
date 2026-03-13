@@ -82,6 +82,11 @@ project-requirements/SKILL.md
 project-requirements/references/proposal-template.md
 project-requirements/references/srs-template.md
 project-requirements/references/user-story-patterns.md
+project-sync/SKILL.md
+project-sync/references/detection-markers.md
+project-sync/references/merge-algorithm.md
+project-sync/references/registry-schema.md
+project-sync/references/section-classification.md
 repo-research/SKILL.md
 repo-research/references/document-templates.md
 repo-research/references/mermaid-patterns.md
