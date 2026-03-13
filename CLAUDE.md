@@ -35,6 +35,8 @@ skills/
 - Frontmatter field order: `name`, `metadata` (with `compatible_agents`, `tags`), `description`
 - Reference file naming: kebab-case, descriptive (e.g., `pest-patterns.md`, `api-security-checklist.md`)
 - Skill naming: kebab-case, action-oriented where possible (e.g., `pest-testing`, not `pest`)
+- Skill grouping: related skills share a prefix (e.g., all project management skills use `project-` prefix)
+- Skill renames: always add old→new mapping to `migrations.txt` so the installer cleans up deprecated skills
 - Command format in skills: `/command subcommand` (e.g., `/test generate`, `/quality check`)
 - Git tags: bare semver without `v` prefix (`1.0.0`, not `v1.0.0`)
 - Package development:
@@ -45,6 +47,12 @@ skills/
   - PHP: `^8.4` minimum
   - Laravel: always latest version (`^12.0`)
 
+## DO / DON'T (continued)
+
+- ✅ DO update `migrations.txt` when renaming or removing a skill
+- ✅ DO update `manifest.txt` and `README.md` when adding, renaming, or removing skills
+- ❌ DON'T rename a skill without adding migration entry — users will have stale copies in `~/.claude/skills/`
+
 ## Gotchas
 
 > **Gotcha:** The `description` field in frontmatter must use `>` for multiline YAML folded scalar.
@@ -52,3 +60,7 @@ skills/
 
 > **Gotcha:** Reference files are read relative to the skill directory, not the project root.
 > Always use paths like `references/template.md` in SKILL.md, not absolute or root-relative paths.
+
+> **Gotcha:** When renaming a skill directory, you must update 4 places: the directory name,
+> `name:` in SKILL.md frontmatter, `manifest.txt`, and `migrations.txt`. Missing any one
+> will cause install failures or stale skill copies on user machines.

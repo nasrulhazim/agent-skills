@@ -23,12 +23,13 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 </details>
 
 <details>
-<summary><strong>Project Management</strong> (8 skills)</summary>
+<summary><strong>Project Management</strong> (9 skills)</summary>
 
 | Skill | Description |
 |---|---|
 | [project-api](skills/project-api/) | Full API lifecycle — design through governance |
 | [project-conventions](skills/project-conventions/) | Auto-update CLAUDE.md with corrections, preferences, and gotchas |
+| [project-ddd](skills/project-ddd/) | Pragmatic DDD — domain discovery, migration planning, and boundary enforcement |
 | [project-docs](skills/project-docs/) | Full SDLC documentation toolchain |
 | [project-faq](skills/project-faq/) | Multi-audience FAQ generator by stakeholder persona |
 | [project-inventory](skills/project-inventory/) | Discover and inventory all Claude Code projects with HTML dashboard |

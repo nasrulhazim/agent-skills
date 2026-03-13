@@ -59,6 +59,10 @@ php-best-practices/references/code-smells.md
 php-best-practices/references/php82-features.md
 php-best-practices/references/rector-rules.md
 php-best-practices/references/refactoring-catalog.md
+project-ddd/SKILL.md
+project-ddd/references/arch-tests.md
+project-ddd/references/domain-structure.md
+project-ddd/references/migration-checklist.md
 project-docs/SKILL.md
 project-docs/references/badges.md
 project-docs/references/scaffolds.md
