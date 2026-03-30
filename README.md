@@ -63,10 +63,11 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 </details>
 
 <details>
-<summary><strong>Business & Design</strong> (4 skills)</summary>
+<summary><strong>Business & Design</strong> (5 skills)</summary>
 
 | Skill | Description |
 |---|---|
+| [business-card](skills/business-card/) | SVG business card designer with print-ready export |
 | [sales-planner](skills/sales-planner/) | Pricing, quotations, marketing copy, and financial planning |
 | [svg-logo-system](skills/svg-logo-system/) | SVG logo system design with multi-platform export |
 | [logo-designer](skills/logo-designer/) | Professional SVG logo designer with granular category and style control |

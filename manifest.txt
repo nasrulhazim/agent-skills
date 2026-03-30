@@ -1,3 +1,7 @@
+business-card/SKILL.md
+business-card/references/card-design-patterns.md
+business-card/references/card-gallery-template.md
+business-card/references/card-showcase-template.md
 ci-cd-pipeline/SKILL.md
 ci-cd-pipeline/references/docker-laravel.md
 ci-cd-pipeline/references/github-actions-templates.md
