@@ -107,6 +107,12 @@ repo-research/references/saas-analysis-framework.md
 sales-planner/SKILL.md
 sales-planner/references/pricing-patterns.md
 sales-planner/references/product-config-template.md
+soc-analyst/SKILL.md
+soc-analyst/references/hardening-checklist.md
+soc-analyst/references/incident-report-templates.md
+soc-analyst/references/mitre-attack-mapping.md
+soc-analyst/references/remediation-playbooks.md
+soc-analyst/references/vulnerability-patterns.md
 svg-logo-system/SKILL.md
 svg-logo-system/references/preview-gallery-template.md
 svg-logo-system/references/preview-mockup-template.md

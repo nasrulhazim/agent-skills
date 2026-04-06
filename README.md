@@ -40,7 +40,7 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 </details>
 
 <details>
-<summary><strong>Deployment & Ops</strong> (5 skills)</summary>
+<summary><strong>Deployment & Ops</strong> (6 skills)</summary>
 
 | Skill | Description |
 |---|---|
@@ -49,6 +49,7 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 | [gh-workflow](skills/gh-workflow/) | GitHub CLI automation — issues, PRs, Projects, Actions debugging |
 | [package-dev](skills/package-dev/) | Laravel package scaffolding, testing, and release |
 | [log-monitor](skills/log-monitor/) | Production log analysis, error triage, and GitHub issue creation |
+| [soc-analyst](skills/soc-analyst/) | Senior SOC analyst — security triage, investigation, remediation, and hardening |
 
 </details>
 
