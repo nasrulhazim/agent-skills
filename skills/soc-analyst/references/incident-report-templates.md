@@ -15,8 +15,7 @@ Use this after running `/soc triage` or `/soc harden` to document a full securit
 **Audited By:** SOC Analyst (Claude Code)
 **Date:** [YYYY-MM-DD]
 **Scope:** [Full application / Specific module / API only]
-**Laravel Version:** [Version]
-**PHP Version:** [Version]
+**Stack:** [Detected stack and version — e.g., Laravel 12 / PHP 8.4, Express 5 / Node 22, Django 5.1 / Python 3.12]
 
 ---
 
@@ -61,14 +60,14 @@ Use this after running `/soc triage` or `/soc harden` to document a full securit
 [What an attacker could achieve by exploiting this.]
 
 **Evidence:**
-```php
-// Vulnerable code
+```
+// Vulnerable code (use the project's language)
 [code snippet]
 ```
 
 **Remediation:**
-```php
-// Fixed code
+```
+// Fixed code (use the project's language)
 [code snippet]
 ```
 
@@ -334,8 +333,8 @@ Use this for detailed documentation of a single vulnerability.
 
 ## Affected Code
 
-```php
-// Vulnerable code at [file:line]
+```
+// Vulnerable code at [file:line] (use the project's language)
 [code snippet]
 ```
 
@@ -343,8 +342,8 @@ Use this for detailed documentation of a single vulnerability.
 
 ## Fix
 
-```php
-// Remediated code
+```
+// Remediated code (use the project's language)
 [code snippet]
 ```
 
@@ -359,9 +358,9 @@ Use this for detailed documentation of a single vulnerability.
 1. [How to verify the fix works — test command or manual check]
 2. [Regression test added — file path and description]
 
-**Pest Test:**
-```php
-[Test code that prevents regression]
+**Regression Test:**
+```
+[Test code using the project's test framework — Pest, Jest, pytest, RSpec, etc.]
 ```
 
 ---
