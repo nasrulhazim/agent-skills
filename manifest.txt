@@ -32,6 +32,11 @@ git-workflow/SKILL.md
 git-workflow/references/branch-strategies.md
 git-workflow/references/conventional-commits.md
 git-workflow/references/hooks-and-templates.md
+kickoff-patch/SKILL.md
+kickoff-patch/references/detect-and-version.md
+kickoff-patch/references/merge-and-apply.md
+kickoff-patch/references/patch-map.md
+kickoff-patch/references/source-of-truth.md
 livewire-flux/SKILL.md
 livewire-flux/references/flux-components.md
 livewire-flux/references/livewire4-patterns.md

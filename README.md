@@ -9,11 +9,12 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 ## Skills Directory
 
 <details open>
-<summary><strong>Development & Quality</strong> (6 skills)</summary>
+<summary><strong>Development & Quality</strong> (7 skills)</summary>
 
 | Skill | Description |
 |---|---|
 | [project-laravel](skills/project-laravel/) | Kickoff Laravel conventions enforcer and code scaffolder |
+| [kickoff-patch](skills/kickoff-patch/) | Patch a Kickoff-based project to the latest Kickoff baseline via category-grouped 3-way merge |
 | [pest-testing](skills/pest-testing/) | Pest PHP test generator with Livewire, arch testing, and factory patterns |
 | [code-quality](skills/code-quality/) | PHPStan + Pint + Rector workflow automation |
 | [php-best-practices](skills/php-best-practices/) | PHP 8.2+ modernization, refactoring, and code review |
