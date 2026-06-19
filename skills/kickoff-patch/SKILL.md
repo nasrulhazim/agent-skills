@@ -151,9 +151,11 @@ backed by a reference file — **read the reference before executing that step**
    or `resources/css/**` changed (stale bundle → `$store.sidebar undefined` etc.);
    (d) **quality gate** — `composer format` / `analyse` / `test`. **Run the test suite** —
    it's the gap detector: applied stubs (views/components/routes) routinely depend on
-   project-owned code the merge skipped (model scopes/methods, route `auth` guards, a
-   middleware registration in `bootstrap/app.php`, an edition predicate), so red tests
-   pinpoint the missing pieces to port (see §7d's symptom→cause table). Suggest a commit
+   project-owned code **and imperative state** the merge skipped (model scopes/methods,
+   route `auth` guards, a middleware registration in `bootstrap/app.php`, an edition
+   predicate, **a composer package behind a menu item that §6 never `require`d, an
+   unseeded permission, a runtime `.env` key**), so red tests **and a silently-hidden
+   menu item** pinpoint the missing pieces (see §7d's symptom→cause table). Suggest a commit
    message but **do not commit unless asked**. Defer CLAUDE.md / convention drift to **`project-sync`**.
 
 ---

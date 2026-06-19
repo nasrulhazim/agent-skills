@@ -330,6 +330,12 @@ Current-as-of-1.24.0 anchors (verify live):
 Only apply the **diff** (packages/tags/cmds **new since** `$BASE_TAG`), not the whole
 list — the project already has everything from its baseline.
 
+After requiring, **verify each new package actually landed** — `composer show <pkg>` and
+confirm its route/menu item resolves in `route:list`. A skipped or failed `composer require`
+(or a stub that only ships the package's *config/menu/permission*) leaves the feature dead:
+the menu item is silently hidden by its `Route::has()` guard and nothing errors. This is the
+**single most common "patch looked clean but the feature is missing"** bug — see §7d.
+
 ---
 
 ## 7. Verify & hand off
@@ -402,10 +408,15 @@ tests that encode the expected behaviour) and read failures by signature:
 | Guest gets **403** instead of a **302** login redirect; suspended user not logged out | a new stub route lacks `auth`/`verified`, or a stub middleware (`EnsureUserIsNotSuspended`) isn't registered in `bootstrap/app.php` | mirror the stub's `routes/web/*.php` guards + `bootstrap/app.php` `appendToGroup('web', …)` |
 | `ERR_TOO_MANY_REDIRECTS` on `/telescope` | a project-owned route self-redirects (`Route::redirect('/telescope', config('telescope.path'))` — source path === target) | remove it; Telescope/Horizon serve their own named dashboards — guard the menu with `Route::has()` |
 | SaaS-only screen visible on the on-prem edition | a menu item gated only by permission, not edition | add an edition predicate (`Edition::isSaas()`) to its visibility |
+| A new menu item is **silently hidden** / its vendor route 404s (e.g. Artisan Runner) | the stub menu/config/gate/permission applied, but the **backing composer package was never installed** — file copies don't run `composer require`. The `Route::has()` guard hides the dead item, so nothing errors loudly | run §6 for that package: `composer require <pkg>` → `vendor:publish --tag=<pkg>-config/-migrations` → `php artisan migrate` (e.g. artisan-runner's `command_logs`). **Verify**: `composer show <pkg>` + the route appears in `route:list` |
+| A gate that maps to a permission **denies** even for superadmin; the menu item stays hidden | the patch applied the new permission to `config/access-control.php` (a file) but the permission row was **never seeded** into the DB, so `$user->can(...)` is false | re-run the permission sync — `php artisan db:seed --class=AccessControlSeeder` (or the project's sync cmd) + `php artisan permission:cache-reset` |
+| A feature toggled by `env('X_ENABLED', false)` is **off** after patch though its stub config shipped (e.g. Telescope `/telescope` 404) | the patch updates `.env.example` but **never the runtime `.env`**; the project's/platform's `.env` lacks the new key, so the `false` default wins | surface the new `.env.example` keys **loudly** for the user to set; for must-register-by-default features (a dashboard route) prefer a robust config default (`env('X_ENABLED', true)`, opt-out) over `false` |
 
-The recurring lesson: **diff the applied stubs against the project-owned code they reference.**
-For each applied stub view/component/route, check the model methods, route middleware,
-middleware registration, and gates it assumes — and port the missing project-owned pieces.
+The recurring lesson: **diff the applied stubs against the project-owned code AND the imperative
+state they depend on** — model members, route middleware, middleware registration, gates,
+**installed composer packages (§6), seeded permissions, and runtime `.env` keys**. A clean
+file merge can still leave a feature dead because a non-file dependency (a package, a seed row,
+an env key) was never applied.
 
 ### 7e. Quality gate
 
