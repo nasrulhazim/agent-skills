@@ -142,9 +142,19 @@ backed by a reference file — **read the reference before executing that step**
 
 7. **Stamp + verify + hand off** → `references/detect-and-version.md` §5 + `references/merge-and-apply.md` §7
    Write the new version stamp (`.kickoff-version` + `composer.json` `extra.kickoff`) so
-   the next run is deterministic. Run the project's quality gate if present
-   (`composer format` / `analyse` / `test`). Suggest a commit message but **do not commit
-   unless asked**. Defer CLAUDE.md / convention drift to the **`project-sync`** skill.
+   the next run is deterministic. **Verify in four layers** (`merge-and-apply.md` §7):
+   (a) **boot smoke-test** — `config:clear` + `artisan about` + `view:cache` (catches a
+   merged file referencing a package API the installed version lacks, e.g.
+   `Features::passkeys()`); (b) **run pending migrations** — the patch ships migration
+   *files* but doesn't run them; `migrate:status` then `migrate`, else a patched page over
+   an un-migrated table 500s; (c) **rebuild assets** — `npm run build` when `resources/js/**`
+   or `resources/css/**` changed (stale bundle → `$store.sidebar undefined` etc.);
+   (d) **quality gate** — `composer format` / `analyse` / `test`. **Run the test suite** —
+   it's the gap detector: applied stubs (views/components/routes) routinely depend on
+   project-owned code the merge skipped (model scopes/methods, route `auth` guards, a
+   middleware registration in `bootstrap/app.php`, an edition predicate), so red tests
+   pinpoint the missing pieces to port (see §7d's symptom→cause table). Suggest a commit
+   message but **do not commit unless asked**. Defer CLAUDE.md / convention drift to **`project-sync`**.
 
 ---
 

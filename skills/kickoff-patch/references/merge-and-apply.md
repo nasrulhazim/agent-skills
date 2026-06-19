@@ -334,8 +334,83 @@ list — the project already has everything from its baseline.
 
 ## 7. Verify & hand off
 
-After applying, run the project's own quality gate **if present** (these are the
-composer scripts StartCommand writes — see `setupComposer()`):
+Verify in **four layers** — **boot, migrations, assets, quality gate** — before handing off.
+Every layer comes from a real patch failure: a config calling a method the installed package
+lacked; an un-run migration behind a patched page; a sidebar referencing an un-rebuilt JS
+store; and — the most common by far — a **stub that depends on project-owned code the merge
+correctly skipped** (§7d). Run the project's **test suite** as part of the gate: the patch
+ships tests that encode the expected behaviour, so a red suite *is* the gap detector.
+
+### 7a. Boot smoke-test (catches fatals a clean merge can still introduce)
+
+A clean 3-way merge can pull in code that references an API the project's installed package
+version lacks (e.g. `config/fortify.php` calling `Features::passkeys()` on an older Fortify).
+Boot the framework to surface it **before** handing off:
+
+```sh
+php artisan config:clear
+php artisan about                                   # or --version; a fatal here = a merged file is broken
+php artisan view:cache && php artisan view:clear    # if any resources/views/** changed — compiles every Blade
+php artisan route:list >/dev/null                   # routes still resolve
+```
+If a fatal points at a merged config/file referencing a missing method/class, the project's
+package is older than the new stub expects — disable that feature or bump the package, and say so.
+
+### 7b. Run pending migrations (the patch ships migration files but doesn't run them)
+
+New baseline migrations arrive as **files** (e.g. `*_add_suspended_at_to_users_table`,
+`*_add_uuid_to_audits_table`, a Spatie `database/settings/*` migration) — copying the file
+does **not** create the column. A patched view/component that reads the new column then 500s
+at runtime even though the merge looks clean. After applying, surface and run them:
+
+```sh
+php artisan migrate:status | grep -i pending     # list what the patch introduced
+php artisan migrate                              # confirm first; additive nullable columns are safe
+```
+Run them — or, if the user declines, **say loudly** which are pending. A patched page over an
+un-migrated table is the single most common post-patch 500.
+
+### 7c. Rebuild front-end assets (when JS/CSS changed)
+
+If the patch touched `resources/js/**`, `resources/css/**`, `tailwind.config.js`, or
+`package.json`, the **source** is updated but the **compiled bundle is stale** — the change
+is invisible at runtime until rebuilt (e.g. a new `Alpine.store('sidebar')` or collapsible
+sidebar CSS won't apply, throwing `$store.sidebar undefined`). Rebuild:
+
+```sh
+[ -n "$(git -C "$PROJECT" diff --name-only HEAD -- package.json)" ] && (cd "$PROJECT" && npm install)
+(cd "$PROJECT" && npm run build)    # recompiles resources/js + resources/css into public/build
+```
+`public/build/` is usually git-ignored (rebuilt at deploy), so this is a local verify step —
+but skipping it makes JS/CSS patches look applied while the browser still serves the old bundle.
+
+### 7d. Stub ↔ project-owned dependency gaps (the #1 source of post-patch 500s)
+
+The merge applies **stub files** (views, Livewire components, routes, blade) but **never
+touches PROJECT-OWNED code** — models (`app/Models`), the middleware kernel
+(`bootstrap/app.php`), route guards, service providers, gates. A new stub view/component
+routinely **depends on** project-owned code the project doesn't have yet: it compiles fine
+but breaks at runtime. The fix is almost always **additive** — port the missing member from
+the matching stub model/provider/route. Run the project's **test suite** (the patch ships
+tests that encode the expected behaviour) and read failures by signature:
+
+| Runtime symptom | Real cause | Fix |
+|---|---|---|
+| `Call to undefined method App\Models\X::scope()/method()` | a stub view/component calls a model scope/method (`User::active()`, `suspend()`, `status()`) the project model lacks | copy the methods from `$KICKOFF/stubs/app/Models/X.php` into the project model |
+| `Class name must be a valid object or a string` (HasRelationships) | model relationship/guard mismatch — e.g. spatie `Role::withCount('users')` under the `sanctum` default guard with no pin | port the stub model's `__construct` guard pin (`$attributes['guard_name'] ??= 'web'`) + members like `isProtected()` |
+| `Flux component [icon.X] does not exist` | a merged menu/view uses an unpublished Flux icon | `php artisan flux:icon X …` (or ship the icon blade in `resources/views/flux/icon`) |
+| Guest gets **403** instead of a **302** login redirect; suspended user not logged out | a new stub route lacks `auth`/`verified`, or a stub middleware (`EnsureUserIsNotSuspended`) isn't registered in `bootstrap/app.php` | mirror the stub's `routes/web/*.php` guards + `bootstrap/app.php` `appendToGroup('web', …)` |
+| `ERR_TOO_MANY_REDIRECTS` on `/telescope` | a project-owned route self-redirects (`Route::redirect('/telescope', config('telescope.path'))` — source path === target) | remove it; Telescope/Horizon serve their own named dashboards — guard the menu with `Route::has()` |
+| SaaS-only screen visible on the on-prem edition | a menu item gated only by permission, not edition | add an edition predicate (`Edition::isSaas()`) to its visibility |
+
+The recurring lesson: **diff the applied stubs against the project-owned code they reference.**
+For each applied stub view/component/route, check the model methods, route middleware,
+middleware registration, and gates it assumes — and port the missing project-owned pieces.
+
+### 7e. Quality gate
+
+Run the project's own quality gate **if present** (the composer scripts StartCommand writes —
+see `setupComposer()`):
 
 ```sh
 composer format   2>/dev/null || vendor/bin/pint
@@ -343,7 +418,7 @@ composer analyse  2>/dev/null || vendor/bin/phpstan analyse
 composer test     2>/dev/null || vendor/bin/pest
 ```
 
-Report results; if the gate fails, the merged code likely needs a fix-up — surface it,
+Report results; if any layer fails, the merged code needs a fix-up — surface it,
 don't silently leave a broken tree.
 
 Finally:
