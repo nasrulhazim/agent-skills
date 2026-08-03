@@ -1,0 +1,26 @@
+# Changelog
+
+All notable changes to this project are documented in this file.
+The format follows [Keep a Changelog](https://keepachangelog.com) and this project adheres to [Semantic Versioning](https://semver.org).
+
+## [2.0.0] - 2026-08-03
+
+### Changed
+
+- **BREAKING**: Repository renamed from `nasrulhazim/agent-skills` to `nasrulhazim/claude` — old URLs redirect, but update your clones: `git remote set-url origin https://github.com/nasrulhazim/claude.git`
+- **BREAKING**: `manifest.txt` entries are now type-prefixed (`skills/…`, `agents/…`, `commands/…`); `install.sh` older than 2.0.0 cannot parse the new manifest (remote installs always fetch the latest installer — stale local clones must `git pull` first)
+- `install.sh` rewritten as the Claude Toolkit Installer v2.0.0: installs skills, agents and commands to `~/.claude/{skills,agents,commands}`
+- `migrations.txt` format extended with type-prefixed entries (`agents/old:agents/new`); legacy `old:new` skill entries still supported
+- `generate-manifest.sh` now scans `skills/`, `agents/` and `commands/`
+
+### Added
+
+- `agents/` — 13 role agents: brand-designer, business-analyst, code-reviewer, courseware-developer, devops-engineer, fleet-auditor, package-maintainer, qa-engineer, security-analyst, support-analyst, tech-writer, ui-designer, upgrade-specialist
+- `commands/` — 10 slash commands: analyze-repo, design-logo, docs, sales, sales-create-config, sales-get-marketing, sales-get-pricing, sales-get-quotation, upgrade-laravel, upgrade-livewire
+- `.claude-plugin/` plugin + marketplace manifests — install via `/plugin marketplace add nasrulhazim/claude` then `/plugin install claude-toolkit@claude`
+- `install.sh` flags: `--dry-run` and `--only <name>`
+- This CHANGELOG
+
+## [1.19.0] and earlier
+
+See [GitHub releases](https://github.com/nasrulhazim/claude/releases) for the `agent-skills`-era history (1.0.0 – 1.19.0, skills only).

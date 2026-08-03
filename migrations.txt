@@ -1,10 +1,14 @@
-# Skill migrations — old-name:new-name
-# Each line maps a deprecated skill name to its replacement.
-# The installer uses this to detect and remove old skills,
+# Migrations — old:new
+# Each line maps a deprecated skill, agent or command to its replacement.
+# The installer uses this to detect and remove old entries,
 # notifying the user of the change.
 #
-# Format: old-skill-name:new-skill-name
-# Use "removed" as the new name if the skill was deleted entirely.
+# Formats:
+#   old-skill-name:new-skill-name          (legacy — skills only)
+#   skills/old-name:skills/new-name        (type-prefixed)
+#   agents/old-name:agents/new-name        (agents/commands omit .md)
+#   commands/old-name:commands/new-name
+# Use "removed" as the new name if the entry was deleted entirely.
 
 api-lifecycle:project-api
 faq-generator:project-faq

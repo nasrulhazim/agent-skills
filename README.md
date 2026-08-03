@@ -1,10 +1,13 @@
-# Agent Skills
+# Claude Toolkit
 
-[![Latest Version](https://img.shields.io/github/v/release/nasrulhazim/agent-skills?style=flat-square)](https://github.com/nasrulhazim/agent-skills/releases)
-[![License](https://img.shields.io/github/license/nasrulhazim/agent-skills?style=flat-square)](LICENSE)
+[![Latest Version](https://img.shields.io/github/v/release/nasrulhazim/claude?style=flat-square)](https://github.com/nasrulhazim/claude/releases)
+[![License](https://img.shields.io/github/license/nasrulhazim/claude?style=flat-square)](LICENSE)
 
-A collection of Claude Code skills for Laravel developers, solo founders, and package authors —
-targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
+A complete Claude Code toolkit — **skills**, **agents** and **commands** — for Laravel developers, solo founders, and package authors. Skills target the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
+
+- **Skills** carry knowledge and method — loaded on demand by trigger phrases or `/name`.
+- **Agents** are role personas (code reviewer, QA engineer, DevOps engineer, …) that load the matching skills as their playbook and can be delegated to or fanned out in parallel.
+- **Commands** are workflow entry points invoked as slash commands.
 
 ## Skills Directory
 
@@ -77,33 +80,92 @@ targeting the [Laravel Cloud Skills](https://skills.laravel.cloud) ecosystem.
 
 </details>
 
+## Agents Directory
+
+13 role agents — thin personas that load the skills above as their playbook. Reviewer, auditor and security roles are restricted to read-only tools.
+
+| Agent | Role |
+|---|---|
+| [code-reviewer](agents/code-reviewer.md) | Read-only Laravel code review — Kickoff conventions, patterns, security, test gaps |
+| [qa-engineer](agents/qa-engineer.md) | Writes and repairs Pest tests until green; coverage and arch tests |
+| [package-maintainer](agents/package-maintainer.md) | Package scaffolding, dependency bumps, Testbench, releases — parallel-safe |
+| [devops-engineer](agents/devops-engineer.md) | CI/CD, Docker, deployments, GitHub administration, release automation |
+| [upgrade-specialist](agents/upgrade-specialist.md) | Laravel/Livewire/PHP upgrades and Kickoff baseline patching |
+| [tech-writer](agents/tech-writer.md) | SDLC docs, roadmaps, FAQs, release notes, READMEs |
+| [business-analyst](agents/business-analyst.md) | SRS, user stories, wireframes, proposals (BM/EN), pricing |
+| [brand-designer](agents/brand-designer.md) | SVG logo systems, wordmarks, business cards, brand assets |
+| [ui-designer](agents/ui-designer.md) | UI/UX design and Livewire+Flux implementation, accessibility audits |
+| [support-analyst](agents/support-analyst.md) | Ticket triage with SLA awareness, production log analysis |
+| [security-analyst](agents/security-analyst.md) | Defensive security audits, dependency advisories, incident investigation |
+| [fleet-auditor](agents/fleet-auditor.md) | Read-only sweeps across many repos — drift, inventory, statistics |
+| [courseware-developer](agents/courseware-developer.md) | Interactive HTML courseware and training decks |
+
+## Commands Directory
+
+| Command | Purpose |
+|---|---|
+| [/analyze-repo](commands/analyze-repo.md) | Repository analysis assistant |
+| [/design-logo](commands/design-logo.md) | Design an SVG logo system |
+| [/docs](commands/docs.md) | Documentation management |
+| [/sales](commands/sales.md) | All-in-one sales — config, pricing, marketing, quotation |
+| [/sales-create-config](commands/sales-create-config.md) | Create a product-config.md interactively |
+| [/sales-get-marketing](commands/sales-get-marketing.md) | Marketing copy — taglines, pitches, social posts |
+| [/sales-get-pricing](commands/sales-get-pricing.md) | Pricing by scenario |
+| [/sales-get-quotation](commands/sales-get-quotation.md) | Generate a quotation |
+| [/upgrade-laravel](commands/upgrade-laravel.md) | Laravel 12 → 13 upgrade assistant |
+| [/upgrade-livewire](commands/upgrade-livewire.md) | Livewire 3 → 4 upgrade assistant |
+
 ## Installation
 
 <details open>
-<summary><strong>Quick Install (all skills)</strong></summary>
+<summary><strong>Quick Install (everything)</strong></summary>
 
 ```bash
-# Remote — install all skills via curl
-curl -fsSL https://raw.githubusercontent.com/nasrulhazim/agent-skills/main/install.sh | bash
+# Remote — install all skills, agents and commands via curl
+curl -fsSL https://raw.githubusercontent.com/nasrulhazim/claude/main/install.sh | bash
 ```
 
 ```bash
 # Local — clone and install
-git clone https://github.com/nasrulhazim/agent-skills.git
-cd agent-skills
+git clone https://github.com/nasrulhazim/claude.git
+cd claude
 bash install.sh
 ```
 
-Skills are installed to `~/.claude/skills/` and available globally in Claude Code.
+Content is installed to `~/.claude/skills/`, `~/.claude/agents/` and `~/.claude/commands/` and available globally in Claude Code.
+
+Useful flags:
+
+```bash
+bash install.sh --dry-run              # preview without writing
+bash install.sh --only pest-testing   # install a single skill, agent or command
+```
 
 </details>
 
 <details>
-<summary><strong>Manual Install (single skill)</strong></summary>
+<summary><strong>Plugin Marketplace</strong></summary>
+
+```bash
+# In Claude Code
+/plugin marketplace add nasrulhazim/claude
+/plugin install claude-toolkit@claude
+```
+
+Use either the installer **or** the plugin — installing both duplicates the content in your setup.
+
+</details>
+
+<details>
+<summary><strong>Manual Install (single item)</strong></summary>
 
 ```bash
 # Copy a skill directory into your project's .claude/skills/ folder
 cp -r skills/pest-testing /path/to/your-project/.claude/skills/
+
+# Or a single agent / command
+cp agents/code-reviewer.md /path/to/your-project/.claude/agents/
+cp commands/docs.md /path/to/your-project/.claude/commands/
 ```
 
 </details>
@@ -137,16 +199,20 @@ Many skills assume the [Kickoff.my](https://kickoff.my) bootstrap stack:
 Skills build on top of this baseline rather than re-scaffolding what Kickoff already provides.
 
 <details>
-<summary><strong>Skill Structure</strong></summary>
-
-Each skill follows this structure:
+<summary><strong>Repository Structure</strong></summary>
 
 ```text
-skills/[skill-name]/
-├── SKILL.md              # Skill definition (YAML frontmatter + instructions)
-└── references/           # Reference files (templates, patterns, examples)
-    ├── template-a.md
-    └── patterns-b.md
+claude/
+├── .claude-plugin/       # Plugin + marketplace manifests
+├── skills/[skill-name]/
+│   ├── SKILL.md          # Skill definition (YAML frontmatter + instructions)
+│   └── references/       # Reference files (templates, patterns, examples)
+├── agents/[agent-name].md      # Role agent definitions
+├── commands/[command-name].md  # Slash command definitions
+├── install.sh            # Installer (remote or local mode)
+├── generate-manifest.sh  # Regenerates manifest.txt
+├── manifest.txt          # Type-prefixed file list for remote installs
+└── migrations.txt        # Rename/removal mappings applied by the installer
 ```
 
 ### SKILL.md Frontmatter
@@ -162,15 +228,28 @@ description: >
 ---
 ```
 
+### Agent Frontmatter
+
+```yaml
+---
+name: agent-name
+color: orange              # semantic: red=security, orange=quality, green=build/ship,
+                           # pink=docs/business, blue=design, cyan=audit, yellow=support
+description: Use this agent when...   # third-person, trigger-oriented
+tools: Read, Grep, Glob, Bash, Skill  # optional allowlist; omit for all tools
+---
+```
+
 </details>
 
 <details>
 <summary><strong>Contributing</strong></summary>
 
-1. Follow the existing skill structure and frontmatter format
-2. Include `metadata` with `compatible_agents` and `tags` in frontmatter
-3. Add reference files for templates and patterns
+1. Follow the existing structure and frontmatter format for each content type
+2. Skills: include `metadata` with `compatible_agents` and `tags`; add reference files for templates and patterns
+3. Agents: thin role personas (25–75 lines) that load skills — no duplicated skill content
 4. Include trigger phrases in both English and Bahasa Malaysia where appropriate
+5. Run `bash generate-manifest.sh` before committing; record renames in `migrations.txt`
 
 </details>
 

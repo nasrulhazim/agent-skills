@@ -14,13 +14,13 @@ they are available in every project.
 # Remote
 curl -fsSL \
   https://raw.githubusercontent.com/\
-nasrulhazim/agent-skills/main/install.sh \
+nasrulhazim/claude/main/install.sh \
   | bash
 
 # Local clone
 git clone \
-  https://github.com/nasrulhazim/agent-skills.git
-cd agent-skills
+  https://github.com/nasrulhazim/claude.git
+cd claude
 bash install.sh
 ```
 
@@ -41,7 +41,7 @@ same name.
 Re-run the installer to update all skills:
 
 ```bash
-cd agent-skills
+cd claude
 git pull
 bash install.sh
 ```

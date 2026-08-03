@@ -10,8 +10,8 @@
 
 ```bash
 git clone \
-  https://github.com/nasrulhazim/agent-skills.git
-cd agent-skills
+  https://github.com/nasrulhazim/claude.git
+cd claude
 bash install.sh
 ```
 
@@ -22,7 +22,7 @@ available globally in Claude Code.
 
 ```bash
 curl -fsSL \
-  https://raw.githubusercontent.com/nasrulhazim/agent-skills/main/install.sh \
+  https://raw.githubusercontent.com/nasrulhazim/claude/main/install.sh \
   | bash
 ```
 
@@ -36,7 +36,7 @@ cp -r skills/pest-testing \
 ## Project Layout
 
 ```text
-agent-skills/
+claude/
 ├── CLAUDE.md           ← Project conventions
 ├── README.md           ← Public-facing directory
 ├── install.sh          ← Installer script

@@ -29,6 +29,29 @@ description: >
 
 4. Update the root `README.md` skills directory table.
 
+## Creating a New Agent
+
+1. Create `agents/my-agent.md` — role-titled, kebab-case (e.g. `code-reviewer`, `qa-engineer`):
+
+```yaml
+---
+name: my-agent
+color: orange          # red=security, orange=quality, green=build/ship,
+                       # pink=docs/business, blue=design, cyan=audit, yellow=support
+description: Use this agent when...   # third person, trigger-oriented
+tools: Read, Grep, Glob, Bash, Skill  # optional — restrict read-only roles; omit for all tools
+---
+```
+
+1. Keep the body thin (25–75 lines): role persona, which skills to load first, how to work, rules. Knowledge lives in skills — never duplicate it into the agent.
+
+2. Run `bash generate-manifest.sh` and update the root `README.md` agents table.
+
+## Creating a New Command
+
+1. Create `commands/my-command.md` (subdirectories namespace: `commands/data/analyze.md` → `/data/analyze`). Frontmatter is optional.
+2. Run `bash generate-manifest.sh` and update the root `README.md` commands table.
+
 ## Modifying an Existing Skill
 
 1. Edit `skills/[name]/SKILL.md` for instruction changes.

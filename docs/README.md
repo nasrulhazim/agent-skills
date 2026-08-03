@@ -1,7 +1,7 @@
 # Agent Skills Documentation
 
-[![Latest Version](https://img.shields.io/github/v/release/nasrulhazim/agent-skills?style=flat-square)](https://github.com/nasrulhazim/agent-skills/releases)
-[![License](https://img.shields.io/github/license/nasrulhazim/agent-skills?style=flat-square)](LICENSE)
+[![Latest Version](https://img.shields.io/github/v/release/nasrulhazim/claude?style=flat-square)](https://github.com/nasrulhazim/claude/releases)
+[![License](https://img.shields.io/github/license/nasrulhazim/claude?style=flat-square)](LICENSE)
 
 Documentation for the Agent Skills collection — Claude Code skills for Laravel developers,
 solo founders, and package authors.

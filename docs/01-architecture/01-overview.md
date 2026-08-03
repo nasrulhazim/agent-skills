@@ -2,34 +2,41 @@
 
 ## Purpose
 
-Agent Skills provides a collection of reusable Claude
-Code skill definitions for Laravel developers. Each
-skill is a self-contained prompt with supporting
-reference material.
+Claude Toolkit provides reusable Claude Code content —
+skills, agents and commands — for Laravel developers.
+Skills carry knowledge, agents carry roles, commands
+carry workflows; agents load skills as their playbook.
 
 ## Design Principles
 
 - **Self-contained** — each skill directory has
   everything it needs
-- **Prompt-based** — skills are markdown instructions,
+- **Prompt-based** — content is markdown instructions,
   not executable code
 - **Convention over configuration** — consistent
-  structure across all skills
+  structure across all content types
 - **Bilingual** — trigger phrases in English and
   Bahasa Malaysia
+- **Thin agents** — role personas (25–75 lines) that
+  load skills; knowledge is never duplicated into agents
 
 ## Project Structure
 
 ```text
-agent-skills/
+claude/
 ├── CLAUDE.md               ← Project conventions
-├── README.md               ← Skills directory
-├── install.sh              ← Global installer
+├── README.md               ← Content directory
+├── install.sh              ← Global installer (skills, agents, commands)
+├── .claude-plugin/         ← Plugin + marketplace manifests
 ├── docs/                   ← SDLC documentation
-└── skills/
-    └── [skill-name]/
-        ├── SKILL.md        ← Frontmatter + instructions
-        └── references/     ← Templates, patterns
+├── skills/
+│   └── [skill-name]/
+│       ├── SKILL.md        ← Frontmatter + instructions
+│       └── references/     ← Templates, patterns
+├── agents/
+│   └── [agent-name].md     ← Role persona (frontmatter + instructions)
+└── commands/
+    └── [command-name].md   ← Slash command definition
 ```
 
 ## Skill Anatomy
@@ -41,6 +48,23 @@ Each skill consists of:
    instructions
 2. **references/** — Supporting files (templates,
    patterns, checklists) as pure markdown
+
+## Agent Anatomy
+
+Each agent is a single markdown file with YAML
+frontmatter (`name`, `color`, `description`, optional
+`tools` allowlist) and a short body: role persona,
+which skills to load, how to work, and rules.
+Read-only roles (code-reviewer, fleet-auditor,
+security-analyst) restrict `tools` to
+`Read, Grep, Glob, Bash, Skill`.
+
+## Command Anatomy
+
+Each command is a single markdown file invoked as
+`/command-name`. Frontmatter is optional.
+Subdirectories namespace commands
+(`commands/data/analyze.md` → `/data/analyze`).
 
 ## Categories
 

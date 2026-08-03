@@ -28,7 +28,7 @@ Yes. Agent Skills is licensed under MIT.
 
 ```bash
 curl -fsSL \
-  https://raw.githubusercontent.com/nasrulhazim/agent-skills/main/install.sh \
+  https://raw.githubusercontent.com/nasrulhazim/claude/main/install.sh \
   | bash
 ```
 
@@ -36,8 +36,8 @@ Or clone and install locally:
 
 ```bash
 git clone \
-  https://github.com/nasrulhazim/agent-skills.git
-cd agent-skills
+  https://github.com/nasrulhazim/claude.git
+cd claude
 bash install.sh
 ```
 
@@ -82,4 +82,4 @@ Re-run `bash install.sh` to reinstall from source.
 ## Getting Help
 
 - **GitHub Issues:**
-  [agent-skills/issues](https://github.com/nasrulhazim/agent-skills/issues)
+  [claude/issues](https://github.com/nasrulhazim/claude/issues)
