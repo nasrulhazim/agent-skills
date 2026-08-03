@@ -127,9 +127,12 @@ agents/code-reviewer.md
 agents/courseware-developer.md
 agents/devops-engineer.md
 agents/fleet-auditor.md
+agents/laravel-developer.md
 agents/package-maintainer.md
+agents/performance-engineer.md
 agents/qa-engineer.md
 agents/security-analyst.md
+agents/software-architect.md
 agents/support-analyst.md
 agents/tech-writer.md
 agents/ui-designer.md

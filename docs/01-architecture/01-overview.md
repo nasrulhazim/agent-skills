@@ -75,3 +75,12 @@ Subdirectories namespace commands
 | Deploy & Ops | ci-cd-pipeline, git-workflow | Release |
 | Research | repo-research, dev-summary | Analysis |
 | Business | sales-planner, svg-logo | Non-code |
+
+## Agent Roster
+
+16 role agents spanning the full SDLC — see
+[Using Agents](../02-development/05-using-agents.md)
+for the phase-by-phase coverage map. Color clusters:
+red=security, orange=quality, green=build/ship,
+pink=planning/docs/business, blue=design,
+cyan=audit/research, yellow=support, purple=training.

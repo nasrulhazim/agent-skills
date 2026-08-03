@@ -50,4 +50,6 @@ typically includes:
 The `install.sh` script copies each
 `skills/[name]/` directory to
 `~/.claude/skills/[name]/`, preserving the
-internal structure.
+internal structure. Manifest entries are
+type-prefixed since v2.0.0
+(`skills/[name]/SKILL.md`).

@@ -1,24 +1,33 @@
-# Frequently Asked Questions — Agent Skills
+# Frequently Asked Questions — Claude Toolkit
 
 ## General
 
-### What is Agent Skills?
+### What is the Claude Toolkit?
 
-A collection of Claude Code skills for Laravel
-developers, solo founders, and package authors.
-Skills provide structured prompts for common
-workflows like testing, code quality, deployment,
-and project planning.
+A complete Claude Code toolkit — skills, agents and
+commands — for Laravel developers, solo founders, and
+package authors. Skills carry knowledge, agents are
+delegatable role personas, commands are workflow entry
+points.
 
 ### What are the system requirements?
 
 - Git (for cloning)
-- Bash 4.0+ (for install script)
-- Claude Code CLI (for using skills)
+- Bash 3.2+ (for install script — macOS default works)
+- Claude Code CLI
 
 ### Is this free to use?
 
-Yes. Agent Skills is licensed under MIT.
+Yes. The Claude Toolkit is licensed under MIT.
+
+### Should I use the installer or the plugin?
+
+Pick one. `install.sh` copies content to
+`~/.claude/{skills,agents,commands}`; the plugin
+(`/plugin marketplace add nasrulhazim/claude` then
+`/plugin install claude-toolkit@claude`) loads the
+same content as a plugin. Installing both duplicates
+everything.
 
 ---
 
@@ -41,12 +50,28 @@ cd claude
 bash install.sh
 ```
 
-### How do I install a single skill?
+### How do I install a single item?
+
+```bash
+bash install.sh --only pest-testing    # skill, agent or command by name
+```
+
+Or copy manually into a project:
 
 ```bash
 cp -r skills/pest-testing \
   /path/to/your-project/.claude/skills/
+cp agents/code-reviewer.md \
+  /path/to/your-project/.claude/agents/
 ```
+
+### How do I use the agents?
+
+Ask Claude Code to delegate: "use the code-reviewer
+agent on this diff", or just describe the task — it
+auto-matches agent descriptions. See
+[Using Agents](../02-development/05-using-agents.md)
+for the SDLC coverage map and typical chains.
 
 ### Skills installed but not recognised
 

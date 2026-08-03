@@ -1,10 +1,10 @@
-# Agent Skills Documentation
+# Claude Toolkit Documentation
 
 [![Latest Version](https://img.shields.io/github/v/release/nasrulhazim/claude?style=flat-square)](https://github.com/nasrulhazim/claude/releases)
 [![License](https://img.shields.io/github/license/nasrulhazim/claude?style=flat-square)](LICENSE)
 
-Documentation for the Agent Skills collection — Claude Code skills for Laravel developers,
-solo founders, and package authors.
+Documentation for the Claude Toolkit — Claude Code skills, agents and commands for Laravel
+developers, solo founders, and package authors.
 
 ## Contents
 
@@ -12,5 +12,5 @@ solo founders, and package authors.
 - [Architecture](01-architecture/README.md) — Design overview, patterns, ADRs
 - [Development](02-development/README.md) — Getting started, workflows, testing
 - [Deployment](03-deployment/README.md) — Publishing, CI/CD, runbook
-- [API](04-api/README.md) — Skill API reference and contracts
+- [API](04-api/README.md) — Skill, agent and command format contracts
 - [Support](05-support/README.md) — FAQ, triage, SLA, deprecation

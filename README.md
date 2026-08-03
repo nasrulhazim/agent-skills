@@ -82,12 +82,15 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 
 ## Agents Directory
 
-13 role agents — thin personas that load the skills above as their playbook. Reviewer, auditor and security roles are restricted to read-only tools.
+16 role agents — thin personas that load the skills above as their playbook, covering the full SDLC (see [Using Agents](docs/02-development/05-using-agents.md) for the coverage map). Reviewer, auditor and security roles are restricted to read-only tools.
 
 | Agent | Role |
 |---|---|
+| [software-architect](agents/software-architect.md) | System/module design, DDD boundaries, API design, ADRs, architectural review |
+| [laravel-developer](agents/laravel-developer.md) | Implements features end-to-end — models, Actions, Livewire/Flux, policies, tests |
 | [code-reviewer](agents/code-reviewer.md) | Read-only Laravel code review — Kickoff conventions, patterns, security, test gaps |
-| [qa-engineer](agents/qa-engineer.md) | Writes and repairs Pest tests until green; coverage and arch tests |
+| [qa-engineer](agents/qa-engineer.md) | Test strategy (QA) + writes and repairs Pest tests until green (QC) |
+| [performance-engineer](agents/performance-engineer.md) | Measure-first optimisation — N+1, indexes, caching, queues, Livewire payloads |
 | [package-maintainer](agents/package-maintainer.md) | Package scaffolding, dependency bumps, Testbench, releases — parallel-safe |
 | [devops-engineer](agents/devops-engineer.md) | CI/CD, Docker, deployments, GitHub administration, release automation |
 | [upgrade-specialist](agents/upgrade-specialist.md) | Laravel/Livewire/PHP upgrades and Kickoff baseline patching |

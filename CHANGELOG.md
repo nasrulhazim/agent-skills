@@ -3,6 +3,19 @@
 All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com) and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [2.1.0] - 2026-08-03
+
+### Added
+
+- 3 agents completing full SDLC coverage: `software-architect` (design/ADRs), `laravel-developer` (implementation), `performance-engineer` (measure-first optimisation) — roster is now 16
+- `docs/02-development/05-using-agents.md` — SDLC coverage map, delegation guide, typical agent chains
+- `docs/04-api/02-agent-format.md` and `03-command-format.md` — format contracts for agents and commands
+
+### Changed
+
+- `qa-engineer` description now explicitly covers test strategy / QA planning alongside test writing (QC)
+- Docs refreshed for the toolkit era: product spec 0.2, requirements 0.2 (FR-05/06/07 for agent/command/plugin formats, Bash 3.2 requirement), roadmap (2.0 shipped, 2.x planned), architecture overview, FAQ
+
 ## [2.0.0] - 2026-08-03
 
 ### Changed
