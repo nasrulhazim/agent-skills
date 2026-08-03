@@ -82,12 +82,14 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 
 ## Agents Directory
 
-16 role agents — thin personas that load the skills above as their playbook, covering the full SDLC (see [Using Agents](docs/02-development/05-using-agents.md) for the coverage map). Reviewer, auditor and security roles are restricted to read-only tools.
+20 role agents — thin personas that load the skills above as their playbook, covering the full SDLC (see [Using Agents](docs/02-development/05-using-agents.md) for the coverage map). Reviewer, auditor and security roles are restricted to read-only tools.
 
 | Agent | Role |
 |---|---|
 | [software-architect](agents/software-architect.md) | System/module design, DDD boundaries, API design, ADRs, architectural review |
+| [database-engineer](agents/database-engineer.md) | Schema, migrations, indexing, integrity, backups, multi-tenant data isolation |
 | [laravel-developer](agents/laravel-developer.md) | Implements features end-to-end — models, Actions, Livewire/Flux, policies, tests |
+| [api-engineer](agents/api-engineer.md) | REST API design & build — versioning, Resources, auth/scopes, rate limits, OpenAPI |
 | [code-reviewer](agents/code-reviewer.md) | Read-only Laravel code review — Kickoff conventions, patterns, security, test gaps |
 | [qa-engineer](agents/qa-engineer.md) | Test strategy (QA) + writes and repairs Pest tests until green (QC) |
 | [performance-engineer](agents/performance-engineer.md) | Measure-first optimisation — N+1, indexes, caching, queues, Livewire payloads |
@@ -96,10 +98,12 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 | [upgrade-specialist](agents/upgrade-specialist.md) | Laravel/Livewire/PHP upgrades and Kickoff baseline patching |
 | [tech-writer](agents/tech-writer.md) | SDLC docs, roadmaps, FAQs, release notes, READMEs |
 | [business-analyst](agents/business-analyst.md) | SRS, user stories, wireframes, proposals (BM/EN), pricing |
+| [project-manager](agents/project-manager.md) | Roadmaps, GitHub milestones/boards, sprints, risk & scope, multi-repo status |
 | [brand-designer](agents/brand-designer.md) | SVG logo systems, wordmarks, business cards, brand assets |
 | [ui-designer](agents/ui-designer.md) | UI/UX design and Livewire+Flux implementation, accessibility audits |
 | [support-analyst](agents/support-analyst.md) | Ticket triage with SLA awareness, production log analysis |
 | [security-analyst](agents/security-analyst.md) | Defensive security audits, dependency advisories, incident investigation |
+| [penetration-tester](agents/penetration-tester.md) | Authorized offensive testing — local/staging only, scoped, minimal-impact |
 | [fleet-auditor](agents/fleet-auditor.md) | Read-only sweeps across many repos — drift, inventory, statistics |
 | [courseware-developer](agents/courseware-developer.md) | Interactive HTML courseware and training decks |
 

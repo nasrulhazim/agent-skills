@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Nasrul Hazim's complete Claude Code toolkit: skills, agents and commands in one repo (`nasrulhazim/claude`). Skills are self-contained directories under `skills/` with a `SKILL.md` and optional `references/` folder; agents are single-file role personas under `agents/`; commands are single-file slash commands under `commands/`.
+A complete Claude Code toolkit: skills, agents and commands in one repo (`nasrulhazim/claude`). Skills are self-contained directories under `skills/` with a `SKILL.md` and optional `references/` folder; agents are single-file role personas under `agents/`; commands are single-file slash commands under `commands/`.
 
 ## Stack
 

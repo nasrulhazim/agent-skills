@@ -41,7 +41,7 @@ Clean, modern layout with information left-aligned and logo bottom-right.
 
   <!-- Name -->
   <text x="60" y="180" font-family="system-ui, -apple-system, sans-serif"
-        font-size="34" font-weight="700" fill="#111111">Nasrul Hazim</text>
+        font-size="34" font-weight="700" fill="#111111">Jane Doe</text>
 
   <!-- Title -->
   <text x="60" y="215" font-family="system-ui, -apple-system, sans-serif"
@@ -82,7 +82,7 @@ Formal, structured layout with centered elements and clear hierarchy.
 
   <!-- Name (centered) -->
   <text x="525" y="200" font-family="system-ui, -apple-system, sans-serif"
-        font-size="32" font-weight="700" fill="#111111" text-anchor="middle">Nasrul Hazim</text>
+        font-size="32" font-weight="700" fill="#111111" text-anchor="middle">Jane Doe</text>
 
   <!-- Title -->
   <text x="525" y="230" font-family="system-ui, -apple-system, sans-serif"
@@ -119,7 +119,7 @@ white on the right with contact details.
 
   <!-- Name (left side, white text) -->
   <text x="60" y="250" font-family="system-ui, -apple-system, sans-serif"
-        font-size="30" font-weight="700" fill="#ffffff">Nasrul</text>
+        font-size="30" font-weight="700" fill="#ffffff">Jane</text>
   <text x="60" y="290" font-family="system-ui, -apple-system, sans-serif"
         font-size="30" font-weight="700" fill="#ffffff">Hazim</text>
 
@@ -221,7 +221,7 @@ Monospace hints, code-bracket accents, social/GitHub prominence.
 
   <!-- Name -->
   <text x="100" y="200" font-family="system-ui, -apple-system, sans-serif"
-        font-size="32" font-weight="700" fill="#e2e8f0">Nasrul Hazim</text>
+        font-size="32" font-weight="700" fill="#e2e8f0">Jane Doe</text>
 
   <!-- Title with code syntax hint -->
   <text x="100" y="235" font-family="'SF Mono', 'Fira Code', monospace"

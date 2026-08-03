@@ -3,6 +3,18 @@
 All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com) and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [2.2.0] - 2026-08-03
+
+### Added
+
+- 4 agents completing the role coverage: `database-engineer` (DBA — schema, migrations, indexing, backups, tenant isolation), `project-manager` (roadmaps, milestones, sprints, risk/scope), `api-engineer` (REST design & build), `penetration-tester` (authorized offensive testing — local/staging only, scoped, minimal-impact) — roster is now 20
+
+### Changed
+
+- **Generalised the whole toolkit** — removed personal names, private product names (product suite/ticketing specifics) and machine-specific paths from all agents, skills, docs and manifests so the toolkit reads as a general-purpose Kickoff-based Laravel toolkit. The Kickoff baseline is kept (it is the toolkit's core value)
+- Plugin/marketplace author set to CleaniqueCoders; personal email removed
+- Docs (product spec, roadmap, using-agents coverage map) updated for the 20-agent roster
+
 ## [2.1.0] - 2026-08-03
 
 ### Added

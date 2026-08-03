@@ -61,7 +61,7 @@ them immediately.
 ### [FR-04] Bilingual Trigger Phrases
 
 **Priority:** Should
-**User Story:** As a Malaysian developer, I want
+**User Story:** As a bilingual (BM/EN) developer, I want
 trigger phrases in Bahasa Malaysia so that I can
 invoke skills naturally in my preferred language.
 

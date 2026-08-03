@@ -2,7 +2,7 @@
 
 > **Status:** Active
 > **Version:** 0.2
-> **Author:** Nasrul Hazim
+> **Author:** CleaniqueCoders
 > **Last Updated:** 2026-08-03
 
 ## Problem Statement
@@ -62,15 +62,18 @@ method, loaded on demand.
 
 ### Agent Roster
 
-16 role agents covering the full SDLC — requirements
-(business-analyst), architecture (software-architect),
-design (ui-designer, brand-designer), implementation
-(laravel-developer), testing & QA/QC (qa-engineer),
-review (code-reviewer), security (security-analyst),
-performance (performance-engineer), deployment
-(devops-engineer), maintenance (upgrade-specialist),
-operations (support-analyst), governance
-(fleet-auditor), documentation (tech-writer), and
+20 role agents covering the full SDLC — requirements
+(business-analyst), project management (project-manager),
+architecture (software-architect), data/database
+(database-engineer), design (ui-designer, brand-designer),
+implementation (laravel-developer), API (api-engineer),
+testing & QA/QC (qa-engineer), review (code-reviewer),
+defensive security (security-analyst), offensive security
+(penetration-tester), performance (performance-engineer),
+deployment (devops-engineer), maintenance
+(upgrade-specialist), operations (support-analyst),
+governance (fleet-auditor), package lifecycle
+(package-maintainer), documentation (tech-writer), and
 training (courseware-developer). Agents are thin role
 personas that load skills as their playbook.
 
@@ -126,7 +129,7 @@ stack (Livewire 4, Pest, PHPStan, Rector, Pint).
 | Metric | Baseline | Target | Measurement |
 | --- | --- | --- | --- |
 | Skill count | 29 | 35+ | `skills/*/SKILL.md` |
-| Agent count | 16 | 16+ | `agents/*.md` |
+| Agent count | 20 | 20+ | `agents/*.md` |
 | Install rate | 100% | 100% | Manual test |
 | Adoption | 0 | 50+ stars | GitHub stars |
 
@@ -149,13 +152,13 @@ The MVP may exclude:
 
 | Question | Owner | Due | Status |
 | --- | --- | --- | --- |
-| Cloud Skills extra metadata? | Nasrul | TBD | Open |
-| Independent item versioning? | Nasrul | TBD | Open |
-| Category-split plugins? | Nasrul | TBD | Open |
+| Cloud Skills extra metadata? | Maintainer | TBD | Open |
+| Independent item versioning? | Maintainer | TBD | Open |
+| Category-split plugins? | Maintainer | TBD | Open |
 
 ## Revision History
 
 | Version | Date | Author | Changes |
 | --- | --- | --- | --- |
-| 0.1 | 2026-02-28 | Nasrul Hazim | Initial draft |
-| 0.2 | 2026-08-03 | Nasrul Hazim | Claude Toolkit: agents + commands added, plugin packaging, installer v2 |
+| 0.1 | 2026-02-28 | CleaniqueCoders | Initial draft |
+| 0.2 | 2026-08-03 | CleaniqueCoders | Claude Toolkit: agents + commands added, plugin packaging, installer v2 |

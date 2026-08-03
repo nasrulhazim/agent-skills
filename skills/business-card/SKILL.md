@@ -140,7 +140,7 @@ If user doesn't specify all options, apply smart defaults based on industry/cont
 Before generating, summarize the user's choices:
 
 ```
-Name:        Nasrul Hazim
+Name:        Jane Doe
 Title:       Senior Software Engineer
 Company:     CleaniqueCoders Sdn Bhd
 Phone:       +60 12-345 6789

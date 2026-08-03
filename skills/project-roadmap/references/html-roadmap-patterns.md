@@ -1,6 +1,6 @@
 # HTML Roadmap Patterns
 
-CSS skeletons and layout patterns based on roadmaps produced across Nasrul's projects.
+CSS skeletons and layout patterns based on roadmaps produced across many projects.
 Pick the closest match to the project type, then customise colors and fonts.
 
 ---

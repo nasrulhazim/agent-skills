@@ -1,13 +1,20 @@
 {
     "name": "claude-toolkit",
-    "description": "29 skills, 16 role agents and 10 commands covering Laravel development, testing, code quality, CI/CD, package development, documentation, requirements, sales, branding and support operations. Kickoff-baseline aware.",
-    "version": "2.1.0",
+    "description": "29 skills, 20 role agents and 10 commands covering Laravel development, testing, code quality, CI/CD, package development, documentation, requirements, sales, branding and support operations. Kickoff-baseline aware.",
+    "version": "2.2.0",
     "author": {
-        "name": "Nasrul Hazim Bin Mohamad",
-        "email": "nasrulhazim.m@gmail.com"
+        "name": "CleaniqueCoders"
     },
     "homepage": "https://github.com/nasrulhazim/claude",
     "repository": "https://github.com/nasrulhazim/claude",
     "license": "MIT",
-    "keywords": ["laravel", "livewire", "pest", "kickoff", "skills", "agents", "commands"]
+    "keywords": [
+        "laravel",
+        "livewire",
+        "pest",
+        "kickoff",
+        "skills",
+        "agents",
+        "commands"
+    ]
 }

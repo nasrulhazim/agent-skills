@@ -4,7 +4,7 @@ metadata:
   compatible_agents: [claude-code]
   tags: [roadmap, project-planning, phases, html, markdown]
 description: >
-  Generates project roadmaps in Nasrul's exact style — always produces BOTH a ROADMAP.md
+  Generates project roadmaps in a consistent, opinionated style — always produces BOTH a ROADMAP.md
   (phase-based markdown with checkboxes, exit criteria, dependency map, and quick reference)
   AND a beautiful custom-styled HTML visual roadmap. Use this skill whenever the user asks
   for a roadmap, project plan, implementation plan, development phases, or says "buat roadmap",
@@ -137,7 +137,7 @@ Tasks must be **immediately actionable** — not vague:
 | "Running numbers" | "Order number via `laravel-running-number` (`ORD-YYYYMMDD-XXXXXX`)" |
 | "Test it" | "Pest: `it('creates order with correct running number')` in `OrderTest`" |
 
-Always reference specific packages from Nasrul's ecosystem where relevant:
+Reference specific packages from the project's own ecosystem where relevant:
 - `cleaniquecoders/laravel-running-number` — sequential numbered IDs
 - `cleaniquecoders/laravel-media-secure` — file/image uploads
 - `cleaniquecoders/laravel-action` — action class scaffolding

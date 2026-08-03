@@ -1,7 +1,7 @@
 # Roadmap — Claude Toolkit
 
 > **Last Updated:** 2026-08-03
-> **Maintained by:** Nasrul Hazim
+> **Maintained by:** CleaniqueCoders
 
 ## Phase Summary
 
