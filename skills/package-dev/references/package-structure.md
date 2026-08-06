@@ -76,8 +76,8 @@ packages/vendor/package-name/
     "require-dev": {
         "laravel/pint": "^1.0",
         "orchestra/testbench": "^10.0",
-        "pestphp/pest": "^3.0",
-        "pestphp/pest-plugin-laravel": "^3.0"
+        "pestphp/pest": "^5.0",
+        "pestphp/pest-plugin-laravel": "^5.0"
     },
     "autoload": {
         "psr-4": {

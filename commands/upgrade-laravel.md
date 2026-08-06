@@ -120,8 +120,8 @@ Update `composer.json`:
     "laravel/tinker": "^3.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^12.0",
-    "pestphp/pest": "^4.0"
+    "phpunit/phpunit": "^13.0",
+    "pestphp/pest": "^5.0"
   }
 }
 ```
@@ -134,8 +134,8 @@ Update `composer.json`:
   },
   "require-dev": {
     "orchestra/testbench": "^10.0 || ^11.0",
-    "phpunit/phpunit": "^11.0 || ^12.0",
-    "pestphp/pest": "^3.0 || ^4.0"
+    "phpunit/phpunit": "^11.0 || ^12.0 || ^13.0",
+    "pestphp/pest": "^3.0 || ^4.0 || ^5.0"
   }
 }
 ```
