@@ -260,6 +260,59 @@ $result = Cache::get($key);
 
 ---
 
+## Blind Spots That Cost Hours
+
+Three Larastan behaviours produce errors pointing somewhere other than the cause. Check these
+before debugging the reported location.
+
+### A class docblock must sit ABOVE the PHP attributes
+
+```php
+// ❌ WRONG — parses fine, annotations SILENTLY IGNORED.
+#[Fillable(['name', 'status'])]
+/** @property array<string, mixed> $credentials */
+class SecretRotation extends Model {}
+
+// ✅ RIGHT
+/** @property array<string, mixed> $credentials */
+#[Fillable(['name', 'status'])]
+class SecretRotation extends Model {}
+```
+
+With the docblock in the wrong place PHPStan carries on inferring `string` for every cast
+column, and the errors it then reports point at the **call sites**, not at the model. Half an
+hour, minimum, every time.
+
+### Larastan cannot see casts declared through the `casts()` method
+
+It reads the `$casts` **property**, not the method. An array-cast column declared in `casts()`
+with no `@property` annotation is inferred from the column type as `?string`, so
+`(array) $model->env_vars` reads as a one-element list where every offset is "non-existent".
+Annotate any array-cast column before reading keys off it:
+
+```php
+/** @property array<string, string> $env_vars */
+class DeploymentWorkload extends Model
+{
+    protected function casts(): array
+    {
+        return ['env_vars' => 'array'];
+    }
+}
+```
+
+### Annotating a shared relation churns the baseline — but not annotating is worse
+
+Adding `@return BelongsTo<Foo, $this>` to a widely-used relation improves inference *at every
+call site*, which can invalidate unrelated `phpstan-baseline.neon` entries and fail
+`composer analyse` with `ignore.unmatched`. Prefer annotating a relation only your new code
+uses, or regenerate the baseline deliberately.
+
+The converse is the trap that actually bites: leaving a cast un-annotated **to avoid** baseline
+churn makes PHPStan read an enum column as `string` and report every correct
+`=== Status::Active` as *always false*. An annotation that makes correct code look broken is
+not a saving — annotate the cast and prune the stale baseline entries.
+
 ## Larastan-Specific Features
 
 Larastan extends PHPStan with Laravel-aware analysis. These are things base PHPStan cannot

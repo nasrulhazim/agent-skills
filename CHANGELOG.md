@@ -3,6 +3,47 @@
 All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com) and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [2.3.0] - 2026-08-13
+
+### Added
+
+- `project-status` skill — TLDR + table status report that cross-checks a project's planning
+  tree against live GitHub issues **and the code**, on the rule that a planning document's
+  claim is never status until the code confirms it
+- `deploy-app` skill — deploy a Kickoff app via `bin/deploy` over SSH: verification checklist,
+  a recovery path per failure mode, and the production traps (DB-backed settings overriding
+  `.env`, host SMTP port blocks, unattended prompts exiting 0, `APP_KEY` rotation)
+- `docs/02-development/06-laravel-boost-coexistence.md` — which skill names Laravel Boost owns
+  and why a collision between the two is silent
+
+### Changed
+
+- **`pest-testing` renamed to `kickoff-pest-testing`** (migration entry included). Laravel
+  Boost's `boost:install --skills` writes its own `pest-testing` into the same directory and
+  had already overwritten the toolkit's copy in a live project, undetected. The two are
+  complementary — Boost covers Pest syntax; this covers scaffolding, the arch-test baseline
+  and suite performance
+- `kickoff-pest-testing` — new sections on what a green suite does not prove (Alpine, Flux
+  custom elements, deferred `wire:model`) and on suite performance (seeder placement in
+  `$seeder` rather than `beforeEach`, `XDEBUG_MODE` pinning, Test Impact Analysis and pcov)
+- `livewire-flux` — client-side gotchas that ship green: Flux renders `<ui-checkbox>` not a
+  native input, `x-cloak` is inert without its CSS rule, a double quote anywhere in an Alpine
+  attribute un-Alpines the subtree, and `description:trailing` for field help text
+- `project-laravel` — `access-control.md` gains a tenancy section (a policy is not a scope;
+  scoped finders; per-tenant uniqueness; pinning the guard on non-`web` surfaces);
+  `database-conventions.md` gains engine-portability rules (MySQL leading-column FK indexes,
+  non-transactional DDL, unreliable `hasIndex()`, the migrate/rollback/migrate round trip);
+  `model-conventions.md` gains silent failure modes (null relations, Traitify's `user_id`
+  auto-fill, seeder `unguarded()`, factory visibility branches)
+- `code-quality` — Larastan blind spots: docblock placement above PHP attributes, casts
+  declared via `casts()` being invisible, and baseline churn from generic relation annotations
+- `project-conventions` — lessons belong in `CLAUDE.md` and tracking on GitHub, never in a
+  local `tasks/todo.md` or `lessons.md`; the multi-repo workspace two-`CLAUDE.md` pattern; and
+  the repository housekeeping Claude depends on (`/.claude/worktrees/` in `.gitignore`)
+- `kickoff-patch` — records the Kickoff composer-script change (TIA no longer the default
+  `test`), the new `build/php-ini` test tooling, `PASSKEYS_USER_HANDLE_SECRET` and the
+  `/.claude/worktrees/` ignore rule; restores `laravel/doctor` in the package baseline
+
 ## [2.2.0] - 2026-08-03
 
 ### Added

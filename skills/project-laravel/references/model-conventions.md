@@ -88,6 +88,68 @@ class Invoice extends Base
 }
 ```
 
+## Silent Failure Modes
+
+### An undefined relation or attribute resolves to `null` — it does not error
+
+```php
+// Deployment has owner() over user_id — there is no user() relation.
+// This guard silently passes EVERYTHING, forever.
+if ($deployment->user?->id !== $actor->id) {
+    abort(403);
+}
+```
+
+Dynamic model properties are `mixed`, so PHPStan cannot see it either. The rule that catches
+it: **whenever a guard's whole job is to say "no", write a test that proves it says no.** A
+guard that never fires is indistinguishable from one that never runs.
+
+The same shape appears with a column that does not exist (`$component->version` on a model
+where the version lives elsewhere) — every read returns `null` and downstream code quietly
+treats it as "not set".
+
+### Traitify's `InteractsWithUser` auto-fills any column named `user_id`
+
+`App\Models\Base` uses it, and on create it writes the authenticated user into a column
+literally named `user_id`. That is correct when `user_id` means *"who made this row"* — and
+wrong when it is a **scope** column. On an organisation-scoped table it silently turns every
+org-wide row into a personal one.
+
+```php
+// Disable it where user_id is a scope, not an author.
+// The trait's Schema::hasColumn() check then short-circuits.
+protected $user_id_column = '__disabled__';
+```
+
+### `db:seed` wraps seeding in `Model::unguarded()` — and only there
+
+A seeder can mass-assign a column that is not `#[Fillable]` when run through the artisan
+command, and silently drop it when the same seeder is instantiated directly (from a test, or
+from another seeder). Never let seeder logic lean on ambient unguarded state — write the
+non-fillable column through `forceFill()` or the model's own method
+(`markEmailAsVerified()`), and instantiate the seeder directly in its test so the difference
+cannot hide.
+
+### A factory default must land inside a visibility branch
+
+When a model gains a two-branch visibility rule — say `organization_id` nullable **plus**
+`is_system` for a shared catalogue — a factory defaulting to *neither* (no organisation,
+`is_system` false) produces rows that match under neither branch. Tests then "create" records
+the UI can never list. Give the factory one branch as its default and a named state for the
+other:
+
+```php
+public function definition(): array
+{
+    return ['organization_id' => null, 'is_system' => true];   // catalogue default
+}
+
+public function forOrganization(Organization $org): static
+{
+    return $this->state(fn () => ['organization_id' => $org->id, 'is_system' => false]);
+}
+```
+
 ## DO / DON'T
 
 - ✅ DO extend `App\Models\Base`
@@ -95,8 +157,12 @@ class Invoice extends Base
 - ✅ DO define return types on relationships
 - ✅ DO cast enum fields to their enum class
 - ✅ DO use SoftDeletes for business entities
+- ✅ DO write a test that proves a guard denies, not only that it allows
+- ✅ DO disable `InteractsWithUser` (`$user_id_column`) where `user_id` is a scope column
 - ❌ DON'T extend `Illuminate\Database\Eloquent\Model` directly
 - ❌ DON'T use `$guarded = []` — always use `$fillable`
+- ❌ DON'T rely on a relation name without checking it exists — a typo is `null`, not an error
+- ❌ DON'T let a seeder mass-assign a non-fillable column via ambient `unguarded()`
 - ❌ DON'T define accessors/mutators without proper Attribute cast syntax
 - ❌ DON'T put business logic in models — use Actions instead
 

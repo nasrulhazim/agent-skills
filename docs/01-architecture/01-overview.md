@@ -70,7 +70,7 @@ Subdirectories namespace commands
 
 | Category | Skills | Purpose |
 | --- | --- | --- |
-| Dev & Quality | pest-testing, code-quality | Code review |
+| Dev & Quality | kickoff-pest-testing, code-quality | Code review |
 | Project Mgmt | project-docs, project-roadmap | Planning |
 | Deploy & Ops | ci-cd-pipeline, git-workflow | Release |
 | Research | repo-research, dev-summary | Analysis |

@@ -53,13 +53,13 @@ bash install.sh
 ### How do I install a single item?
 
 ```bash
-bash install.sh --only pest-testing    # skill, agent or command by name
+bash install.sh --only kickoff-pest-testing    # skill, agent or command by name
 ```
 
 Or copy manually into a project:
 
 ```bash
-cp -r skills/pest-testing \
+cp -r skills/kickoff-pest-testing \
   /path/to/your-project/.claude/skills/
 cp agents/code-reviewer.md \
   /path/to/your-project/.claude/agents/

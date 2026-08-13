@@ -14,6 +14,7 @@ skills/courseware-builder/SKILL.md
 skills/courseware-builder/references/html-template.md
 skills/courseware-builder/references/step-templates.md
 skills/courseware-builder/references/themes.md
+skills/deploy-app/SKILL.md
 skills/design-patterns/SKILL.md
 skills/design-patterns/references/decision-matrix.md
 skills/design-patterns/references/laravel-patterns.md
@@ -37,6 +38,10 @@ skills/kickoff-patch/references/detect-and-version.md
 skills/kickoff-patch/references/merge-and-apply.md
 skills/kickoff-patch/references/patch-map.md
 skills/kickoff-patch/references/source-of-truth.md
+skills/kickoff-pest-testing/SKILL.md
+skills/kickoff-pest-testing/references/arch-testing.md
+skills/kickoff-pest-testing/references/livewire-testing.md
+skills/kickoff-pest-testing/references/pest-patterns.md
 skills/livewire-flux/SKILL.md
 skills/livewire-flux/references/flux-components.md
 skills/livewire-flux/references/livewire4-patterns.md
@@ -52,10 +57,6 @@ skills/logo-designer/references/svg-design-patterns.md
 skills/package-dev/SKILL.md
 skills/package-dev/references/package-structure.md
 skills/package-dev/references/testbench-patterns.md
-skills/pest-testing/SKILL.md
-skills/pest-testing/references/arch-testing.md
-skills/pest-testing/references/livewire-testing.md
-skills/pest-testing/references/pest-patterns.md
 skills/php-best-practices/SKILL.md
 skills/php-best-practices/references/code-smells.md
 skills/php-best-practices/references/php82-features.md
@@ -100,6 +101,7 @@ skills/project-requirements/references/user-story-patterns.md
 skills/project-roadmap/SKILL.md
 skills/project-roadmap/references/html-roadmap-patterns.md
 skills/project-roadmap/references/interview-guide.md
+skills/project-status/SKILL.md
 skills/project-sync/SKILL.md
 skills/project-sync/references/detection-markers.md
 skills/project-sync/references/merge-algorithm.md

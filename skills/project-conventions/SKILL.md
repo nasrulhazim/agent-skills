@@ -177,6 +177,77 @@ Minimum sections for any project:
 
 ---
 
+## Where Lessons and Plans Live
+
+**Lessons go in `CLAUDE.md`. Plans and tracking go on GitHub. Neither goes in a local file.**
+
+| Thing | Home | Why not a local file |
+|---|---|---|
+| A correction, preference, gotcha | `CLAUDE.md` | It is read at the start of every session in every clone; `tasks/lessons.md` is read by nobody |
+| A plan with checkable items | A GitHub issue (`- [ ]` list in the body, `gh issue edit` to tick) | Visible to the team, survives a fresh clone, links to the commits |
+| The result of a piece of work | A comment on that issue, then close it | Keeps the decision next to the change |
+
+Do **not** create a `tasks/` directory, a `todo.md`, or a `lessons.md` inside a repository. If
+you find one, migrate its live content — gotchas into `CLAUDE.md`, outstanding items into
+issues — and delete it.
+
+The exception is a **multi-repo workspace** that keeps design and planning documents of its
+own (see below): long-form plan documents belong there, one file per feature. Even then, the
+*tracking* is still GitHub issues; the document holds the reasoning, not the checkboxes of
+record.
+
+---
+
+## Multi-Repo Workspaces: Two CLAUDE.md Files, One Authority
+
+When a product folder is a thin wrapper around one or more application repositories, put a
+**short** `CLAUDE.md` at the workspace root whose main job is to point at the real one:
+
+```
+product/
+├── CLAUDE.md               # thin: layout, where to cd, pointer to the app's CLAUDE.md
+├── documentation/          # product-level docs, by context
+│   ├── 01-requirements/
+│   ├── 02-design/
+│   └── 03-planning/        # MVP scope + tasks/ (one plan document per feature)
+└── platform/
+    └── product-app/        # the real application — its own git repo
+        └── CLAUDE.md       # authoritative: conventions, architecture, gotchas
+```
+
+The workspace file states four things and stops:
+
+1. **This directory is not the project** — and whether it is a git repository at all.
+2. **Where the real work happens**, with the `cd` required before any composer/artisan command.
+3. **A pointer**: "`platform/product-app/CLAUDE.md` is the authoritative guide. Read it before
+   making changes. Do not duplicate or contradict it here — when app conventions change, update
+   *that* file."
+4. A handful of **non-obvious constraints** worth knowing before opening anything, each one a
+   single line that links onward rather than explaining in full.
+
+> **Gotcha:** The failure mode is a workspace file that grows into a second, competing
+> conventions guide. Two files that both claim authority drift within weeks, and the reader has
+> no way to tell which is current. Keep the workspace file under a screen; if a rule is about
+> code, it belongs in the app's file.
+
+---
+
+## Housekeeping the Repository Owes Claude
+
+- **`.gitignore` must exclude `/.claude/worktrees/`.** Agent worktrees are transient nested
+  checkouts; left untracked they accumulate silently. One working project was found carrying
+  over 100,000 files there.
+- **`.claude/settings.local.json`** is where an allowlist converges over time. Committing it
+  saves every future session the same permission prompts.
+- **Skill-name collisions are silent.** If a tool in the project writes into `.claude/skills/`
+  — Laravel Boost's `boost:install --skills` does, with the names `pest-testing`,
+  `laravel-best-practices`, `livewire-development`, `fluxui-development`,
+  `tailwindcss-development` and `configuring-horizon` — then a skill of your own sharing a name
+  is overwritten with nothing to say so. Prefix yours (`kickoff-pest-testing`) rather than
+  relying on copy order.
+
+---
+
 ## Initialising CLAUDE.md for a New Project
 
 When the user says "buat CLAUDE.md" or starts a new project without one:

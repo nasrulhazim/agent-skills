@@ -89,6 +89,84 @@ Schema::create('invoice_tag', function (Blueprint $table) {
 });
 ```
 
+## Portability — Why a Green Suite Proves Nothing
+
+Tests run on **SQLite in-memory**, the most permissive engine there is: it rebuilds the whole
+table on `ALTER` and accepts orderings the production engine rejects. Anything touching
+indexes, foreign keys, or column modification must be checked against the real engine before
+it is called done.
+
+```bash
+# The round trip. Run it against MySQL, not SQLite.
+php artisan migrate && php artisan migrate:rollback && php artisan migrate
+```
+
+### MySQL needs an index whose *leading* column backs each foreign key
+
+Dropping a unique before creating its replacement fails with **errno 1553** — while PostgreSQL
+and SQLite accept either order.
+
+```php
+// RIGHT — create the replacement first, then drop the old one.
+$table->unique(['organization_id', 'slug'], 'items_org_slug_unique');
+$table->dropUnique('items_slug_unique');
+// ...and reverse that order in down().
+```
+
+It is about the **leading column**, not about an index merely existing. Swapping one composite
+unique for another still fails if the FK column stops being leading anywhere — that FK then
+needs a plain index of its own, created before the drop.
+
+### `down()` hits errno 1553 where `up()` does not
+
+A composite unique leading with a foreign-key column becomes the only index backing that
+constraint, so MySQL refuses to drop it while the FK stands. Order: **drop the foreign key,
+then the index, then the column.** This is why the round trip above must be tested rather than
+reasoned about.
+
+### MySQL and Oracle have no transactional DDL
+
+A migration that fails halfway leaves the table half-changed *and* unrecorded, so the next
+`migrate` reports a confusing "Duplicate column" instead of the real error. Guard multi-step
+migrations so a partially-applied database recovers on re-run:
+
+```php
+if (! Schema::hasColumn('items', 'archived_at')) {
+    Schema::table('items', fn (Blueprint $t) => $t->timestamp('archived_at')->nullable());
+}
+```
+
+### `Schema::hasIndex()` is not reliable mid-migration
+
+It has returned `false` for an index that plainly existed, silently skipping the `dropUnique()`
+guarded by it — the swap reports DONE and the old index survives, visible only via
+`SHOW INDEX`. Read the list and match the name yourself, case-insensitively (the drivers
+disagree on casing):
+
+```php
+$existing = collect(Schema::getIndexes('items'))
+    ->pluck('name')
+    ->map(fn ($n) => strtolower($n));
+
+if ($existing->contains('items_slug_unique')) {
+    $table->dropUnique('items_slug_unique');
+}
+```
+
+### `dropConstrainedForeignId()` guesses the conventional name
+
+It assumes `{table}_{column}_foreign`. A migration that named its FK explicitly via
+`constrained(indexName: '…')` must drop it by **that** name, or MySQL fails with errno 1091.
+SQLite rebuilds the table on ALTER and passes either way.
+
+### Engine-agnostic by default
+
+Use Eloquent, the schema builder and the query builder for everything ordinary — they already
+emit correct SQL per driver, which is the whole point of using them. Where something genuinely
+is engine-specific, branch on `DB::connection()->getDriverName()` and implement each path so
+the **result** is identical. Never dialect-specific syntax (`TINYINT(1)`, `AUTO_INCREMENT`,
+`ENGINE=InnoDB`, `jsonb`, `ILIKE`, `::text`) outside such a branch.
+
 ## Factory Template
 
 ```php

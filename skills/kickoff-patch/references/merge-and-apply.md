@@ -322,7 +322,7 @@ Current-as-of-1.24.0 anchors (verify live):
   spatie/laravel-activitylog, spatie/laravel-medialibrary, cleaniquecoders/media-manager,
   spatie/laravel-permission, spatie/laravel-settings, yadahan/laravel-authentication-log.
 - `$requireDev`: barryvdh/laravel-debugbar, cleaniquecoders/laravel-db-doc, driftingly/rector-laravel,
-  laravel/boost, larastan/larastan, pestphp/pest-plugin-arch.
+  laravel/boost, laravel/doctor, larastan/larastan, pestphp/pest-plugin-arch.
 - npm: `lodash axios tippy.js`.
 - post-install artisan (in `runTasks()`): `make:notifications-table`, `operations:install`,
   `mcp-kit:install --no-interaction`, `reload:db`, plus `boost:install --guidelines --skills --mcp`.

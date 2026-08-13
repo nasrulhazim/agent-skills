@@ -9,3 +9,4 @@ Guides for contributing to the Claude Toolkit — setup, workflows, and quality 
 - [Testing](03-testing.md) — Validating skill definitions
 - [Using Skills](04-using-skills.md) — Install, invoke, and combine skills
 - [Using Agents](05-using-agents.md) — Delegate to role agents, SDLC coverage map
+- [Laravel Boost Coexistence](06-laravel-boost-coexistence.md) — Which skill names Boost owns, and why a collision is silent

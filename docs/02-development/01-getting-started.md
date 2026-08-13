@@ -29,7 +29,7 @@ curl -fsSL \
 ## Manual Install (Single Skill)
 
 ```bash
-cp -r skills/pest-testing \
+cp -r skills/kickoff-pest-testing \
   /path/to/your-project/.claude/skills/
 ```
 

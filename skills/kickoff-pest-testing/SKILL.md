@@ -1,28 +1,36 @@
 ---
-name: pest-testing
+name: kickoff-pest-testing
 metadata:
   compatible_agents: [claude-code]
-  tags: [laravel, php, pest, testing, livewire]
+  tags: [laravel, php, pest, testing, livewire, kickoff]
 description: >
-  Comprehensive Pest PHP testing skill for Laravel projects — auto-detects models, controllers,
-  services, and Livewire components then scaffolds matching Pest test files with proper assertions,
-  factories, and database testing patterns. Supports feature tests with actingAs(), API endpoint
-  tests, Livewire::test() component testing, Spatie Permission role-based helpers, architecture
-  testing (extending Kickoff baseline), and coverage gap analysis. Use this skill whenever the
-  user asks to write tests, generate test files, scaffold test suites, check test coverage, or
-  create architecture rules — including: "write tests for this model", "test this controller",
-  "generate feature tests", "add Livewire tests", "scaffold Pest tests", "check test coverage",
-  "add arch tests", "test this API endpoint", "tulis test untuk model ni", "buat feature test",
-  "tambah test untuk controller", "scaffold test suite", "semak coverage", "buat arch test",
-  or "test Livewire component ni". Assumes Pest is already installed with arch testing configured
-  (Kickoff baseline).
+  Comprehensive Pest PHP testing skill for Laravel projects on the Kickoff baseline —
+  auto-detects models, controllers, services, and Livewire components then scaffolds matching
+  Pest test files with proper assertions, factories, and database testing patterns. Supports
+  feature tests with actingAs(), API endpoint tests, Livewire::test() component testing,
+  Spatie Permission role-based helpers, architecture testing (extending Kickoff baseline),
+  suite performance (seeder placement, Xdebug/pcov, Test Impact Analysis) and coverage gap
+  analysis. Use this skill whenever the user asks to write tests, generate test files, scaffold
+  test suites, check test coverage, speed up a slow suite, or create architecture rules —
+  including: "write tests for this model", "test this controller", "generate feature tests",
+  "add Livewire tests", "scaffold Pest tests", "check test coverage", "the test suite is slow",
+  "set up TIA", "add arch tests", "test this API endpoint", "tulis test untuk model ni",
+  "buat feature test", "tambah test untuk controller", "scaffold test suite", "semak coverage",
+  "buat arch test", "test suite lambat", or "test Livewire component ni". Assumes Pest is
+  already installed with arch testing configured (Kickoff baseline).
 ---
 
-# Pest Testing Skill
+# Pest Testing Skill (Kickoff baseline)
 
 Auto-detect Laravel application components and scaffold production-quality Pest test files —
 feature tests, unit tests, Livewire component tests, API tests, and architecture rules. Designed
 for projects using the Kickoff baseline where Pest and arch testing are pre-configured.
+
+> **Naming:** this skill is `kickoff-pest-testing`, not `pest-testing`, because Laravel Boost's
+> `boost:install --skills` writes its own `pest-testing` skill into `.claude/skills/` and would
+> silently overwrite this one. Boost's covers Pest 4 syntax generically; this one covers
+> scaffolding, the Kickoff arch-test baseline and suite performance. They are complementary —
+> load both.
 
 ## Command Reference
 
@@ -526,6 +534,107 @@ When generating tests, never produce code that:
 | `App\Jobs\ProcessInvoice` | `tests/Feature/Jobs/ProcessInvoiceTest.php` |
 | `App\Mail\InvoiceCreated` | `tests/Feature/Mail/InvoiceCreatedTest.php` |
 | Architecture rules | `tests/Arch/ArchTest.php` (extend existing) |
+
+---
+
+## 9. What a Green Suite Does Not Prove
+
+Three failure modes ship green and are only caught by driving the real page once. When a
+feature's behaviour lives in Alpine or in a Flux-rendered element, the test to write is the
+one that pins the **markup contract** — so a package upgrade fails CI instead of silently
+returning the feature to nothing.
+
+| Assertion | What it actually proves | What it does not |
+|---|---|---|
+| `assertSee('...')` | The server rendered that string | Nothing about whether the browser does anything with it — a broken Alpine expression, a selector matching zero elements, or an inert `x-cloak` all pass |
+| `assertSee` on a Flux control | Flux emitted markup | That your JS can find it. Flux renders `<ui-checkbox>`, not `<input type="checkbox">` — every `input[type=checkbox]` selector matches **zero** and reports a confident, wrong answer |
+| A passing test on a `wire:model`-derived counter | The server computed it | That the operator sees it — `wire:model` is deferred, so the value is a round trip behind the UI |
+
+```php
+// Pin the marker the JS depends on, so a Flux upgrade fails here and not in production.
+it('renders checkboxes as the flux custom element the panel counts', function () {
+    Livewire::test(AllowedComponentsPanel::class)
+        ->assertSee('data-flux-checkbox', escape: false);
+});
+```
+
+Related: `actingAs()` sets the user directly on the guard and bypasses session middleware, so
+a feature test using it passes even when a route is missing the `web` middleware group. Session
+and middleware regressions need a real login flow against a running server.
+
+---
+
+## 10. Suite Performance
+
+Measure before optimising, but these three account for most of what makes a Kickoff suite slow.
+
+### Seeders belong in `$seeder`, never in a hook
+
+A seeder whose output is identical for every test must not run per test.
+
+```php
+// tests/TestCase.php — runs once per process as part of migrate:fresh
+protected $seeder = AccessControlSeeder::class;
+```
+
+`AccessControlSeeder` costs ~645 queries and ~110ms. Called from `beforeEach` it was roughly
+**half** the wall clock of a 1400-test suite — 96s down to 43s once moved. Because every test
+still runs inside a transaction that rolls back, the visible state is **identical** either way:
+the per-test call bought nothing. Check individual files too — a global hook does not stop nine
+of them re-seeding on top of it.
+
+### Xdebug must be pinned off
+
+A machine with `xdebug.mode=coverage` in its ini pays roughly **3×** on every run (one file:
+13.7s → 5.3s with `XDEBUG_MODE=off`). Pin it in `composer.json` so it cannot be inherited by
+accident:
+
+```json
+"test": ["@putenv XDEBUG_MODE=off", "@php vendor/bin/pest"]
+```
+
+Use the **array + `@putenv`** form, not an inline `VAR=x` prefix: it keeps `@php` (so Composer
+picks the PHP binary), works on Windows, and still forwards extra CLI args. And never `php -d`
+— ParaTest spawns its workers without the parent's `-d` flags, so only an environment variable
+reaches them.
+
+### Test Impact Analysis is not free, and its failure mode is silent
+
+TIA records **per-test** coverage, so it forces a coverage driver on for the whole suite before
+it can skip anything.
+
+| | Cold record | Replay |
+|---|---|---|
+| Xdebug | ~90 min | — |
+| pcov | ~72s | ~5s |
+
+Under Xdebug, Composer's default 300-second process timeout kills the record part way through,
+leaving `worker-edges-*.json` and **no** `graph.json` — an unusable graph, so the next run
+re-records from scratch and hits the same wall, forever. That is the whole of the "ran 30
+minutes and never finished" report.
+
+Requirements for a working TIA setup:
+
+- `Composer\Config::disableProcessTimeout` at the head of the script
+- `PHP_INI_SCAN_DIR` pointing at a directory containing a pcov ini (environment variable, not `-d`)
+- TIA **opt-in** (`composer test-tia`), never the default `composer test` — it has a prerequisite
+- `tests/Pest.php` may set `->filtered()`, but deliberately **not** `->locally()` or `->always()`,
+  which mark TIA *enabled* and put the record cost on every local run
+
+The graph lives in `~/.pest/tia/<project-key>/`, **not** in the repo — `pest --baseline` prints
+the path, so the absence of a `.pest/` directory says nothing. TIA normalises content, so a
+comment-only edit correctly yields "No affected tests found"; that is not a bug.
+
+> **Gotcha:** pcov built **static** rather than shared has no `get_module` symbol, and PHP
+> rejects it with *"Invalid library (maybe not a PHP library)"* — which reads exactly like
+> "this extension does not support your PHP version" and is not that. Configure with
+> `--enable-pcov=shared` and check `nm -g modules/pcov.so | grep get_module` before installing.
+
+### SQLite-in-memory is the most permissive engine there is
+
+A green suite is not evidence a migration is portable. Anything touching indexes, foreign keys,
+or column modification needs a run against the real engine — see the database-conventions
+reference in `project-laravel`.
 
 ---
 

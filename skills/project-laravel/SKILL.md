@@ -59,7 +59,7 @@ Create the following files in order:
 6. **Controller** — Resource controller with policy authorization (suffix "Controller")
 7. **Form Request** — Store and Update request classes with validation rules
 8. **Route file** — Modular route in `routes/web/` or `routes/api/` (see `references/route-conventions.md`)
-9. **Pest tests** — Feature tests for all CRUD operations (delegate to pest-testing skill patterns)
+9. **Pest tests** — Feature tests for all CRUD operations (delegate to kickoff-pest-testing skill patterns)
 10. **Permission config** — Add entries to `config/access-control.php` (see `references/access-control.md`)
 
 ### Step 3: Register

@@ -29,7 +29,7 @@ bash install.sh
 Copy a single skill into a specific project:
 
 ```bash
-cp -r skills/pest-testing \
+cp -r skills/kickoff-pest-testing \
   /path/to/project/.claude/skills/
 ```
 
@@ -140,7 +140,7 @@ Best used during active development.
 - **project-laravel** — Enforces Kickoff.my
   conventions: UUID models, Base class extension,
   Spatie packages, strict typing
-- **pest-testing** — Auto-detects models,
+- **kickoff-pest-testing** — Auto-detects models,
   controllers, and Livewire components, then
   scaffolds matching Pest test files
 - **code-quality** — Runs PHPStan, Pint, and

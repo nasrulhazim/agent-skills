@@ -6,14 +6,14 @@
     },
     "metadata": {
         "description": "A complete Claude Code toolkit \u2014 skills, agents and commands for Laravel developers, solo founders and package authors.",
-        "version": "2.2.0"
+        "version": "2.3.0"
     },
     "plugins": [
         {
             "name": "claude-toolkit",
             "source": "./",
-            "description": "29 skills, 20 role agents and 10 commands covering Laravel development, testing, code quality, CI/CD, package development, documentation, requirements, sales, branding and support operations. Kickoff-baseline aware.",
-            "version": "2.2.0",
+            "description": "31 skills, 20 role agents and 10 commands covering Laravel development, testing, code quality, CI/CD, package development, documentation, requirements, sales, branding and support operations. Kickoff-baseline aware.",
+            "version": "2.3.0",
             "author": {
                 "name": "CleaniqueCoders"
             },

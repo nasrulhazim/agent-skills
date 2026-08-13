@@ -661,6 +661,80 @@ Before presenting any component, verify:
 
 ---
 
+## 5b. Client-Side Gotchas — the ones that ship green
+
+Each of these renders correct HTML, passes every Livewire test, throws no console error, and
+does not work. They are only ever found by driving the real page — so once found, **pin the
+markup contract in a test** so the next package upgrade fails CI instead of silently
+reverting the feature.
+
+### Flux renders custom elements, not native inputs
+
+`<flux:checkbox>` emits **`<ui-checkbox>`** — a custom element carrying `data-flux-checkbox`
+and `role="checkbox"`. Consequences:
+
+- `document.querySelectorAll('input[type=checkbox]')` matches **zero elements** and returns a
+  confident, wrong count
+- the CSS `:checked` pseudo-class does not apply
+- the element **does** expose a `.checked` property, so reading state still works
+
+```js
+// Match both, and read the property — never assume a native input.
+const boxes = el.querySelectorAll('[data-flux-checkbox], input[type=checkbox]')
+const selected = [...boxes].filter(b => b.checked).length
+```
+
+```php
+// Pin it, so a Flux upgrade fails here rather than in production.
+Livewire::test(AllowedComponentsPanel::class)
+    ->assertSee('data-flux-checkbox', escape: false);
+```
+
+### `x-cloak` is inert without a CSS rule
+
+`x-cloak` is only an attribute Alpine *removes* on init. The hiding is entirely:
+
+```css
+[x-cloak] { display: none !important; }
+```
+
+Without that rule in `resources/css/app.css`, **every `x-show="false"` element renders visible
+on first paint** and disappears a moment later. Nothing errors, so it survives every test —
+2FA challenges, tab panels and disclosure bodies can flash their hidden state for months.
+Check the rule exists before debugging anything else that "flickers".
+
+### A double quote anywhere in an Alpine attribute ends the attribute
+
+Blade does not escape what you write inside `x-data`, so a comment containing `role="checkbox"`
+truncates the expression mid-way, leaves a stray `checkbox"` attribute on the element, and
+un-Alpines the whole subtree — **with no console error**, just a panel that never reacts.
+
+- single quotes for JS strings inside Alpine attributes, never double
+- `{{-- --}}` Blade comments go *outside* the tag
+- prefer `/* */` over `//` inside multi-line attributes — a line comment swallows the rest if
+  the newlines are ever collapsed
+
+### `wire:model` is deferred
+
+Any badge or counter derived from a `wire:model` value is a round trip behind what the operator
+can see. Compute it client-side and seed the initial value from the server so first paint is
+right.
+
+### Flux field help text
+
+Use **`description:trailing`**, which renders below the input. The plain `description` prop
+renders *between* the label and the field, breaking left/right alignment. In a multi-column
+grid row, do not put a description inside a cell at all — the taller cell stretches its
+neighbour; render the help as a full-width `<p class="text-sm text-zinc-500 dark:text-zinc-400">`
+below the row.
+
+> **Gotcha:** **A Livewire assertion proves the server rendered a string, never that the browser
+> does anything with it.** `assertSee` passes just as happily for markup whose Alpine expression
+> is broken, whose selector matches nothing, or whose `x-cloak` is inert. Anything whose
+> behaviour lives in Alpine or in a Flux-rendered element needs a browser **once**.
+
+---
+
 ## 6. Volt-Specific Patterns
 
 ### Full Page Volt Component with Route

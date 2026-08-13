@@ -203,6 +203,7 @@ barryvdh/laravel-debugbar
 cleaniquecoders/laravel-db-doc
 driftingly/rector-laravel
 laravel/boost
+laravel/doctor
 larastan/larastan
 pestphp/pest-plugin-arch
 ```
@@ -248,17 +249,30 @@ Config publishes are intentionally limited because **pre-configured configs ship
 
 - **autoload.files**: `["support/helpers.php"]`
 - **config.allow-plugins**: `pestphp/pest-plugin: true`
-- **scripts** (keys): `post-autoload-dump`, `post-update-cmd`, `post-root-package-install`, `post-create-project-cmd`, `dev`, `analyse`, `test`, `test-arch`, `test-coverage`, `format`, `lint`, `rector`. Notable values:
+- **scripts** (keys): `post-autoload-dump`, `post-update-cmd`, `post-root-package-install`, `post-create-project-cmd`, `dev`, `analyse`, `test`, `test-parallel`, `test-arch`, `test-tia`, `test-tia-fresh`, `test-coverage`, `format`, `lint`, `rector`. Notable values:
   - `analyse` → `@php vendor/bin/phpstan analyse`
-  - `test` → `@php vendor/bin/pest`
-  - `test-arch` → `@php vendor/bin/pest tests/Feature/ArchitectureTest.php`
-  - `test-coverage` → `vendor/bin/pest --coverage`
+  - `test` → `["@putenv XDEBUG_MODE=off", "@php vendor/bin/pest"]`
+  - `test-parallel` → `["@putenv XDEBUG_MODE=off", "@php vendor/bin/pest --parallel"]`
+  - `test-arch` → `["@putenv XDEBUG_MODE=off", "@php vendor/bin/pest tests/Feature/ArchitectureTest.php"]`
+  - `test-tia` → `["Composer\Config::disableProcessTimeout", "@putenv XDEBUG_MODE=off", "@putenv PHP_INI_SCAN_DIR=build/php-ini", "@php vendor/bin/pest --parallel --tia"]`
+  - `test-tia-fresh` → as `test-tia`, with `@php build/reset-tia.php` before the pest call
+  - `test-coverage` → `["Composer\Config::disableProcessTimeout", "@putenv XDEBUG_MODE=off", "@putenv PHP_INI_SCAN_DIR=build/php-ini", "@php vendor/bin/pest --coverage"]`
   - `format` → `@php vendor/bin/pint`
   - `lint` → `@php vendor/bin/phplint`
   - `rector` → `vendor/bin/rector process`
   - `dev` → `npx concurrently` running `php artisan serve` + `queue:listen` + `pail` + `npm run dev`
 
 Merge by key: add missing scripts, update changed Kickoff-owned scripts (with review), and **preserve any project-specific scripts** not in this list.
+
+> **1.36 breaking change — patch this one deliberately.** `test` used to be
+> `@php vendor/bin/pest --tia`. TIA has to *record* per-test coverage before it can skip
+> anything, so it needs a coverage driver: under Xdebug a cold record runs to ~90 minutes and
+> Composer's 300-second process timeout kills it part way, leaving an unusable graph that is
+> re-recorded from scratch on every subsequent run. TIA is now opt-in (`test-tia`) and every
+> test script pins `XDEBUG_MODE`. **A project still carrying `test` → `pest --tia` should be
+> patched even if nothing else in `composer.json` has drifted.** The array + `@putenv` form is
+> required, not stylistic: an inline `VAR=x` prefix loses `@php`, and `php -d` does not reach
+> ParaTest's worker processes.
 
 ### (d) npm installs — `installPackages()`
 

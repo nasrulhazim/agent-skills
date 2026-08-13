@@ -14,3 +14,9 @@ api-lifecycle:project-api
 faq-generator:project-faq
 roadmap-generator:project-roadmap
 self-update:project-conventions
+
+# Renamed so Laravel Boost's own `pest-testing` skill (written by
+# `boost:install --skills`) cannot silently overwrite it. Only ever removes
+# ~/.claude/skills/pest-testing — the installer targets $HOME, so a
+# project-level skill written by Boost is never touched.
+skills/pest-testing:skills/kickoff-pest-testing

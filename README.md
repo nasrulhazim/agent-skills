@@ -18,7 +18,7 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 |---|---|
 | [project-laravel](skills/project-laravel/) | Kickoff Laravel conventions enforcer and code scaffolder |
 | [kickoff-patch](skills/kickoff-patch/) | Patch a Kickoff-based project to the latest Kickoff baseline via category-grouped 3-way merge |
-| [pest-testing](skills/pest-testing/) | Pest PHP test generator with Livewire, arch testing, and factory patterns |
+| [kickoff-pest-testing](skills/kickoff-pest-testing/) | Pest PHP test generator with Livewire, arch testing, and factory patterns |
 | [code-quality](skills/code-quality/) | PHPStan + Pint + Rector workflow automation |
 | [php-best-practices](skills/php-best-practices/) | PHP 8.2+ modernization, refactoring, and code review |
 | [design-patterns](skills/design-patterns/) | PHP & Laravel design patterns with decision matrix |
@@ -27,7 +27,7 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 </details>
 
 <details>
-<summary><strong>Project Management</strong> (9 skills)</summary>
+<summary><strong>Project Management</strong> (10 skills)</summary>
 
 | Skill | Description |
 |---|---|
@@ -39,15 +39,17 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 | [project-inventory](skills/project-inventory/) | Discover and inventory all Claude Code projects with HTML dashboard |
 | [project-requirements](skills/project-requirements/) | SRS, user stories, proposals, and wireframes |
 | [project-roadmap](skills/project-roadmap/) | Phase-based roadmap in Markdown + styled HTML |
+| [project-status](skills/project-status/) | TLDR + table status report — planning docs cross-checked against live GitHub issues and the code |
 | [project-sync](skills/project-sync/) | Sync CLAUDE.md conventions across multiple Kickoff projects |
 
 </details>
 
 <details>
-<summary><strong>Deployment & Ops</strong> (6 skills)</summary>
+<summary><strong>Deployment & Ops</strong> (7 skills)</summary>
 
 | Skill | Description |
 |---|---|
+| [deploy-app](skills/deploy-app/) | Deploy a Kickoff app via bin/deploy over SSH — verification checklist, failure recovery, production traps |
 | [ci-cd-pipeline](skills/ci-cd-pipeline/) | GitHub Actions + Docker workflow automation |
 | [git-workflow](skills/git-workflow/) | Conventional commits, branching, release automation, and git hooks |
 | [gh-workflow](skills/gh-workflow/) | GitHub CLI automation — issues, PRs, Projects, Actions debugging |
@@ -145,7 +147,7 @@ Useful flags:
 
 ```bash
 bash install.sh --dry-run              # preview without writing
-bash install.sh --only pest-testing   # install a single skill, agent or command
+bash install.sh --only kickoff-pest-testing   # install a single skill, agent or command
 ```
 
 </details>
@@ -168,7 +170,7 @@ Use either the installer **or** the plugin — installing both duplicates the co
 
 ```bash
 # Copy a skill directory into your project's .claude/skills/ folder
-cp -r skills/pest-testing /path/to/your-project/.claude/skills/
+cp -r skills/kickoff-pest-testing /path/to/your-project/.claude/skills/
 
 # Or a single agent / command
 cp agents/code-reviewer.md /path/to/your-project/.claude/agents/
