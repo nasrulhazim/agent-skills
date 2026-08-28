@@ -3,6 +3,38 @@
 All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com) and this project adheres to [Semantic Versioning](https://semver.org).
 
+## [2.4.0] - 2026-08-28
+
+### Added
+
+- `schema-diagram` skill — generates a self-contained interactive ERD from a Laravel
+  project's **live database**: one standalone HTML file with domain-coloured table cards,
+  foreign-key edges anchored to the actual column rows, a per-table inspector showing both
+  directions of every relation, and a committed JSON payload that makes schema drift
+  reviewable as a diff rather than as a 1 MB generated file
+- `/erd` command — `init`, `generate`, `build`, `refresh`, `check`, `domains`, `verify`
+- `database-engineer` agent now loads `schema-diagram` for schema documentation work
+
+### Notes
+
+Distilled from a production ERD build, so the references carry the findings rather than only
+the code. The failures worth naming, all of which render *successfully* and are wrong:
+
+- **Read the database, never the migrations.** Migrations are the instructions; only the
+  database is the result, and a mature project's column changes, index swaps and drops are
+  exactly what a parser gets wrong — silently
+- **Filter tables on `getCurrentSchemaName()`, not `getDatabaseName()`.** The two disagree on
+  SQLite, where the schema is `main` and the database name is the file path: the wrong filter
+  matches nothing, so the test suite passes against an empty schema instead of failing
+- **Domain assignment is a hand-written map with a two-way coverage gate.** A name-prefix
+  heuristic mis-files tables and gives no sign that it did. The command refuses to write and
+  the Pest suite fails when a table is unaccounted for
+- **Giving a React Flow node `width`/`height` makes it skip measurement**, so handle bounds
+  never exist and every edge is dropped with no error at all — every card draws perfectly and
+  all relations vanish. Use `initialWidth`/`initialHeight`
+- **An unpainted Chrome tab throttles `ResizeObserver` and `rAF`**, producing exactly those
+  symptoms on a healthy page. Screenshot first — that forces a frame — then trust the DOM
+
 ## [2.3.0] - 2026-08-13
 
 ### Added
