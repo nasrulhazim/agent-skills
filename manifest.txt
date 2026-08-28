@@ -114,6 +114,13 @@ skills/repo-research/references/saas-analysis-framework.md
 skills/sales-planner/SKILL.md
 skills/sales-planner/references/pricing-patterns.md
 skills/sales-planner/references/product-config-template.md
+skills/schema-diagram/SKILL.md
+skills/schema-diagram/references/build-pipeline.md
+skills/schema-diagram/references/coverage-tests.md
+skills/schema-diagram/references/diagram-app.md
+skills/schema-diagram/references/diagram-styles.md
+skills/schema-diagram/references/domain-map.md
+skills/schema-diagram/references/schema-extractor.md
 skills/soc-analyst/SKILL.md
 skills/soc-analyst/references/hardening-checklist.md
 skills/soc-analyst/references/incident-report-templates.md
@@ -146,6 +153,7 @@ agents/upgrade-specialist.md
 commands/analyze-repo.md
 commands/design-logo.md
 commands/docs.md
+commands/erd.md
 commands/sales-create-config.md
 commands/sales-get-marketing.md
 commands/sales-get-pricing.md

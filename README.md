@@ -27,7 +27,7 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 </details>
 
 <details>
-<summary><strong>Project Management</strong> (10 skills)</summary>
+<summary><strong>Project Management</strong> (11 skills)</summary>
 
 | Skill | Description |
 |---|---|
@@ -41,6 +41,7 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 | [project-roadmap](skills/project-roadmap/) | Phase-based roadmap in Markdown + styled HTML |
 | [project-status](skills/project-status/) | TLDR + table status report — planning docs cross-checked against live GitHub issues and the code |
 | [project-sync](skills/project-sync/) | Sync CLAUDE.md conventions across multiple Kickoff projects |
+| [schema-diagram](skills/schema-diagram/) | Interactive database ERD — live schema introspection to one self-contained HTML document, with a hand-written domain map the build refuses to skip |
 
 </details>
 
@@ -116,6 +117,7 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 | [/analyze-repo](commands/analyze-repo.md) | Repository analysis assistant |
 | [/design-logo](commands/design-logo.md) | Design an SVG logo system |
 | [/docs](commands/docs.md) | Documentation management |
+| [/erd](commands/erd.md) | Generate, refresh or verify the interactive database ERD |
 | [/sales](commands/sales.md) | All-in-one sales — config, pricing, marketing, quotation |
 | [/sales-create-config](commands/sales-create-config.md) | Create a product-config.md interactively |
 | [/sales-get-marketing](commands/sales-get-marketing.md) | Marketing copy — taglines, pitches, social posts |
