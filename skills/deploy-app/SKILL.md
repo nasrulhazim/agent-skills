@@ -146,3 +146,54 @@ not chased. Do not turn "deploy latest" into a refactor.
 - `bin/provision-host` — idempotent host provisioner for a new machine
 - `bin/backup-db` / `bin/backup-app` — run before any risky release
 - `ci-cd-pipeline` skill — for the pipeline itself rather than a manual release
+
+---
+
+## Common Rationalizations
+
+| Rationalization | Reality |
+|---|---|
+| "It's a one-line change, no need for the checklist" | The checklist is short precisely so it survives one-line changes. Most bad deploys were small. |
+| "The backup is probably fine" | An unverified backup is not a backup. Check the file size and the timestamp before you migrate. |
+| "I'll run the migration and see what happens" | On production, "see what happens" is the plan for data loss. Classify it as additive or destructive first. |
+| "Tests passed on main, so this commit is fine" | You are deploying a specific commit. Confirm the suite was green on *that* SHA. |
+| "The queue will pick up the new code eventually" | Workers hold the class in memory. Without `queue:restart` they run the old code until they die. |
+| "I'll fix forward, rolling back is messy" | Fixing forward under pressure ships a second untested change on top of a broken one. |
+| "Maintenance mode is annoying for users" | A 503 for ninety seconds is less annoying than a half-migrated database. |
+| "It deployed without errors, so it worked" | A successful deploy command and a working application are different claims. Load a real page. |
+| "Let me just rotate APP_KEY to be safe" | That destroys every `encrypted:` column with no recovery, and invalidates every passkey. |
+
+## Red Flags
+
+- Deploying without a fresh, size-checked backup
+- A destructive migration with no written rollback
+- `migrate:fresh`, `db:wipe`, or `--seed` typed against a production host
+- `queue:restart` skipped after a deploy that touched job classes
+- New `.env` keys added to the repo but never set on the host
+- No post-deploy verification beyond "the command exited 0"
+- The app left in maintenance mode with nobody told
+- Editing files directly on the production host
+- A deploy that also contains a refactor
+- `APP_KEY` in the diff
+
+## Verification
+
+- [ ] Backup taken, and its size and timestamp checked
+- [ ] Migrations classified; destructive ones have a written rollback
+- [ ] Deployed commit SHA matches a green test run
+- [ ] `php artisan about` shows the expected env, drivers and versions
+- [ ] Homepage and one authenticated route return 200
+- [ ] `queue:restart` ran, and one real job was observed completing
+- [ ] Scheduler alive on exactly one host; `schedule:list` matches cron
+- [ ] Log tailed for 60s with no new exception class
+- [ ] App is out of maintenance mode
+- [ ] Report delivered: what shipped, what migrated, what warnings were seen and deliberately not chased
+
+---
+
+## Reference Files
+
+| File | Read When |
+|---|---|
+| `references/deploy-checklist.md` | Running a release — pre-flight, release steps, post-flight verification |
+| `references/rollback-playbook.md` | A release went wrong; deciding roll back vs fix forward, and how to do either |

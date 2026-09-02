@@ -195,6 +195,28 @@ Read `references/rector-rules.md` for the full rule catalog and custom rule crea
 
 ---
 
+---
+
+## Companion: ponytail
+
+`ponytail` is installed by default with this toolkit and enforces a minimalism ladder on every
+response: **skip it → reuse what exists → stdlib → native platform feature → an
+already-installed dependency → one line → the minimum that works.** Stop at the first rung
+that holds.
+
+Apply it before proposing any structure here. The most common failure in this skill's area is
+a pattern introduced for a problem that does not exist yet:
+
+- An interface with exactly one implementation
+- A factory producing one product
+- A Repository wrapping Eloquent with no second data source in sight
+- A DTO for three scalars that never cross a boundary
+- Config for a value that has never changed
+
+Reach for a pattern when there is a **second** case, not in anticipation of one. `/ponytail-review`
+checks a diff for over-engineering; `/ponytail-audit` sweeps a whole repo. The ladder shortens
+the solution — it never shortens the reading you do first.
+
 ## 5. Rector Integration
 
 Rector is assumed to be already installed in the project. This skill helps configure and

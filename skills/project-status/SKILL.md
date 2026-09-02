@@ -126,3 +126,9 @@ for it and do not skip it when the plans look tidy.
 | Report "not built" from a doc | Grep the code first |
 | Write prose paragraphs | Tables, and a TLDR at the top |
 | Treat every open issue as outstanding work | Spot-check the big ones — some are already done |
+
+## Reference Files
+
+| File | Read When |
+|---|---|
+| `references/status-report-template.md` | Writing the report — TLDR + workstream table shape, and the evidence rules |

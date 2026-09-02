@@ -12,7 +12,7 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 ## Skills Directory
 
 <details open>
-<summary><strong>Development & Quality</strong> (7 skills)</summary>
+<summary><strong>Development & Quality</strong> (8 skills)</summary>
 
 | Skill | Description |
 |---|---|
@@ -23,6 +23,7 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 | [php-best-practices](skills/php-best-practices/) | PHP 8.2+ modernization, refactoring, and code review |
 | [design-patterns](skills/design-patterns/) | PHP & Laravel design patterns with decision matrix |
 | [livewire-flux](skills/livewire-flux/) | Livewire 4 + Flux UI component patterns |
+| [debugging](skills/debugging/) | Five-step triage — reproduce, localise, reduce, fix at the root, guard with a regression test |
 
 </details>
 
@@ -46,7 +47,7 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 </details>
 
 <details>
-<summary><strong>Deployment & Ops</strong> (7 skills)</summary>
+<summary><strong>Deployment & Ops</strong> (8 skills)</summary>
 
 | Skill | Description |
 |---|---|
@@ -57,6 +58,7 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 | [package-dev](skills/package-dev/) | Laravel package scaffolding, testing, and release |
 | [log-monitor](skills/log-monitor/) | Production log analysis, error triage, and GitHub issue creation |
 | [soc-analyst](skills/soc-analyst/) | Senior SOC analyst — security triage, investigation, remediation, and hardening |
+| [security-hardening](skills/security-hardening/) | Defensive Laravel hardening — OWASP Top 10, authorization coverage, uploads, secrets, config, CI/CD |
 
 </details>
 
@@ -118,6 +120,7 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 | [/design-logo](commands/design-logo.md) | Design an SVG logo system |
 | [/docs](commands/docs.md) | Documentation management |
 | [/erd](commands/erd.md) | Generate, refresh or verify the interactive database ERD |
+| [/output](commands/output.md) | Set the response output format — `tldr`, `table`, `verbose`, `bullets`, `narrative`, `json`, `raw` |
 | [/sales](commands/sales.md) | All-in-one sales — config, pricing, marketing, quotation |
 | [/sales-create-config](commands/sales-create-config.md) | Create a product-config.md interactively |
 | [/sales-get-marketing](commands/sales-get-marketing.md) | Marketing copy — taglines, pitches, social posts |
@@ -125,6 +128,51 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 | [/sales-get-quotation](commands/sales-get-quotation.md) | Generate a quotation |
 | [/upgrade-laravel](commands/upgrade-laravel.md) | Laravel 12 → 13 upgrade assistant |
 | [/upgrade-livewire](commands/upgrade-livewire.md) | Livewire 3 → 4 upgrade assistant |
+
+## Output Format
+
+By default every response is **TLDR + tables** — a bold `**TLDR:**` line carrying the answer,
+then the substance in markdown tables. The installer writes this as a delimited managed block
+in `~/.claude/CLAUDE.md`, so it applies to every prompt and is replaced (never duplicated) on
+reinstall. Skip it with `--no-output-format`.
+
+Switch modes for a session with `/output`:
+
+| Mode | Shape |
+|---|---|
+| `default` | TLDR line + tables. The baseline. |
+| `tldr` | The TLDR line only. |
+| `table` | Tables, prose only where a table cannot carry the meaning. |
+| `verbose` | Full reasoning, trade-offs, alternatives, worked examples. |
+| `bullets` | Flat bullet lists. |
+| `narrative` | Flowing prose — post-mortems, proposals, non-technical readers. |
+| `json` | One fenced JSON block, no surrounding prose. |
+| `raw` | Command output, files or diffs verbatim, no commentary. |
+
+A one-off instruction in your own prompt always wins for that reply ("explain in detail",
+"just the table", "terangkan panjang"), then the session mode resumes. Safety caveats, unmet
+requirements and failing tests are reported in **every** mode.
+
+## Companions
+
+Two upstream tools are installed alongside the toolkit because several skills and agents
+assume them. Neither is vendored — each is installed through its own mechanism so it stays
+current and keeps its own licence. Skip both with `--no-companions`.
+
+| Companion | What it does | Installed via |
+|---|---|---|
+| [graphify](https://github.com/Graphify-Labs/graphify) | Turns a codebase into a queryable knowledge graph — structural questions answered in seconds instead of a grep sweep | `uv tool install graphifyy` then `graphify install --platform claude` |
+| [ponytail](https://github.com/dietrichgebert/ponytail) | Minimalism ladder applied to every response — skip it, reuse, stdlib, native, existing dep, one line, minimum that works | `/plugin marketplace add DietrichGebert/ponytail` then `/plugin install ponytail@ponytail` |
+
+**Where they are wired in:**
+
+| Companion | Skills | Agents |
+|---|---|---|
+| graphify | `repo-research`, `project-ddd`, `debugging` | `software-architect`, `fleet-auditor` |
+| ponytail | `design-patterns`, `php-best-practices` | `code-reviewer`, `laravel-developer` |
+
+Both are accelerators, not prerequisites — every skill falls back to its normal approach when
+the companion is absent, and the installer reports a skip rather than failing.
 
 ## Installation
 
@@ -148,8 +196,10 @@ Content is installed to `~/.claude/skills/`, `~/.claude/agents/` and `~/.claude/
 Useful flags:
 
 ```bash
-bash install.sh --dry-run              # preview without writing
+bash install.sh --dry-run                     # preview without writing
 bash install.sh --only kickoff-pest-testing   # install a single skill, agent or command
+bash install.sh --no-companions               # skip graphify and ponytail
+bash install.sh --no-output-format            # skip the TLDR+table block in ~/.claude/CLAUDE.md
 ```
 
 </details>

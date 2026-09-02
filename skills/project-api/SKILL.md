@@ -1031,6 +1031,50 @@ Recommendations:
 
 ---
 
+---
+
+## Common Rationalizations
+
+| Rationalization | Reality |
+|---|---|
+| "Nobody's using that field yet, I can change it" | Hyrum's Law: every observable behaviour is depended on by someone. Check, then deprecate — do not just change it. |
+| "It's an internal API, versioning is overkill" | Internal APIs get external consumers, mobile clients that cannot be force-updated, and partners. Version from day one. |
+| "I'll write the OpenAPI spec after the endpoints work" | Then the spec documents what you built rather than governing it, and the two drift within a sprint. |
+| "Returning 200 with an error body is friendlier" | It is friendlier to nothing. Every client's error handling keys on the status code. |
+| "Pagination can come later, there are only 50 records" | There are 50 records today. An unbounded list endpoint is a latent outage. |
+| "The frontend validates it" | The frontend is one client. Validate at the API boundary, always. |
+| "Rate limiting will annoy legitimate users" | Tier it. No limit at all means one misbehaving client takes the API down for everyone. |
+| "We'll document the errors if people ask" | Undocumented error semantics is the single most common API complaint. Document the shape once. |
+| "Breaking change, but we told them in the changelog" | A changelog is not a deprecation. Ship the old behaviour alongside the new, with a sunset date and a header. |
+
+## Red Flags
+
+- A list endpoint with no pagination and no maximum page size
+- Errors returned as `200 OK` with `{"error": …}`
+- Inconsistent error shapes across endpoints
+- A field renamed, removed or retyped without a deprecation window
+- No version in the URL or the `Accept` header
+- Validation only in the client, or only in the model
+- An endpoint returning a full Eloquent model rather than an API Resource
+- Internal identifiers, stack traces or SQL in an error response
+- Auth by API key with no scopes, no expiry and no revocation
+- No rate limit tier distinction between anonymous, authenticated and privileged callers
+- The OpenAPI spec and the routes file disagreeing
+
+## Verification
+
+- [ ] OpenAPI spec exists and matches the implemented routes, methods and status codes
+- [ ] Every list endpoint paginates with an enforced maximum page size
+- [ ] Error responses use correct status codes and one consistent body shape
+- [ ] No internal detail (stack trace, SQL, class path, internal ID) leaks in any error
+- [ ] Every endpoint validates via a Form Request and returns an API Resource, never a raw model
+- [ ] Authorization tested negatively — wrong user gets `403`, not `200`
+- [ ] Rate limits defined per tier and verified by a test
+- [ ] Any breaking change ships behind a new version with the old one deprecated, dated and announced
+- [ ] Contract tests run in CI against the spec
+
+---
+
 ## Reference Files
 
 | File | Read When |

@@ -50,6 +50,28 @@ This skill applies DDD where it creates real business value:
 
 ---
 
+---
+
+## Companion: graphify
+
+`graphify` builds a persistent, queryable knowledge graph of a codebase — tree-sitter AST
+parsing for code plus semantic extraction for docs. It answers structural questions far faster
+than grepping, and it is installed by default with this toolkit.
+
+**Use it before a manual sweep whenever the question is structural.**
+
+```bash
+graphify extract .                       # build (or refresh) the graph — once per repo
+graphify query "how does authentication work"
+graphify path UserController InvoiceRepository   # call chain between two nodes
+graphify explain app/Services/BillingService.php
+```
+
+If `graphify-out/` already exists in the target repo, treat the question as a graph query
+first and fall back to file reading only for what the graph cannot answer. If `graphify` is
+not installed, carry on with the normal file-reading approach — it is an accelerator, never a
+prerequisite.
+
 ## 1. `/project-ddd discover` — Domain Discovery
 
 ### Purpose

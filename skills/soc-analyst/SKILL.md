@@ -517,6 +517,47 @@ Generate structured security documents.
 
 ---
 
+---
+
+## Common Rationalizations
+
+| Rationalization | Reality |
+|---|---|
+| "It's probably just a scanner" | Probably. Confirm it — the one time it is not, "probably" is in the post-mortem. |
+| "One failed login isn't worth investigating" | One is not. The pattern is: same IP across many accounts, or many IPs against one account. Look at the shape, not the count. |
+| "The WAF would have blocked it" | The WAF blocks what it recognises. Check whether the request reached the app and what it returned. |
+| "No data was exfiltrated as far as I can see" | "As far as I can see" is the finding. State what your logs can and cannot prove. |
+| "I'll clean up the compromised account and move on" | Without knowing entry, dwell time and lateral movement, you have removed a symptom and left the door open. |
+| "Rotating credentials will disrupt users" | So does a second breach. Rotate, and communicate. |
+| "The logs don't go back that far" | Then that is a finding in its own right — record it and extend retention before the next incident. |
+| "It happened, we fixed it, no need to write it up" | The write-up is how the fix survives the next person. Undocumented incidents recur. |
+
+## Red Flags
+
+- 403 or 404 spikes from one source — someone is enumerating
+- Failed-login bursts across many accounts (credential stuffing) or one account (brute force)
+- A successful login from a new country or ASN immediately after failures
+- Requests containing `../`, `union select`, `<script`, `${jndi:`, or long base64 blobs
+- Access to `.env`, `.git/config`, `/admin`, `phpinfo`, or backup file extensions
+- A new user with elevated roles created outside business hours
+- Log gaps — an absent window is evidence, not an inconvenience
+- Outbound requests from the app to an unfamiliar host
+- A queue or scheduler suddenly running commands nobody scheduled
+- An incident closed with no stated entry vector
+
+## Verification
+
+- [ ] Timeline reconstructed: first observation, entry vector, dwell time, last activity
+- [ ] Scope stated explicitly — which accounts, which records, over which window
+- [ ] What the logs **cannot** prove is stated as plainly as what they can
+- [ ] Indicators (IPs, user agents, payloads, account IDs) recorded for future matching
+- [ ] Containment done: sessions invalidated, credentials and tokens rotated, access revoked
+- [ ] Root cause is a vulnerability or misconfiguration, not "an attacker attacked us"
+- [ ] Detection gap identified — why was this not alerted on, and what now alerts on it
+- [ ] Findings converted into tracked issues with owners
+
+---
+
 ## Reference Files
 
 | File | Read When |

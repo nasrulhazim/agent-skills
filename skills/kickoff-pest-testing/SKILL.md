@@ -638,6 +638,47 @@ reference in `project-laravel`.
 
 ---
 
+---
+
+## Common Rationalizations
+
+| Rationalization | Reality |
+|---|---|
+| "The happy path passes, that's the important one" | The happy path is what you already know works. Every production incident is an unhandled path. |
+| "It's too simple to need a test" | Then the test is one line and takes thirty seconds. Cost is not the real objection. |
+| "Coverage is at 85%, we're fine" | Coverage measures lines executed, not assertions made. A test with no assertion still counts. |
+| "I'll add tests once the feature settles" | The feature settles when it ships, and then nobody is paid to go back. |
+| "Mocking it properly takes too long" | If a unit is hard to test, that is the design telling you something. Fix the seam, not the test. |
+| "The test is flaky, I'll add a retry" | A retry hides a race that production will hit at higher concurrency. Find the shared state. |
+| "I tested it manually" | Manual testing is not repeatable, does not run in CI, and does not protect the next person's change. |
+| "Authorization is covered — the owner can view it" | The positive case passes even when the check is missing entirely. The test that matters asserts `403` for the wrong user. |
+| "Arch tests are just ceremony" | Arch tests are the only thing that catches a convention breaking in a file nobody reviewed. |
+
+## Red Flags
+
+- A test with no assertion, or one that only asserts `assertTrue(true)`
+- `->skip()` or `->markTestIncomplete()` added during a bug fix
+- `sleep()` in a test
+- Assertions on `id === 1` or on auto-increment ordering
+- `now()` asserted directly instead of `Carbon::setTestNow()`
+- Real `Mail`, `Http`, `Queue` or `Storage` used where a fake exists
+- Tests that pass alone and fail in the suite (or vice versa)
+- A new endpoint with an "owner can access" test and no "other user cannot" test
+- A bug fix PR with no regression test and no explanation of why one was impossible
+- Factories creating dozens of rows per test when two would do
+
+## Verification
+
+- [ ] `./vendor/bin/pest` green on a clean checkout
+- [ ] `./vendor/bin/pest --order-by=random` green — no order dependence
+- [ ] Every new endpoint has a negative authorization test asserting `403`/`401`
+- [ ] Every bug fix has a test that fails when the fix is reverted
+- [ ] No `sleep()`, no `->skip()`, no real network or mail in the suite
+- [ ] Arch tests pass and cover the new namespaces
+- [ ] Suite runtime did not materially regress — if it did, say by how much and why
+
+---
+
 ## Reference Files
 
 | File | Read When |

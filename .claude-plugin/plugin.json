@@ -1,7 +1,7 @@
 {
     "name": "claude-toolkit",
-    "description": "31 skills, 20 role agents and 10 commands covering Laravel development, testing, code quality, CI/CD, package development, documentation, requirements, sales, branding and support operations. Kickoff-baseline aware.",
-    "version": "2.4.0",
+    "description": "34 skills, 20 role agents and 12 commands covering Laravel development, testing, debugging, code quality, security hardening, CI/CD, deployment, package development, documentation, requirements, sales, branding and support operations. Kickoff-baseline aware. Ships graphify and ponytail as companions and a TLDR+table output default.",
+    "version": "2.5.0",
     "author": {
         "name": "CleaniqueCoders"
     },

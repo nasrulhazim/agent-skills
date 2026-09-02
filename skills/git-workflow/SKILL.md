@@ -657,6 +657,45 @@ See `references/hooks-and-templates.md` for additional templates.
 
 ---
 
+---
+
+## Common Rationalizations
+
+| Rationalization | Reality |
+|---|---|
+| "I'll squash it all into one commit at the end" | The end is when you have forgotten why each change was made. Commit at each working point. |
+| "'fix stuff' is fine, the diff explains it" | The diff says what changed. Only the message can say why, and why is what the next reader needs. |
+| "Force push is fine, it's my branch" | Until someone reviewed it, based work on it, or you typed the wrong branch name. Use `--force-with-lease`. |
+| "I'll just commit the .env, it's a private repo" | Repos become public, get forked, and get cloned to laptops. A committed secret is a rotated secret. |
+| "Rebasing rewrites history, that's dangerous" | Rebasing your own unpushed branch is the safest way to keep history readable. Rebasing shared history is the dangerous one. |
+| "This PR is big but it's all one feature" | A 1500-line PR gets an "LGTM", not a review. Split it and get an actual read. |
+| "Merge commits pollute the log" | Sometimes. But a fake-linear history that hides an integration failure is worse than a merge commit. |
+| "I'll clean up the branches later" | Two hundred stale branches later, nobody can tell which are live. Delete on merge. |
+
+## Red Flags
+
+- Commit messages: "fix", "wip", "update", "changes", "phase 1"
+- A commit containing a fix, a refactor and a formatting sweep together
+- `git push --force` without `--with-lease`
+- `.env`, `*.pem`, `id_rsa`, `.DS_Store`, `vendor/` or `node_modules/` in a diff
+- A PR over ~1000 lines that is not a generated-file or lockfile change
+- Committing directly to `main` on a repo with a PR workflow
+- A merge that resolved conflicts by taking one side wholesale without reading
+- Tags that drift from the version in `composer.json` / `plugin.json`
+- Long-lived branches that have not been rebased in weeks
+
+## Verification
+
+- [ ] Each commit is one logical change, and the suite is green at that commit
+- [ ] Subject lines are imperative, under ~72 chars, and say what and why
+- [ ] No secrets, build artifacts or local config in the diff (`git status` is clean)
+- [ ] Branch is up to date with `main` and conflicts were resolved deliberately
+- [ ] PR description states the change, the reason, and how it was verified
+- [ ] Diff size is reviewable in one sitting, or the PR explains why it cannot be split
+- [ ] Version bumps and tags are consistent across every file that carries a version
+
+---
+
 ## Reference Files
 
 | File | Read When |

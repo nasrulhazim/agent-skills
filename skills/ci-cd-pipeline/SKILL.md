@@ -492,6 +492,47 @@ Push to develop          Push to main            Push tag v*
 
 ---
 
+---
+
+## Common Rationalizations
+
+| Rationalization | Reality |
+|---|---|
+| "The pipeline is flaky, just re-run it" | A pipeline you re-run on reflex has stopped being a signal. Fix the flake or delete the job. |
+| "I'll set continue-on-error until we clean it up" | That is deleting the gate while keeping the badge. Either the check matters or it does not. |
+| "Pinning actions to a SHA is annoying to maintain" | A moving tag means a third party can change what runs against your secrets, without a PR. |
+| "The secret is only echoed for debugging" | Logs are retained, forwarded and often public on the fork. That secret is now compromised. |
+| "pull_request_target is the only way to get secrets on a fork PR" | It is also the way to hand an attacker your secrets. If forks need secrets, the design is wrong. |
+| "Caching dependencies is premature optimisation" | It is a two-line change that halves every run. This is the cheapest win in CI. |
+| "Deploy on green is risky, I'll deploy manually" | Manual deploys drift from the tested artifact. Automate the deploy; gate it on an environment approval. |
+| "One big job is simpler than several" | Until it fails, and the log is 4000 lines with no indication which check broke. |
+
+## Red Flags
+
+- `continue-on-error: true` on a quality or test job
+- Actions referenced by `@main`, `@master` or a moving `@v4`
+- `pull_request_target` combined with a checkout of the PR head
+- No workflow-level `permissions:` block (defaults to write)
+- Secrets interpolated into a `run:` step that could be logged
+- A deploy step with no environment protection or approval
+- No dependency caching on a suite that takes minutes
+- Test, lint and static analysis all inside a single opaque job
+- A required check that has been failing for weeks and is now ignored
+- Workflow files editable without review
+
+## Verification
+
+- [ ] Pipeline green on a clean branch, twice in a row — no flakes
+- [ ] Every job that gates merge is genuinely blocking (no `continue-on-error`)
+- [ ] All third-party actions pinned to a full commit SHA
+- [ ] Workflow-level `permissions:` is least-privilege (`contents: read` baseline)
+- [ ] No secret is echoed, printed, or passed to an untrusted step
+- [ ] `pull_request_target` absent, or provably not checking out untrusted code
+- [ ] Deploy gated on green plus an environment approval
+- [ ] Jobs are separable — a failure names which check broke without reading the whole log
+
+---
+
 ## Reference Files
 
 | File | Read When |

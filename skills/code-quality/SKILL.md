@@ -462,6 +462,44 @@ Status: All quality gates passing
 
 ---
 
+---
+
+## Common Rationalizations
+
+| Rationalization | Reality |
+|---|---|
+| "Just baseline it, it's legacy code" | A baseline entry is a permanent, invisible ignore. Baseline to unblock CI, then file the issue — a baseline that only ever grows is a broken quality gate. |
+| "Level 5 is good enough for now" | Levels only ever ratchet up when someone forces them. "For now" has been the level for two years in most codebases. |
+| "Pint fixed it, so the code is reviewed" | Pint fixes spacing and ordering. It has no opinion on the god class it just reformatted. |
+| "Rector's diff is huge but it's automated" | Automated does not mean correct. Rector changes behaviour on `mixed`, on magic methods, and on anything it cannot type. Read the diff. |
+| "I'll fix the PHPStan errors after the feature" | The feature is what introduced them. Fixing them later means fixing them without the context you have right now. |
+| "The error is a false positive" | Sometimes true. Then annotate it with `@phpstan-ignore-next-line` **and a reason** — never widen a type or add `mixed` to silence it. |
+| "CI is red but it's unrelated to my change" | Then it was red before your change and nobody dealt with it. Red CI that everyone ignores is the same as no CI. |
+| "Adding `@var` fixed the error" | It silenced the error by lying to the analyser. If the annotation is wrong, you have made the codebase less safe, not more. |
+
+## Red Flags
+
+- Baseline file growing in a PR that was supposed to fix quality
+- `@phpstan-ignore` with no reason comment beside it
+- A widened type (`mixed`, `array`, removing a return type) used to clear an error
+- `--memory-limit=-1` added instead of finding what blew up
+- Rector applied and committed without reading the diff
+- `pint --dirty` used as the whole quality gate
+- Quality tooling present in `composer.json` but absent from CI
+- CI quality job set to `continue-on-error: true`
+- A PR that mixes a Rector modernisation sweep with a behaviour change
+
+## Verification
+
+- [ ] `phpstan analyse` exits 0 with **no new** baseline entries
+- [ ] `pint --test` clean
+- [ ] Any Rector changes were read line by line, and the test suite is green after applying them
+- [ ] Every new `@phpstan-ignore` carries a reason and an issue reference
+- [ ] The configured level is unchanged or higher — never lowered to pass
+- [ ] CI runs the same commands you ran locally, without `continue-on-error`
+
+---
+
 ## Reference Files
 
 | File | Read When |

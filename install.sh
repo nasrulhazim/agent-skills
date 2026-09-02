@@ -1,23 +1,29 @@
 #!/bin/bash
 
 # Claude Toolkit Installer — skills, agents and commands
-# Version: 2.4.0
+# Version: 2.5.0
 # Usage (remote): curl -fsSL https://raw.githubusercontent.com/nasrulhazim/claude/main/install.sh | bash
 # Usage (local):  bash install.sh [--dry-run] [--only <name>]
 #
 # Flags:
-#   --dry-run       Show what would be installed/removed without writing anything
-#   --only <name>   Install a single skill, agent or command by name
+#   --dry-run            Show what would be installed/removed without writing anything
+#   --only <name>        Install a single skill, agent or command by name
+#   --no-companions      Skip the companion tools (graphify, ponytail)
+#   --no-output-format   Skip the TLDR+table output-format block in ~/.claude/CLAUDE.md
 
 set -e
 
 # Flags
 DRY_RUN=0
 ONLY=""
+COMPANIONS=1
+OUTPUT_FORMAT=1
 while [ $# -gt 0 ]; do
     case "$1" in
         --dry-run) DRY_RUN=1 ;;
         --only) ONLY="$2"; shift ;;
+        --no-companions) COMPANIONS=0 ;;
+        --no-output-format) OUTPUT_FORMAT=0 ;;
         *) echo "Unknown option: $1"; exit 1 ;;
     esac
     shift
@@ -26,7 +32,7 @@ done
 echo ""
 echo "Claude Toolkit Installer"
 echo "========================"
-echo "Version: 2.4.0"
+echo "Version: 2.5.0"
 [ $DRY_RUN -eq 1 ] && echo "(dry run — nothing will be written)"
 echo ""
 
@@ -236,6 +242,99 @@ for unit in "${UNITS[@]}"; do
 done
 
 echo ""
+
+# --- Output format default: TLDR + tables in ~/.claude/CLAUDE.md ---
+# Written as a delimited managed block so re-running the installer replaces it
+# rather than appending, and the user's own instructions are never touched.
+install_output_format() {
+    local claude_md="$CLAUDE_DIR/CLAUDE.md"
+    local start="<!-- claude-toolkit:output-format:start -->"
+    local end="<!-- claude-toolkit:output-format:end -->"
+    local block
+
+    if [ "$INSTALL_MODE" = "local" ]; then
+        block=$(cat "$REPO_DIR/templates/output-format.md" 2>/dev/null)
+    else
+        block=$(curl -fsSL "$REPO_URL/templates/output-format.md" 2>/dev/null)
+    fi
+    [ -n "$block" ] || { echo -e "  ${RED}✗${NC} output format (template unavailable)"; return 1; }
+
+    if [ $DRY_RUN -eq 1 ]; then
+        echo -e "  ${BLUE}would write${NC} output-format block → $claude_md"
+        return 0
+    fi
+
+    touch "$claude_md"
+    if grep -qF "$start" "$claude_md" 2>/dev/null; then
+        # Replace the existing managed block in place
+        awk -v s="$start" -v e="$end" '
+            index($0, s) { skip = 1 }
+            !skip { print }
+            index($0, e) { skip = 0 }
+        ' "$claude_md" > "$claude_md.tmp" && mv "$claude_md.tmp" "$claude_md"
+        # Trim trailing blank lines left behind
+        printf '%s\n' "$(cat "$claude_md")" > "$claude_md"
+    fi
+    printf '\n%s\n' "$block" >> "$claude_md"
+    echo -e "  ${GREEN}✓${NC} output format (TLDR + tables) → ~/.claude/CLAUDE.md"
+}
+
+if [ $OUTPUT_FORMAT -eq 1 ]; then
+    echo -e "${BLUE}Output format${NC}"
+    install_output_format || true
+    echo ""
+fi
+
+# --- Companions: tools this toolkit's skills and agents expect to be present ---
+# Neither is vendored — each is installed through its own upstream mechanism so
+# it stays current and keeps its own licence. Skipped cleanly if prerequisites
+# are missing; nothing here is fatal to the toolkit install.
+install_companions() {
+    # graphify — codebase knowledge graph (repo-research, project-ddd, debugging, fleet-auditor)
+    if command -v graphify >/dev/null 2>&1; then
+        echo -e "  ${GREEN}✓${NC} graphify (already installed)"
+    elif [ $DRY_RUN -eq 1 ]; then
+        echo -e "  ${BLUE}would install${NC} graphify (uv tool install graphifyy)"
+    elif command -v uv >/dev/null 2>&1; then
+        if uv tool install graphifyy >/dev/null 2>&1 && graphify install --platform claude >/dev/null 2>&1; then
+            echo -e "  ${GREEN}✓${NC} graphify"
+        else
+            echo -e "  ${YELLOW}!${NC} graphify (install failed — run: uv tool install graphifyy && graphify install --platform claude)"
+        fi
+    elif command -v pipx >/dev/null 2>&1; then
+        if pipx install graphifyy >/dev/null 2>&1 && graphify install --platform claude >/dev/null 2>&1; then
+            echo -e "  ${GREEN}✓${NC} graphify"
+        else
+            echo -e "  ${YELLOW}!${NC} graphify (install failed — run: pipx install graphifyy && graphify install --platform claude)"
+        fi
+    else
+        echo -e "  ${YELLOW}!${NC} graphify (needs uv or pipx — see https://github.com/Graphify-Labs/graphify)"
+    fi
+
+    # ponytail — minimalism ladder, applied to every response
+    if ! command -v claude >/dev/null 2>&1; then
+        echo -e "  ${YELLOW}!${NC} ponytail (claude CLI not found — run: /plugin marketplace add DietrichGebert/ponytail)"
+        return 0
+    fi
+    if claude plugin list 2>/dev/null | grep -qi "ponytail"; then
+        echo -e "  ${GREEN}✓${NC} ponytail (already installed)"
+    elif [ $DRY_RUN -eq 1 ]; then
+        echo -e "  ${BLUE}would install${NC} ponytail (claude plugin install ponytail@ponytail)"
+    else
+        claude plugin marketplace add DietrichGebert/ponytail >/dev/null 2>&1 || true
+        if claude plugin install ponytail@ponytail >/dev/null 2>&1; then
+            echo -e "  ${GREEN}✓${NC} ponytail"
+        else
+            echo -e "  ${YELLOW}!${NC} ponytail (install failed — run: /plugin marketplace add DietrichGebert/ponytail then /plugin install ponytail@ponytail)"
+        fi
+    fi
+}
+
+if [ $COMPANIONS -eq 1 ] && [ -z "$ONLY" ]; then
+    echo -e "${BLUE}Companions${NC}"
+    install_companions
+    echo ""
+fi
 
 if [ -n "$ONLY" ] && [ $TOTAL -eq 0 ]; then
     echo -e "${RED}No skill, agent or command named '$ONLY' found.${NC}"

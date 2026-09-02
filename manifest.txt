@@ -14,7 +14,12 @@ skills/courseware-builder/SKILL.md
 skills/courseware-builder/references/html-template.md
 skills/courseware-builder/references/step-templates.md
 skills/courseware-builder/references/themes.md
+skills/debugging/SKILL.md
+skills/debugging/references/laravel-debug-tools.md
+skills/debugging/references/triage-playbook.md
 skills/deploy-app/SKILL.md
+skills/deploy-app/references/deploy-checklist.md
+skills/deploy-app/references/rollback-playbook.md
 skills/design-patterns/SKILL.md
 skills/design-patterns/references/decision-matrix.md
 skills/design-patterns/references/laravel-patterns.md
@@ -102,6 +107,7 @@ skills/project-roadmap/SKILL.md
 skills/project-roadmap/references/html-roadmap-patterns.md
 skills/project-roadmap/references/interview-guide.md
 skills/project-status/SKILL.md
+skills/project-status/references/status-report-template.md
 skills/project-sync/SKILL.md
 skills/project-sync/references/detection-markers.md
 skills/project-sync/references/merge-algorithm.md
@@ -121,6 +127,9 @@ skills/schema-diagram/references/diagram-app.md
 skills/schema-diagram/references/diagram-styles.md
 skills/schema-diagram/references/domain-map.md
 skills/schema-diagram/references/schema-extractor.md
+skills/security-hardening/SKILL.md
+skills/security-hardening/references/authorization-patterns.md
+skills/security-hardening/references/laravel-owasp-checklist.md
 skills/soc-analyst/SKILL.md
 skills/soc-analyst/references/hardening-checklist.md
 skills/soc-analyst/references/incident-report-templates.md
@@ -154,6 +163,7 @@ commands/analyze-repo.md
 commands/design-logo.md
 commands/docs.md
 commands/erd.md
+commands/output.md
 commands/sales-create-config.md
 commands/sales-get-marketing.md
 commands/sales-get-pricing.md
