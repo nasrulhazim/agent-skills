@@ -12,7 +12,7 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 ## Skills Directory
 
 <details open>
-<summary><strong>Development & Quality</strong> (8 skills)</summary>
+<summary><strong>Development & Quality</strong> (10 skills)</summary>
 
 | Skill | Description |
 |---|---|
@@ -24,6 +24,8 @@ A complete Claude Code toolkit — **skills**, **agents** and **commands** — f
 | [design-patterns](skills/design-patterns/) | PHP & Laravel design patterns with decision matrix |
 | [livewire-flux](skills/livewire-flux/) | Livewire 4 + Flux UI component patterns |
 | [debugging](skills/debugging/) | Five-step triage — reproduce, localise, reduce, fix at the root, guard with a regression test |
+| [performance-tuning](skills/performance-tuning/) | Measure-first optimisation — baselines, N+1s, indexing, caching tiers, queue offloading, Livewire payloads |
+| [ui-accessibility](skills/ui-accessibility/) | WCAG 2.1 AA for Livewire/Flux — keyboard paths, accessible names, contrast in both themes, live regions |
 
 </details>
 
@@ -169,7 +171,7 @@ current and keeps its own licence. Skip both with `--no-companions`.
 | Companion | Skills | Agents |
 |---|---|---|
 | graphify | `repo-research`, `project-ddd`, `debugging` | `software-architect`, `fleet-auditor` |
-| ponytail | `design-patterns`, `php-best-practices` | `code-reviewer`, `laravel-developer` |
+| ponytail | `design-patterns`, `php-best-practices`, `performance-tuning` | `code-reviewer`, `laravel-developer` |
 
 Both are accelerators, not prerequisites — every skill falls back to its normal approach when
 the companion is absent, and the installer reports a skip rather than failing.

@@ -380,5 +380,7 @@ These rules exist to avoid slow, repetitive workflows:
 
 ## Reference Files
 
-- `references/preview-gallery-template.md` — HTML/JS template for Phase 1 gallery
-- `references/preview-mockup-template.md` — HTML structure for Phase 2 mockup page
+| File | Read When |
+|---|---|
+| `references/preview-gallery-template.md` | Building the Phase 1 gallery — HTML/JS template |
+| `references/preview-mockup-template.md` | Building the Phase 2 mockup page — HTML structure |

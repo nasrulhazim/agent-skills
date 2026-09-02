@@ -62,6 +62,9 @@ skills/logo-designer/references/svg-design-patterns.md
 skills/package-dev/SKILL.md
 skills/package-dev/references/package-structure.md
 skills/package-dev/references/testbench-patterns.md
+skills/performance-tuning/SKILL.md
+skills/performance-tuning/references/caching-strategy.md
+skills/performance-tuning/references/query-optimisation.md
 skills/php-best-practices/SKILL.md
 skills/php-best-practices/references/code-smells.md
 skills/php-best-practices/references/php82-features.md
@@ -139,6 +142,9 @@ skills/soc-analyst/references/vulnerability-patterns.md
 skills/svg-logo-system/SKILL.md
 skills/svg-logo-system/references/preview-gallery-template.md
 skills/svg-logo-system/references/preview-mockup-template.md
+skills/ui-accessibility/SKILL.md
+skills/ui-accessibility/references/flux-accessibility.md
+skills/ui-accessibility/references/wcag-checklist.md
 agents/api-engineer.md
 agents/brand-designer.md
 agents/business-analyst.md

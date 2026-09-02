@@ -120,7 +120,7 @@ from the skills and agents that use them. Neither is copied into this repo. Wiri
 | Companion | Skills | Agents |
 |---|---|---|
 | graphify | `repo-research`, `project-ddd`, `debugging` | `software-architect`, `fleet-auditor` |
-| ponytail | `design-patterns`, `php-best-practices` | `code-reviewer`, `laravel-developer` |
+| ponytail | `design-patterns`, `php-best-practices`, `performance-tuning` | `code-reviewer`, `laravel-developer` |
 
 ## Output Format
 
